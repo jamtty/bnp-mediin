@@ -29,6 +29,7 @@ interface LnbItem {
 interface Props {
     visualClass: string
     visualTitle: string
+    contentsClass?: string
     lnbItems?: LnbItem[]
     children?: ReactNode
 }
@@ -44,7 +45,7 @@ const topMenuItems = [
     { label: '고객마당', to: '/community/voice', paths: ['/community'] },
 ]
 
-export default function SubPageLayout({ visualClass, visualTitle, lnbItems, children }: Props) {
+export default function SubPageLayout({ visualClass, visualTitle, contentsClass, lnbItems, children }: Props) {
     const location = useLocation()
     const [topOpen, setTopOpen] = useState(false)
     const [lnbOpen, setLnbOpen] = useState(false)
@@ -115,7 +116,7 @@ export default function SubPageLayout({ visualClass, visualTitle, lnbItems, chil
                     )}
                 </div>
             </div>
-            <div className="content">
+            <div className={`content${contentsClass ? ` ${contentsClass}` : ''}`}>
                 {children}
             </div>
             <SiteFooter />

@@ -1,4 +1,5 @@
-﻿import icoNaver from '../assets/images/ico_naver.svg'
+﻿import { Link } from 'react-router-dom'
+import icoNaver from '../assets/images/ico_naver.svg'
 import icoInsta from '../assets/images/ico_insta.svg'
 import icoYoutube from '../assets/images/ico_youtube.svg'
 
@@ -24,7 +25,7 @@ export default function SiteFooter({ onOpenPopup = () => {} }: SiteFooterProps) 
                         <button type="button" className="foot_btn" onClick={() => onOpenPopup('user_info_pop')}>
                             이용약관
                         </button>
-                        <a href="/main/content/view/MN04070000.do" className="foot_btn">오시는 길</a>
+                        <Link to="/about/location" className="foot_btn">오시는 길</Link>
                     </div>
                     <div className="foot_info">
                         <span>메디인병원 대표 이학수</span>

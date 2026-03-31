@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import PopupLayer from '../components/PopupLayer'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
@@ -116,13 +117,13 @@ export default function HomePage() {
                         </a>
                     </div>
                     <div className="quick_item">
-                        <a href="/main/content/view/MN02010000.do">
+                        <Link to="/department/intro">
                             <dl>
                                 <dt>진료과안내</dt>
                                 <dd>메디인병원의 진료과 및 <br />의료진을 소개합니다.</dd>
                             </dl>
                             <i className="ico_m_qc1"></i>
-                        </a>
+                        </Link>
                     </div>
                     <div className="quick_item">
                         <a href="/well/" target="_blank" rel="noreferrer">
@@ -147,52 +148,52 @@ export default function HomePage() {
             <div className="main_menu">
                 <ul>
                     <li>
-                        <a href="/main/content/view/MN01050000.do">
+                        <Link to="/care/certificate">
                             <i className="ico_menu menu1"></i>
                             <p>증명서발급</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/board/2/board_list.do">
+                        <Link to="/news/press">
                             <i className="ico_menu menu2"></i>
                             <p>보도자료</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/board/1/board_list.do">
+                        <Link to="/news/notice">
                             <i className="ico_menu menu3"></i>
                             <p>공지사항</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/board/7/board_list.do">
+                        <Link to="/community/voice">
                             <i className="ico_menu menu4"></i>
                             <p>고객마당</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/main/content/view/MN04010000.do">
+                        <Link to="/about/greeting">
                             <i className="ico_menu menu5"></i>
                             <p>병원소개</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/main/content/view/MN04060000.do">
+                        <Link to="/about/floormap">
                             <i className="ico_menu menu6"></i>
                             <p>층별안내도</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/main/content/view/MN04050000.do">
+                        <Link to="/about/organization">
                             <i className="ico_menu menu7"></i>
                             <p>조직도</p>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/main/content/view/MN04070000.do">
+                        <Link to="/about/location">
                             <i className="ico_menu menu8"></i>
                             <p>오시는길</p>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -311,16 +312,16 @@ export default function HomePage() {
                         </button>
                     </div>
                     <div className="quick_item">
-                        <a href="/main/content/view/MN04070000.do#bus" className="quick_link">
+                        <Link to="/about/location#bus" className="quick_link">
                             <i className="ico_quick2"></i>
                             <p>셔틀버스<br />운행안내</p>
-                        </a>
+                        </Link>
                     </div>
                     <div className="quick_item">
-                        <a href="/main/content/view/MN01050000.do?kakaoPay" className="quick_link">
+                        <Link to="/care/certificate" className="quick_link">
                             <i className="ico_quick3"></i>
                             <p>카카오페이<br />증명서발급</p>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

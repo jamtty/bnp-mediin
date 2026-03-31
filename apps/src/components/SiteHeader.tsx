@@ -1,4 +1,5 @@
 ﻿import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import logoImg from '../assets/images/logo_new.png'
 
 export default function SiteHeader() {
@@ -8,52 +9,52 @@ export default function SiteHeader() {
         <div id="header" className={gnbActive ? 'open_menu' : ''} onMouseLeave={() => setGnbActive(false)}>
             <div className="section">
                 <h1 className="logo">
-                    <a href="/"><img src={logoImg} alt="메디인병원" /></a>
+                    <Link to="/"><img src={logoImg} alt="메디인병원" /></Link>
                 </h1>
                 <div className="gnb_wrap" onMouseEnter={() => setGnbActive(true)}>
                     <div className="gnb_item">
-                        <a href="/care/outpatient" className="gnb_link">진료안내</a>
+                        <Link to="/care/outpatient" className="gnb_link">진료안내</Link>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/care/outpatient">외래진료안내</a></li>
-                                <li><a href="/care/emergency">응급실 진료안내</a></li>
-                                <li><a href="/care/admission">입퇴원절차안내</a></li>
-                                <li><a href="/care/certificate">증명서발급안내</a></li>
-                                <li><a href="/care/non-covered">비급여수가안내</a></li>
+                                <li><Link to="/care/outpatient">외래진료안내</Link></li>
+                                <li><Link to="/care/emergency">응급실 진료안내</Link></li>
+                                <li><Link to="/care/admission">입퇴원절차안내</Link></li>
+                                <li><Link to="/care/certificate">증명서발급안내</Link></li>
+                                <li><Link to="/care/non-covered">비급여수가안내</Link></li>
                             </ul>
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/department/intro" className="gnb_link">진료과안내</a>
+                        <Link to="/department/intro" className="gnb_link">진료과안내</Link>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/department/intro">진료과소개</a></li>
-                                <li><a href="/department/clinic">클리닉소개</a></li>
-                                <li><a href="/department/special">특수센터소개</a></li>
+                                <li><Link to="/department/intro">진료과소개</Link></li>
+                                <li><Link to="/department/clinic">클리닉소개</Link></li>
+                                <li><Link to="/department/special">특수센터소개</Link></li>
                             </ul>
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/about/greeting" className="gnb_link">병원소개</a>
+                        <Link to="/about/greeting" className="gnb_link">병원소개</Link>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/about/greeting">병원장인사말</a></li>
-                                <li><a href="/about/mission">설립목적,미션,비전</a></li>
-                                <li><a href="/about/history">병원연혁</a></li>
-                                <li><a href="/about/logo">로고</a></li>
-                                <li><a href="/about/organization">조직도</a></li>
-                                <li><a href="/about/floormap">층별안내도</a></li>
-                                <li><a href="/about/location">오시는 길</a></li>
+                                <li><Link to="/about/greeting">병원장인사말</Link></li>
+                                <li><Link to="/about/mission">설립목적,미션,비전</Link></li>
+                                <li><Link to="/about/history">병원연혁</Link></li>
+                                <li><Link to="/about/logo">로고</Link></li>
+                                <li><Link to="/about/organization">조직도</Link></li>
+                                <li><Link to="/about/floormap">층별안내도</Link></li>
+                                <li><Link to="/about/location">오시는 길</Link></li>
                             </ul>
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/news/notice" className="gnb_link">병원소식</a>
+                        <Link to="/news/notice" className="gnb_link">병원소식</Link>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/news/notice">공지사항</a></li>
-                                <li><a href="/news/press">보도자료</a></li>
-                                <li><a href="/news/recruit">채용정보</a></li>
+                                <li><Link to="/news/notice">공지사항</Link></li>
+                                <li><Link to="/news/press">보도자료</Link></li>
+                                <li><Link to="/news/recruit">채용정보</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -69,10 +70,10 @@ export default function SiteHeader() {
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/cooperation" className="gnb_link">진료협력센터</a>
+                        <Link to="/cooperation" className="gnb_link">진료협력센터</Link>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/cooperation">진료협력센터</a></li>
+                                <li><Link to="/cooperation">진료협력센터</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -89,12 +90,12 @@ export default function SiteHeader() {
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/community/health-info" className="gnb_link">고객마당</a>
+                        <Link to="/community/health-info" className="gnb_link">고객마당</Link>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/community/health-info">건강정보</a></li>
-                                <li><a href="/community/consultation">건강상담</a></li>
-                                <li><a href="/community/voice">고객의소리</a></li>
+                                <li><Link to="/community/health-info">건강정보</Link></li>
+                                <li><Link to="/community/consultation">건강상담</Link></li>
+                                <li><Link to="/community/voice">고객의소리</Link></li>
                             </ul>
                         </div>
                     </div>
