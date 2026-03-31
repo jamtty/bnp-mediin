@@ -1,0 +1,27 @@
+# 환경변수 (DB 접속정보, JWT 시크릿)
+backend/.env
+backend/api/setup/.seed_done
+
+# 업로드된 파일
+uploads/
+
+# phpMyAdmin (보안상 저장소에 포함 불필요)
+phpMyAdmin/
+
+# Node
+apps/node_modules/
+apps/dist/
+
+# 빌드 캐시
+apps/.vite/
+apps/coverage/
+*.mp4
+*.mov
+*.avi
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/sftp.json

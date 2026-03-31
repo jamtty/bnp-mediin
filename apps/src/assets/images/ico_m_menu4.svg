@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46.247" height="41.585" viewBox="0 0 46.247 41.585">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="사각형_78" data-name="사각형 78" width="46.247" height="41.585" transform="translate(0 0)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="icon_고객마당" transform="translate(0 0)">
+    <g id="그룹_174" data-name="그룹 174" clip-path="url(#clip-path)">
+      <path id="패스_130" data-name="패스 130" d="M37.127,11.278h-2.4a12.484,12.484,0,1,0-24.582,4.374H6.935a5.934,5.934,0,1,0,0,11.869H37.127a8.122,8.122,0,0,0,0-16.243" fill="#fff"/>
+      <path id="패스_131" data-name="패스 131" d="M37.127,11.278h-2.4a12.484,12.484,0,1,0-24.582,4.374H6.935a5.934,5.934,0,1,0,0,11.869H37.127a8.122,8.122,0,0,0,0-16.243Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="패스_132" data-name="패스 132" d="M32.056,21.15a15.169,15.169,0,0,0-18.886,18.6L26.934,25.985,13.17,39.748c.021.076.036.152.059.228A15.177,15.177,0,0,0,32.056,21.15" fill="#5adee8"/>
+      <path id="패스_133" data-name="패스 133" d="M32.056,21.15a15.169,15.169,0,0,0-18.886,18.6L26.934,25.985,13.17,39.748c.021.076.036.152.059.228A15.177,15.177,0,0,0,32.056,21.15Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

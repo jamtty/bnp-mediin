@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="ico_m_plus" transform="translate(-999.501 -2236.5)" opacity="0.36">
+    <path id="ico_nav_arrow" d="M11.314,11.314,0,0" transform="translate(1017.501 2246.5) rotate(135)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="ico_nav_arrow-2" data-name="ico_nav_arrow" d="M11.227,11.227,0,0" transform="translate(1009.501 2254.5) rotate(-135)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

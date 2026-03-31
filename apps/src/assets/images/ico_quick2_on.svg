@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="26" viewBox="0 0 42 26">
+  <g id="ico_quick2_on" transform="translate(-425.329 -325.357)">
+    <path id="사각형_1295" data-name="사각형 1295" d="M1,0H39a1,1,0,0,1,1,1V18.428a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V1A1,1,0,0,1,1,0Z" transform="translate(426.329 326.357)" fill="#437dea" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_1457" data-name="패스 1457" d="M432.1,330.552a1.577,1.577,0,0,0-1.575,1.575v3.989h6.009v-5.564Z" transform="translate(2.256 0.3)" fill="#437dea" stroke="#5adee8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_1458" data-name="패스 1458" d="M457.787,332.127c0-.869-.483-1.575-1.076-1.575h-14.37v5.564h15.446Z" transform="translate(2.051 0.3)" fill="#437dea" stroke="#5adee8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="선_466" data-name="선 466" y2="5.565" transform="translate(452.121 330.852)" fill="#c3e0fc" stroke="#5adee8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <circle id="타원_312" data-name="타원 312" cx="3.931" cy="3.931" r="3.931" transform="translate(429.142 342.495)" fill="#437dea" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <circle id="타원_313" data-name="타원 313" cx="3.931" cy="3.931" r="3.931" transform="translate(455.654 342.495)" fill="#437dea" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

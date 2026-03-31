@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40.477" height="49.246" viewBox="0 0 40.477 49.246">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="사각형_95" data-name="사각형 95" width="40.477" height="49.246" transform="translate(0 0)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="icon_증명서발급" transform="translate(0 0)">
+    <path id="패스_145" data-name="패스 145" d="M18.868,48.246l20.609-12.08L23.2,25.3,1,37.375Z" fill="#fff"/>
+    <g id="그룹_184" data-name="그룹 184">
+      <g id="그룹_183" data-name="그룹 183" clip-path="url(#clip-path)">
+        <path id="패스_146" data-name="패스 146" d="M18.868,48.246l20.609-12.08L23.2,25.3,1,37.375Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+    <path id="패스_147" data-name="패스 147" d="M18.868,36.1,39.477,24.02,23.2,13.146,1,25.228Z" fill="#74f291"/>
+    <g id="그룹_186" data-name="그룹 186">
+      <g id="그룹_185" data-name="그룹 185" clip-path="url(#clip-path)">
+        <path id="패스_148" data-name="패스 148" d="M18.868,36.1,39.477,24.02,23.2,13.146,1,25.228Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+    <path id="패스_149" data-name="패스 149" d="M18.868,23.952l20.609-12.08L23.2,1,1,13.08Z" fill="#5adee8"/>
+    <g id="그룹_188" data-name="그룹 188">
+      <g id="그룹_187" data-name="그룹 187" clip-path="url(#clip-path)">
+        <path id="패스_150" data-name="패스 150" d="M18.868,23.952l20.609-12.08L23.2,1,1,13.08Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+    <line id="선_24" data-name="선 24" x1="5.95" y1="3.975" transform="translate(22.16 8.085)" fill="#fff"/>
+    <line id="선_25" data-name="선 25" x1="5.95" y1="3.975" transform="translate(22.16 8.085)" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="선_26" data-name="선 26" x1="5.95" y1="3.975" transform="translate(15.492 11.836)" fill="#fff"/>
+    <line id="선_27" data-name="선 27" x1="5.95" y1="3.975" transform="translate(15.492 11.836)" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

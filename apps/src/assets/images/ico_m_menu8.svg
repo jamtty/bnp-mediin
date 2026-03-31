@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33.677" height="47.695" viewBox="0 0 33.677 47.695">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="사각형_77" data-name="사각형 77" width="33.677" height="47.695" transform="translate(0 0)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="icon_오시는길" transform="translate(0 0)">
+    <g id="그룹_172" data-name="그룹 172" clip-path="url(#clip-path)">
+      <path id="패스_124" data-name="패스 124" d="M12.684,34.563c-5.131.831-8.828,3.155-8.828,5.9,0,3.444,5.812,6.232,12.982,6.232s12.983-2.788,12.983-6.232c0-2.744-3.7-5.068-8.828-5.9" fill="#fff"/>
+      <path id="패스_125" data-name="패스 125" d="M12.684,34.563c-5.131.831-8.828,3.155-8.828,5.9,0,3.444,5.812,6.232,12.982,6.232s12.983-2.788,12.983-6.232c0-2.744-3.7-5.068-8.828-5.9" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="패스_126" data-name="패스 126" d="M5.639,5.64a15.839,15.839,0,0,0,0,22.4c.248.247,11.2,11.2,11.2,11.2l11.2-11.2a15.839,15.839,0,0,0-22.4-22.4" fill="#5adee8"/>
+      <path id="패스_127" data-name="패스 127" d="M5.639,5.64a15.839,15.839,0,0,0,0,22.4c.248.247,11.2,11.2,11.2,11.2l11.2-11.2a15.839,15.839,0,0,0-22.4-22.4Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="패스_128" data-name="패스 128" d="M22.161,16.447a5.323,5.323,0,1,1-5.323-5.323,5.324,5.324,0,0,1,5.323,5.323" fill="#fff"/>
+      <path id="패스_129" data-name="패스 129" d="M22.161,16.447a5.323,5.323,0,1,1-5.323-5.323A5.324,5.324,0,0,1,22.161,16.447Z" fill="none" stroke="#1a2444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>
