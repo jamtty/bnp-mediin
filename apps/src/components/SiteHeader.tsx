@@ -58,13 +58,13 @@ export default function SiteHeader() {
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/health/program" className="gnb_link">건강증진센터</a>
+                        <a href="/well/" target="_blank" rel="noreferrer" className="gnb_link">건강증진센터</a>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/health/program">건강검진프로그램</a></li>
-                                <li><a href="/health/preparation">검진준비 및 유의사항</a></li>
-                                <li><a href="/health/exams">검사종류</a></li>
-                                <li><a href="/health/about">센터소개</a></li>
+                                <li><a href="/well/" target="_blank" rel="noreferrer">건강검진프로그램</a></li>
+                                <li><a href="/well/" target="_blank" rel="noreferrer">검진준비 및 유의사항</a></li>
+                                <li><a href="/well/" target="_blank" rel="noreferrer">검사종류</a></li>
+                                <li><a href="/well/" target="_blank" rel="noreferrer">센터소개</a></li>
                             </ul>
                         </div>
                     </div>
@@ -77,14 +77,14 @@ export default function SiteHeader() {
                         </div>
                     </div>
                     <div className="gnb_item">
-                        <a href="/funeral/status" className="gnb_link">장례식장</a>
+                        <a href="/fune/" target="_blank" rel="noreferrer" className="gnb_link">장례식장</a>
                         <div className="gnb_sub">
                             <ul>
-                                <li><a href="/funeral/status">현재빈소분향현황</a></li>
-                                <li><a href="/funeral/guide">이용방법안내</a></li>
-                                <li><a href="/funeral/facilities">빈소시설 이용 안내</a></li>
-                                <li><a href="/funeral/other">기타시설 안내</a></li>
-                                <li><a href="/funeral/location">오시는길</a></li>
+                                <li><a href="/fune/" target="_blank" rel="noreferrer">현재빈소분향현황</a></li>
+                                <li><a href="/fune/" target="_blank" rel="noreferrer">이용방법안내</a></li>
+                                <li><a href="/fune/" target="_blank" rel="noreferrer">빈소시설 이용 안내</a></li>
+                                <li><a href="/fune/" target="_blank" rel="noreferrer">기타시설 안내</a></li>
+                                <li><a href="/fune/" target="_blank" rel="noreferrer">오시는길</a></li>
                             </ul>
                         </div>
                     </div>

@@ -1,59 +1,124 @@
+import type { ReactNode } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import SiteHeader from './SiteHeader'
 import SiteFooter from './SiteFooter'
+import subV1 from '../assets/images/sub_v1.png'
+import subV2 from '../assets/images/sub_v2.png'
+import subV3 from '../assets/images/sub_v3.png'
+import subV4 from '../assets/images/sub_v4.png'
+import subV5 from '../assets/images/sub_v5.png'
+import subV8 from '../assets/images/sub_v8.png'
+
+const visualImgMap: Record<string, string> = {
+    vs1: subV1,
+    vs2: subV2,
+    vs3: subV3,
+    vs4: subV4,
+    vs5: subV5,
+    vs8: subV8,
+}
 
 interface LnbItem {
-  label: string
-  to: string
-  onClick?: () => void
+    label: string
+    to?: string
+    href?: string
+    external?: boolean
 }
 
-interface SubPageLayoutProps {
-  visualClass: string       // 'vs1' | 'vs2' | 'vs3' | 'vs4' | 'vs5'
-  visualTitle: string       // 비주얼 영역 제목
-  contentsClass: string     // 'nav sub01_1' 등
-  lnbItems?: LnbItem[]
-  children: React.ReactNode
+interface Props {
+    visualClass: string
+    visualTitle: string
+    lnbItems?: LnbItem[]
+    children?: ReactNode
 }
 
-export default function SubPageLayout({
-  visualClass,
-  visualTitle,
-  contentsClass,
-  lnbItems,
-  children,
-}: SubPageLayoutProps) {
-  const { pathname } = useLocation()
+const topMenuItems = [
+    { label: '진료안내', to: '/care/outpatient', paths: ['/care'] },
+    { label: '진료과안내', to: '/department/intro', paths: ['/department'] },
+    { label: '병원소개', to: '/about/greeting', paths: ['/about'] },
+    { label: '병원소식', to: '/news/notice', paths: ['/news'] },
+    { label: '건강증진센터', href: '/well/', external: true, paths: [] as string[] },
+    { label: '진료협력센터', to: '/cooperation', paths: ['/cooperation'] },
+    { label: '장례식장', href: '/fune/', external: true, paths: [] as string[] },
+    { label: '고객마당', to: '/community/voice', paths: ['/community'] },
+]
 
-  return (
-    <>
-      <ul className="skip_nav">
-        <li><a href="#container">본문 바로가기</a></li>
-        <li><a href="#menu">주메뉴 바로가기</a></li>
-      </ul>
-      <SiteHeader />
-      <div id="container" className="sub_container">
-        <div className={`visual ${visualClass}`}>
-          <div className="inner">
-            <h1>{visualTitle}</h1>
-          </div>
+export default function SubPageLayout({ visualClass, visualTitle, lnbItems, children }: Props) {
+    const location = useLocation()
+    const [topOpen, setTopOpen] = useState(false)
+    const [lnbOpen, setLnbOpen] = useState(false)
+
+    const activeTopMenu = topMenuItems.find((item) =>
+        item.paths.some((p) => location.pathname.startsWith(p))
+    )
+
+    const activeLnbItem = lnbItems?.find((item) => item.to === location.pathname)
+
+    return (
+        <div id="container">
+            <SiteHeader />
+            <div className={`sub_visual ${visualClass}`}>
+                <img src={visualImgMap[visualClass] ?? subV1} alt="" />
+                <h2 className="vi_txt">{visualTitle}</h2>
+            </div>
+            <div className="breadcrumb">
+                <div className="section">
+                    <Link to="/" className="link_home" title="메인으로 이동">
+                        <i className="ico_home"></i>
+                    </Link>
+                    <div className={`link_sec${topOpen ? ' open' : ''}`}>
+                        <button type="button" className="link_active" onClick={() => setTopOpen(v => !v)}>
+                            {activeTopMenu?.label ?? visualTitle}
+                        </button>
+                        <div className="link_list">
+                            <ul>
+                                {topMenuItems.map((item) =>
+                                    item.external ? (
+                                        <li key={item.label}>
+                                            <a href={item.href} target="_blank" rel="noreferrer" className="gnb_link" onClick={() => setTopOpen(false)}>
+                                                {item.label}
+                                            </a>
+                                        </li>
+                                    ) : (
+                                        <li key={item.label} className={location.pathname.startsWith(item.paths?.[0] ?? '__') ? 'active' : ''}>
+                                            <Link to={item.to!} className="gnb_link" onClick={() => setTopOpen(false)}>{item.label}</Link>
+                                        </li>
+                                    )
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+                    {lnbItems && lnbItems.length > 0 && (
+                        <div className={`link_sec${lnbOpen ? ' open' : ''}`}>
+                            <button type="button" className="link_active" onClick={() => setLnbOpen(v => !v)}>
+                                {activeLnbItem?.label ?? lnbItems[0].label}
+                            </button>
+                            <div className="link_list">
+                                <ul>
+                                    {lnbItems.map((item) =>
+                                        item.external ? (
+                                            <li key={item.label}>
+                                                <a href={item.href} target="_blank" rel="noreferrer" className="gnb_link" onClick={() => setLnbOpen(false)}>
+                                                    {item.label}
+                                                </a>
+                                            </li>
+                                        ) : (
+                                            <li key={item.label} className={item.to === location.pathname ? 'active' : ''}>
+                                                <Link to={item.to!} className="gnb_link" onClick={() => setLnbOpen(false)}>{item.label}</Link>
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="content">
+                {children}
+            </div>
+            <SiteFooter />
         </div>
-        {lnbItems && lnbItems.length > 0 && (
-          <div className="lnb">
-            <ul>
-              {lnbItems.map(item => (
-                <li key={item.to} className={pathname.startsWith(item.to) ? 'active' : ''}>
-                  <Link to={item.to} onClick={item.onClick}>{item.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <div className={`contents ${contentsClass}`}>
-          {children}
-        </div>
-      </div>
-      <SiteFooter />
-    </>
-  )
+    )
 }

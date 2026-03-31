@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1752" height="831" viewBox="0 0 1752 831">
+  <g id="greetings_bg" transform="translate(-81 -593)">
+    <g id="타원_7" data-name="타원 7" transform="translate(81 593)" fill="none" stroke="#a3daf7" stroke-width="90" opacity="0.15">
+      <circle cx="179" cy="179" r="179" stroke="none"/>
+      <circle cx="179" cy="179" r="134" fill="none"/>
+    </g>
+    <ellipse id="타원_8" data-name="타원 8" cx="278" cy="277.5" rx="278" ry="277.5" transform="translate(1277 869)" fill="#a3daf7" opacity="0.1"/>
+  </g>
+</svg>

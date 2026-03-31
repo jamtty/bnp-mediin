@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="107" viewBox="0 0 320 107">
+  <g id="loca_shuttle_mo" transform="translate(-18 -1246)">
+    <g id="패스_1472" data-name="패스 1472" transform="translate(-27.5 1251)" fill="none">
+      <path d="M65.5,0c-11.045,0-20,13.4-20,29.931s8.954,29.931,20,29.931Z" stroke="none"/>
+      <path d="M 60.49956130981445 6.503082275390625 C 58.21136093139648 7.9200439453125 56.51753616333008 10.04417419433594 55.51504898071289 11.54446792602539 C 53.96976089477539 13.85713195800781 52.74782562255859 16.58097839355469 51.88318634033203 19.64035415649414 C 50.96536254882812 22.88790512084961 50.4999885559082 26.35019302368164 50.4999885559082 29.9310302734375 C 50.4999885559082 33.51186752319336 50.96536254882812 36.97414398193359 51.88318634033203 40.22170257568359 C 52.74782562255859 43.28108215332031 53.96976089477539 46.00492858886719 55.51504898071289 48.31758117675781 C 56.51753616333008 49.81787490844727 58.21136093139648 51.94200134277344 60.49956130981445 53.35896301269531 L 60.49956130981445 6.503082275390625 M 65.49955749511719 -7.62939453125e-06 L 65.49955749511719 59.86205673217773 C 54.4541015625 59.86205673217773 45.49998474121094 46.46147918701172 45.49998474121094 29.9310302734375 C 45.49998474121094 13.40058135986328 54.4541015625 -7.62939453125e-06 65.49955749511719 -7.62939453125e-06 Z" stroke="none" fill="#e1e4ec"/>
+    </g>
+    <path id="패스_1473" data-name="패스 1473" d="M61.513,0C52.669,0,45.5,11.109,45.5,24.813s7.169,24.813,16.013,24.813Z" transform="translate(-23.098 1255.983)" fill="#fff"/>
+    <g id="패스_1474" data-name="패스 1474" transform="translate(272.5 1251)" fill="none">
+      <path d="M45.5,0c11.045,0,20,13.4,20,29.931s-8.954,29.931-20,29.931Z" stroke="none"/>
+      <path d="M 50.49999618530273 6.503093719482422 L 50.49999618530273 53.35896301269531 C 52.78819274902344 51.9420051574707 54.48200607299805 49.8178825378418 55.48448181152344 48.31758117675781 C 57.02976989746094 46.00493240356445 58.251708984375 43.28108215332031 59.1163444519043 40.22170639038086 C 60.03417205810547 36.97415924072266 60.49954605102539 33.51187133789062 60.49954605102539 29.93103218078613 C 60.49954605102539 26.35019302368164 60.03417205810547 22.88790893554688 59.1163444519043 19.64035797119141 C 58.251708984375 16.58098220825195 57.02976989746094 13.85713195800781 55.48448181152344 11.54446792602539 C 54.48200607299805 10.04417419433594 52.78819274902344 7.920055389404297 50.49999618530273 6.503093719482422 M 45.49999237060547 -3.814697265625e-06 C 56.54544448852539 -3.814697265625e-06 65.49954223632812 13.40058135986328 65.49954223632812 29.93103218078613 C 65.49954223632812 46.46148300170898 56.54544448852539 59.86205673217773 45.49999237060547 59.86205673217773 L 45.49999237060547 -3.814697265625e-06 Z" stroke="none" fill="#e1e4ec"/>
+    </g>
+    <path id="패스_1475" data-name="패스 1475" d="M45.5,0c8.844,0,16.013,11.109,16.013,24.813S54.344,49.627,45.5,49.627Z" transform="translate(272.085 1255.983)" fill="#fff"/>
+    <text id="금촌역_사거리" data-name="금촌역
+사거리" transform="translate(295 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">금촌역</tspan><tspan x="-15.557" y="16">사거리</tspan></text>
+    <text id="금촌_전자랜드" data-name="금촌
+전자랜드" transform="translate(295 1334)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-10.371" y="0">금촌</tspan><tspan x="-20.742" y="16">전자랜드</tspan></text>
+    <rect id="사각형_1059" data-name="사각형 1059" width="281" height="5" transform="translate(38 1251)" fill="#e1e4ec"/>
+    <rect id="사각형_1316" data-name="사각형 1316" width="281" height="5" transform="translate(38 1306)" fill="#e1e4ec"/>
+    <g id="타원_12" data-name="타원 12" transform="translate(126 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_316" data-name="타원 316" transform="translate(126 1301)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_20" data-name="타원 20" transform="translate(288 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_318" data-name="타원 318" transform="translate(288 1301)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <text id="새꽃마을_1단지_후문_" data-name="새꽃마을
+1단지(후문)" transform="translate(62 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-20.742" y="0">새꽃마을</tspan><tspan x="-27.463" y="16">1단지(후문)</tspan></text>
+    <text id="금릉역_스타벅스_" data-name="금릉역
+(스타벅스)" transform="translate(62 1334)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">금릉역</tspan><tspan x="-24.832" y="16">(스타벅스)</tspan></text>
+    <text id="새꽃마을_1단지" data-name="새꽃마을
+1단지" transform="translate(134 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-20.742" y="0">새꽃마을</tspan><tspan x="-13.002" y="16">1단지</tspan></text>
+    <text id="금릉역_1번출구_" data-name="금릉역
+(1번출구)" transform="translate(134 1334)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">금릉역</tspan><tspan x="-22.277" y="16">(1번출구)</tspan></text>
+    <text id="메디인병원" transform="translate(215 1280)" font-size="15" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-32.41" y="0">메디인병원</tspan></text>
+    <text id="메디인병원-2" data-name="메디인병원" transform="translate(215 1335)" font-size="15" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-32.41" y="0">메디인병원</tspan></text>
+    <g id="타원_23" data-name="타원 23" transform="translate(207 1246)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_317" data-name="타원 317" transform="translate(207 1301)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_8" data-name="타원 8" transform="translate(55 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_315" data-name="타원 315" transform="translate(55 1301)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+  </g>
+</svg>

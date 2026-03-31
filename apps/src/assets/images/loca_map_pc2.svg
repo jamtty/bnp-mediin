@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1184.476" height="290" viewBox="0 0 1184.476 290">
+  <g id="loca_map_pc2" transform="translate(-370.554 -1638)">
+    <g id="line">
+      <g id="코너2" transform="translate(370.554 1783)">
+        <path id="패스_1177" data-name="패스 1177" d="M87.833,8.513V105.4C68.152,101.179,53.2,81.063,53.2,56.957S68.152,12.736,87.833,8.513M95.53,0C67.9,0,45.5,25.5,45.5,56.957s22.4,56.957,50.03,56.957Z" transform="translate(-45.5)" fill="#e1e4ec"/>
+        <path id="패스_1166" data-name="패스 1166" d="M92.215,0C66.415,0,45.5,23.281,45.5,52s20.915,52,46.715,52Z" transform="translate(-40.157 5)" fill="#fff"/>
+      </g>
+      <g id="코너1" transform="translate(1459.5 1674)">
+        <path id="패스_1174" data-name="패스 1174" d="M53.2,8.513V105.4c19.682-4.223,34.636-24.339,34.636-48.444S72.878,12.736,53.2,8.513M45.5,0C73.131,0,95.53,25.5,95.53,56.957s-22.4,56.957-50.03,56.957Z" transform="translate(0)" fill="#e1e4ec"/>
+        <path id="패스_1166-2" data-name="패스 1166" d="M45.5,0C71.173,0,91.985,23.281,91.985,52S71.173,104,45.5,104Z" transform="translate(-1.798 5)" fill="#fff"/>
+      </g>
+      <rect id="line3" width="575.5" height="5" transform="translate(415.5 1892)" fill="#e1e4ec"/>
+      <rect id="line2" width="1090.5" height="5" transform="translate(415.5 1783)" fill="#e1e4ec"/>
+      <rect id="line1" width="1114" height="5" transform="translate(392 1674)" fill="#e1e4ec"/>
+    </g>
+    <g id="circle">
+      <g id="원3">
+        <g id="타원_159" data-name="타원 159" transform="translate(467 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_159-2" data-name="타원 159" transform="translate(552 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_159-3" data-name="타원 159" transform="translate(637 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_159-4" data-name="타원 159" transform="translate(722 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_159-5" data-name="타원 159" transform="translate(807 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_159-6" data-name="타원 159" transform="translate(892 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_159-7" data-name="타원 159" transform="translate(977 1887)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+      </g>
+      <g id="원2">
+        <g id="타원_159-8" data-name="타원 159" transform="translate(424 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_165" data-name="타원 165" transform="translate(1189 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_161" data-name="타원 161" transform="translate(509 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_166" data-name="타원 166" transform="translate(1274 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_162" data-name="타원 162" transform="translate(1019 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_162-2" data-name="타원 162" transform="translate(934 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_162-3" data-name="타원 162" transform="translate(849 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_162-4" data-name="타원 162" transform="translate(764 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_162-5" data-name="타원 162" transform="translate(679 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_162-6" data-name="타원 162" transform="translate(594 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_167" data-name="타원 167" transform="translate(1359 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_163" data-name="타원 163" transform="translate(1104 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_160" data-name="타원 160" transform="translate(1444 1778)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+      </g>
+      <g id="원1">
+        <g id="타원_148" data-name="타원 148" transform="translate(382 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_153" data-name="타원 153" transform="translate(722 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_149" data-name="타원 149" transform="translate(467 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_154" data-name="타원 154" transform="translate(807 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_150" data-name="타원 150" transform="translate(552 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_155" data-name="타원 155" transform="translate(1062 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_155-2" data-name="타원 155" transform="translate(892 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_155-3" data-name="타원 155" transform="translate(977 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_156" data-name="타원 156" transform="translate(1147 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_152" data-name="타원 152" transform="translate(637 1670)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_157" data-name="타원 157" transform="translate(1232 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_158" data-name="타원 158" transform="translate(1402 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_158-2" data-name="타원 158" transform="translate(1487 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_158-3" data-name="타원 158" transform="translate(1317 1670)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <g id="text">
+      <g id="text3">
+        <text id="용상골" transform="translate(424.5 1875)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">얼롱119안전센터</tspan></text>
+        <text id="용상골-2" data-name="용상골" transform="translate(527.5 1924)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">춘곡정탁묘</tspan></text>
+        <text id="용상골-3" data-name="용상골" transform="translate(690.5 1924)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">금승리사거리</tspan></text>
+        <text id="용상골-4" data-name="용상골" transform="translate(880.5 1924)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">목장앞</tspan></text>
+        <text id="용상골-5" data-name="용상골" transform="translate(612.5 1875)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">비석사거리</tspan></text>
+        <text id="용상골-6" data-name="용상골" transform="translate(775.5 1875)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">삼성초등학교</tspan></text>
+        <text id="용상골-7" data-name="용상골" transform="translate(932.5 1875)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">웅지세무대학정문</tspan></text>
+      </g>
+      <g id="text2">
+        <text id="용상골-8" data-name="용상골" transform="translate(1139.554 1766)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">위전3리신성레미콘</tspan></text>
+        <text id="용상골-9" data-name="용상골" transform="translate(1059.554 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">월롱역월롱파출소</tspan></text>
+        <text id="용상골-10" data-name="용상골" transform="translate(987.554 1766)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">월롱초등학교</tspan></text>
+        <text id="용상골-11" data-name="용상골" transform="translate(917.554 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">덕은2리</tspan></text>
+        <text id="용상골-12" data-name="용상골" transform="translate(806.554 1766)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">덕은5리마을회관</tspan></text>
+        <text id="용상골-13" data-name="용상골" transform="translate(747.554 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">덕은5리</tspan></text>
+        <text id="용상골-14" data-name="용상골" transform="translate(632.554 1766)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">LCD산업단지고개</tspan></text>
+        <text id="용상골-15" data-name="용상골" transform="translate(490.554 1766)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">상가단지</tspan></text>
+        <text id="용상골-16" data-name="용상골" transform="translate(540.5 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">정다운마을LG기숙사</tspan></text>
+        <text id="용상골-17" data-name="용상골" transform="translate(405.5 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">희성전자</tspan></text>
+        <text id="명성슈퍼" transform="translate(1258.572 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">영태1리</tspan></text>
+        <text id="문산제일고" transform="translate(1343 1766)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">영태5리</tspan></text>
+        <text id="금촌체육공원" transform="translate(1406.5 1815)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">파주여고광일중</tspan></text>
+      </g>
+      <g id="text1">
+        <text id="용상골-18" data-name="용상골" transform="translate(370.554 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">풀무골</tspan></text>
+        <text id="명성슈퍼-2" data-name="명성슈퍼" transform="translate(442 1658)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">문산제일고</tspan></text>
+        <text id="문산제일고-2" data-name="문산제일고" transform="translate(507.59 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">문산제일고삼거리</tspan></text>
+        <text id="메디인병원" transform="translate(599.787 1657)" fill="#4378b5" font-size="20" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="0" y="0">메디인병원</tspan></text>
+        <text id="주공단지입구" transform="translate(687.108 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">새꽃마을1단지</tspan></text>
+        <text id="주공단지입구-2" data-name="주공단지입구" transform="translate(1449 1658)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">순복음평화교회</tspan></text>
+        <text id="금촌로타리" transform="translate(788.5 1658)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">대하마트</tspan></text>
+        <text id="금촌로타리-2" data-name="금촌로타리" transform="translate(1387.5 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">금촌1동</tspan></text>
+        <text id="장안아파트" transform="translate(835 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">금촌로타리평생학습관</tspan></text>
+        <text id="장안아파트-2" data-name="장안아파트" transform="translate(1305 1658)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">금촌역</tspan></text>
+        <text id="금촌역" transform="translate(923.554 1658)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">KT파주지사보훈회관</tspan></text>
+        <text id="금촌역-2" data-name="금촌역" transform="translate(1200.5 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">금촌통일시장</tspan></text>
+        <text id="파주여고" transform="translate(1037.072 1707)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">장안아파트</tspan></text>
+        <text id="영태5리" transform="translate(1122.5 1658)" fill="#707070" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">금촌사거리</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

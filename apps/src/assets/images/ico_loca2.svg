@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="74.605" height="71.122" viewBox="0 0 74.605 71.122">
+  <defs>
+    <linearGradient id="linear-gradient" y1="-1.911" x2="2.402" y2="-1.732" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#19a8ce"/>
+      <stop offset="1" stop-color="#016fb1"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="사각형_1046" data-name="사각형 1046" width="74.605" height="71.122" fill="url(#linear-gradient)"/>
+    </clipPath>
+  </defs>
+  <g id="ico_loca2" transform="translate(0 0)">
+    <g id="그룹_874" data-name="그룹 874" transform="translate(0 0)" clip-path="url(#clip-path)">
+      <path id="패스_1168" data-name="패스 1168" d="M18.071,77.291a2.385,2.385,0,0,0,2.385,2.385h2.689a2.386,2.386,0,0,0,2.386-2.385v-7.57H18.071Z" transform="translate(-2.217 -8.555)" fill="url(#linear-gradient)"/>
+      <path id="패스_1169" data-name="패스 1169" d="M58.464,77.291a2.386,2.386,0,0,0,2.386,2.385h2.689a2.385,2.385,0,0,0,2.385-2.385v-7.57H58.464Z" transform="translate(-7.173 -8.555)" fill="url(#linear-gradient)"/>
+      <path id="패스_1170" data-name="패스 1170" d="M70.743,11.637A3.864,3.864,0,0,0,66.878,15.5v7.461a4.079,4.079,0,0,0,.025.429l-3.224,3.224V4.476A4.476,4.476,0,0,0,59.2,0H15.4a4.476,4.476,0,0,0-4.476,4.476V26.614L7.7,23.39a3.858,3.858,0,0,0,.025-.429V15.5A3.863,3.863,0,1,0,0,15.5v7.461A3.859,3.859,0,0,0,5.623,26.4l5.3,5.3V52.274A4.477,4.477,0,0,0,15.4,56.751H59.2a4.477,4.477,0,0,0,4.477-4.477V31.7l5.3-5.3a3.859,3.859,0,0,0,5.623-3.437V15.5a3.864,3.864,0,0,0-3.863-3.864M59.528,39.369A2.964,2.964,0,1,1,56.564,36.4a2.964,2.964,0,0,1,2.964,2.964M38.867,9.968H57.93v16.36H38.867Zm-22.192,0H35.74v16.36H16.675ZM18.04,36.4a2.964,2.964,0,1,1-2.964,2.964A2.965,2.965,0,0,1,18.04,36.4M58.879,50.038H15.726a1.067,1.067,0,1,1,0-2.134H58.879a1.067,1.067,0,1,1,0,2.134" transform="translate(0 0)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>

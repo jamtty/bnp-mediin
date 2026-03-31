@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="310.722" height="52" viewBox="0 0 310.722 52">
+  <g id="loca_map_mo4" transform="translate(-18 -1246)">
+    <text id="초롱꽃마을_13단지" data-name="초롱꽃마을
+13단지" transform="translate(302.722 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-25.92" y="0">초롱꽃마을</tspan><tspan x="-16.692" y="16">13단지</tspan></text>
+    <text id="금릉역" transform="translate(168.966 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.552" y="0">금릉역</tspan></text>
+    <text id="산내마을_68단지" data-name="산내마을
+68단지" transform="translate(236.226 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-20.736" y="0">산내마을</tspan><tspan x="-17.688" y="16">68단지</tspan></text>
+    <rect id="사각형_1059" data-name="사각형 1059" width="261" height="5" transform="translate(38 1251)" fill="#e1e4ec"/>
+    <g id="타원_12" data-name="타원 12" transform="translate(295.247 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_16" data-name="타원 16" transform="translate(161.47 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_20" data-name="타원 20" transform="translate(228.691 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <text id="금촌역" transform="translate(34 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.552" y="0">금촌역</tspan></text>
+    <g id="타원_8" data-name="타원 8" transform="translate(26 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <text id="메디인병원" transform="translate(103 1280)" font-size="15" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-32.4" y="0">메디인병원</tspan></text>
+    <g id="타원_26" data-name="타원 26" transform="translate(93 1246)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+  </g>
+</svg>

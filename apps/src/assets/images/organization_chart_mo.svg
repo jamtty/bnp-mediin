@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="1648" viewBox="0 0 360 1648">
+  <g id="조직도_m" transform="translate(0 -415)">
+    <rect id="bg" width="360" height="1648" transform="translate(0 415)" fill="#f4f5f9"/>
+    <rect id="사각형_307" data-name="사각형 307" width="140" height="56" transform="translate(110 445)" fill="#1bbf5d"/>
+    <line id="선_104" data-name="선 104" y1="286" transform="translate(180 501)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_514" data-name="선 514" y1="75" transform="translate(90.5 711.5)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_518" data-name="선 518" y1="329" transform="translate(270.5 862.5)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_519" data-name="선 519" y1="461" transform="translate(270 1269)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_517" data-name="선 517" y1="265" transform="translate(90 1740)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_539" data-name="선 539" y1="410" transform="translate(90 1256)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_541" data-name="선 541" y1="329" transform="translate(90 863)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_512" data-name="선 512" x2="20" transform="translate(180 559)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_535" data-name="선 535" x2="40" transform="translate(160 625)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_537" data-name="선 537" x2="20" transform="translate(160 559)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_513" data-name="선 513" x2="40" transform="translate(160 710)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <line id="선_540" data-name="선 540" x2="20" transform="translate(160 786)" fill="none" stroke="#bbb" stroke-linecap="round" stroke-width="1"/>
+    <text id="대표원장" transform="translate(180 479)" fill="#fff" font-size="18" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-31.113" y="0">대표원장</tspan></text>
+    <rect id="사각형_1319" data-name="사각형 1319" width="140" height="56" transform="translate(20 531)" fill="#22a798"/>
+    <rect id="사각형_1369" data-name="사각형 1369" width="140" height="56" transform="translate(20 597)" fill="#22a798"/>
+    <text id="운영위원회" transform="translate(90 565)" fill="#fff" font-size="18" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-38.892" y="0">운영위원회</tspan></text>
+    <text id="제위원회" transform="translate(90 631)" fill="#fff" font-size="18" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-31.113" y="0">제위원회</tspan></text>
+    <rect id="사각형_307-2" data-name="사각형 307" width="140" height="56" transform="translate(200 531)" fill="#22a798"/>
+    <rect id="사각형_1318" data-name="사각형 1318" width="140" height="56" transform="translate(200 597)" fill="#22a798"/>
+    <text id="QPS실" transform="translate(270 565)" fill="#fff" font-size="18" font-family="Pretendard-Medium, Pretendard" font-weight="500"><tspan x="-25.418" y="0">QPS실</tspan></text>
+    <text id="감염관리실" transform="translate(270 631)" fill="#fff" font-size="18" font-family="Pretendard-Medium, Pretendard" font-weight="500"><tspan x="-38.892" y="0">감염관리실</tspan></text>
+    <rect id="사각형_1231" data-name="사각형 1231" width="140" height="56" transform="translate(20 683)" fill="#4378b5"/>
+    <rect id="사각형_1320" data-name="사각형 1320" width="140" height="56" transform="translate(20 759)" fill="#4378b5"/>
+    <rect id="사각형_1268" data-name="사각형 1268" width="140" height="56" transform="translate(200 683)" fill="#4378b5"/>
+    <text id="내과계진료_부원장" data-name="내과계진료
+부원장" transform="translate(90 706)" fill="#fff" font-size="18" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-38.892" y="0">내과계진료</tspan><tspan x="-23.335" y="21">부원장</tspan></text>
+    <text id="외과계진료_부원장" data-name="외과계진료
+부원장" transform="translate(90 782)" fill="#fff" font-size="18" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-38.892" y="0">외과계진료</tspan><tspan x="-23.335" y="21">부원장</tspan></text>
+    <text id="행정부원장" transform="translate(270 717)" fill="#fff" font-size="18" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-38.892" y="0">행정부원장</tspan></text>
+    <g id="사각형_307-3" data-name="사각형 307" transform="translate(20 835)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1283" data-name="사각형 1283" transform="translate(200 759)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1284" data-name="사각형 1284" transform="translate(200 835)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1289" data-name="사각형 1289" transform="translate(200 1241)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1285" data-name="사각형 1285" transform="translate(200 901)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1290" data-name="사각형 1290" transform="translate(200 1307)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1286" data-name="사각형 1286" transform="translate(200 967)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1291" data-name="사각형 1291" transform="translate(200 1373)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1287" data-name="사각형 1287" transform="translate(200 1033)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1292" data-name="사각형 1292" transform="translate(200 1439)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1288" data-name="사각형 1288" transform="translate(200 1099)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1370" data-name="사각형 1370" transform="translate(200 1165)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1293" data-name="사각형 1293" transform="translate(200 1505)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1294" data-name="사각형 1294" transform="translate(200 1571)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1295" data-name="사각형 1295" transform="translate(200 1637)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1296" data-name="사각형 1296" transform="translate(200 1703)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1269" data-name="사각형 1269" transform="translate(20 901)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1270" data-name="사각형 1270" transform="translate(20 967)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1271" data-name="사각형 1271" transform="translate(20 1033)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1272" data-name="사각형 1272" transform="translate(20 1099)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1273" data-name="사각형 1273" transform="translate(20 1165)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1326" data-name="사각형 1326" transform="translate(20 1241)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1327" data-name="사각형 1327" transform="translate(20 1307)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1328" data-name="사각형 1328" transform="translate(20 1373)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1329" data-name="사각형 1329" transform="translate(20 1439)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1330" data-name="사각형 1330" transform="translate(20 1505)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1331" data-name="사각형 1331" transform="translate(20 1571)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1332" data-name="사각형 1332" transform="translate(20 1637)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1279" data-name="사각형 1279" transform="translate(20 1713)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1280" data-name="사각형 1280" transform="translate(20 1779)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1281" data-name="사각형 1281" transform="translate(20 1845)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1282" data-name="사각형 1282" transform="translate(20 1911)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <g id="사각형_1321" data-name="사각형 1321" transform="translate(20 1977)" fill="#fff" stroke="#ddd" stroke-width="1">
+      <rect width="140" height="56" stroke="none"/>
+      <rect x="0.5" y="0.5" width="139" height="55" fill="none"/>
+    </g>
+    <text id="내과" transform="translate(90 869)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">내과</tspan></text>
+    <text id="간호국" transform="translate(270 793)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">간호국</tspan></text>
+    <text id="약제팀" transform="translate(270 869)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">약제팀</tspan></text>
+    <text id="경영지원팀" transform="translate(270 1275)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">경영지원팀</tspan></text>
+    <text id="영상의학팀" transform="translate(270 935)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">영상의학팀</tspan></text>
+    <text id="원무팀" transform="translate(270 1341)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">원무팀</tspan></text>
+    <text id="진단검사팀" transform="translate(270 1001)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">진단검사팀</tspan></text>
+    <text id="보험심사팀" transform="translate(270 1407)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">보험심사팀</tspan></text>
+    <text id="영양팀" transform="translate(270 1067)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">영양팀</tspan></text>
+    <text id="회계관리팀" transform="translate(270 1473)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">회계관리팀</tspan></text>
+    <text id="물리치료팀" transform="translate(270 1133)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">물리치료팀</tspan></text>
+    <text id="검진팀" transform="translate(270 1199)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">검진팀</tspan></text>
+    <text id="시설안전팀" transform="translate(270 1539)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">시설안전팀</tspan></text>
+    <text id="의료정보팀" transform="translate(270 1605)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">의료정보팀</tspan></text>
+    <text id="홍보팀" transform="translate(270 1671)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">홍보팀</tspan></text>
+    <text id="사업운영팀" transform="translate(270 1737)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">사업운영팀</tspan></text>
+    <text id="신경과" transform="translate(90 935)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-23.335" y="0">신경과</tspan></text>
+    <text id="산부인과" transform="translate(90 1001)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">산부인과</tspan></text>
+    <text id="비뇨의학과" transform="translate(90 1067)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">비뇨의학과</tspan></text>
+    <text id="영상의학과" transform="translate(90 1133)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">영상의학과</tspan></text>
+    <text id="진단검사의학과" transform="translate(90 1199)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-54.448" y="0">진단검사의학과</tspan></text>
+    <text id="건강증진센터" transform="translate(90 1275)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-46.67" y="0">건강증진센터</tspan></text>
+    <text id="내시경센터" transform="translate(90 1341)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">내시경센터</tspan></text>
+    <text id="인공신장센터" transform="translate(90 1407)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-46.67" y="0">인공신장센터</tspan></text>
+    <text id="심혈관센터" transform="translate(90 1473)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-38.892" y="0">심혈관센터</tspan></text>
+    <text id="관절센터" transform="translate(90 1539)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">관절센터</tspan></text>
+    <text id="척추센터" transform="translate(90 1605)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">척추센터</tspan></text>
+    <text id="신경통증클리닉_척추비수술센터" data-name="신경통증클리닉/
+척추비수술센터" transform="translate(90 1661)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-57.454" y="0" style="text-align: center;">신경통증클리닉/</tspan><tspan x="-54.448" y="21">척추비수술센터</tspan></text>
+    <text id="외과" transform="translate(90 1747)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">외과</tspan></text>
+    <text id="정형외과" transform="translate(90 1813)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">정형외과</tspan></text>
+    <text id="신경외과" transform="translate(90 1879)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">신경외과</tspan></text>
+    <text id="마취통증의학과" transform="translate(90 1945)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-54.448" y="0">마취통증의학과</tspan></text>
+    <text id="응급센터" transform="translate(90 2011)" fill="#707070" font-size="18" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">응급센터</tspan></text>
+  </g>
+</svg>

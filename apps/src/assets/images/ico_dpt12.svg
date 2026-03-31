@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70" viewBox="0 0 70 70">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="사각형_548" data-name="사각형 548" width="42.041" height="42.041" fill="none" stroke="#333" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="사각형_553" data-name="사각형 553" width="46.623" height="46.623" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="ico_dpt12" transform="translate(-29.671 -30)">
+    <path id="패스_876" data-name="패스 876" d="M70.265,35.534a35,35,0,1,1-35-35,35,35,0,0,1,35,35" transform="translate(29.406 29.466)" fill="#f4f5f9"/>
+    <g id="그룹_717" data-name="그룹 717" transform="translate(44.361 45.688)">
+      <rect id="사각형_546" data-name="사각형 546" width="38.977" height="38.977" transform="translate(0.328 0.328)" fill="#fff"/>
+      <g id="그룹_714" data-name="그룹 714" transform="translate(-0.251 -0.251)">
+        <g id="그룹_713" data-name="그룹 713" clip-path="url(#clip-path)">
+          <rect id="사각형_547" data-name="사각형 547" width="38.977" height="38.977" transform="translate(0.579 0.579)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        </g>
+      </g>
+      <rect id="사각형_549" data-name="사각형 549" width="33.357" height="33.357" transform="translate(3.137 3.138)" fill="#fff"/>
+      <rect id="사각형_551" data-name="사각형 551" width="33.357" height="33.357" transform="translate(3.137 3.138)" fill="#62b6f5"/>
+      <rect id="사각형_550" data-name="사각형 550" width="33.357" height="33.357" transform="translate(3.137 3.138)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <g id="그룹_716" data-name="그룹 716" transform="translate(-3 -3)">
+        <g id="그룹_715" data-name="그룹 715" clip-path="url(#clip-path-2)">
+          <path id="패스_869" data-name="패스 869" d="M50.43,44.824a5.606,5.606,0,1,1-5.606-5.606,5.606,5.606,0,0,1,5.606,5.606" transform="translate(-6.218 -6.218)" fill="#fff"/>
+          <circle id="타원_46" data-name="타원 46" cx="5.606" cy="5.606" r="5.606" transform="translate(32.999 33)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <path id="패스_870" data-name="패스 870" d="M48.559,43.567,44.44,47.686,41.9,45.142" transform="translate(-6.831 -7.213)" fill="#fff"/>
+          <path id="패스_871" data-name="패스 871" d="M48.559,43.567,44.44,47.686,41.9,45.142" transform="translate(-6.831 -7.213)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <path id="패스_872" data-name="패스 872" d="M27.071,13.1v-8.7H21.582v8.7a3.36,3.36,0,1,0,2.744,5.747A3.359,3.359,0,1,0,27.071,13.1" transform="translate(-1.511 1.745)" fill="#fff"/>
+          <path id="패스_873" data-name="패스 873" d="M27.071,13.1v-8.7H21.582v8.7a3.36,3.36,0,1,0,2.744,5.747A3.359,3.359,0,1,0,27.071,13.1Z" transform="translate(-1.511 1.745)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <path id="패스_874" data-name="패스 874" d="M21.583,34.371v8.7h5.489v-8.7a3.36,3.36,0,1,0-2.744-5.747,3.359,3.359,0,1,0-2.744,5.747" transform="translate(-1.511 -3.579)" fill="#fff"/>
+          <path id="패스_875" data-name="패스 875" d="M21.583,34.371v8.7h5.489v-8.7a3.36,3.36,0,1,0-2.744-5.747,3.359,3.359,0,1,0-2.744,5.747Z" transform="translate(-1.511 -3.579)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <line id="선_322" data-name="선 322" x2="3.088" transform="translate(9.108 9.118)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <line id="선_323" data-name="선 323" x2="4.181" transform="translate(9.108 11.458)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <line id="선_324" data-name="선 324" x2="3.088" transform="translate(9.108 13.797)" fill="none" stroke="#202020" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

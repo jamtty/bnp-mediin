@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="321" height="142" viewBox="0 0 321 142">
+  <g id="버스" transform="translate(-20 -919)">
+    <g id="_01" data-name="01">
+      <g id="img" transform="translate(2 -327)">
+        <text id="명성슈퍼" transform="translate(100.722 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-20.742" y="0">명성슈퍼</tspan></text>
+        <text id="문산제일고" transform="translate(168.966 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-25.928" y="0">문산제일고</tspan></text>
+        <text id="금촌체육공원" transform="translate(236.226 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-31.113" y="0">금촌체육공원</tspan></text>
+        <rect id="사각형_1059" data-name="사각형 1059" width="261" height="5" transform="translate(38 1251)" fill="#e1e4ec"/>
+        <g id="타원_12" data-name="타원 12" transform="translate(93.247 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_16" data-name="타원 16" transform="translate(161.47 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_20" data-name="타원 20" transform="translate(228.691 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <text id="용상골" transform="translate(34 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">용상골</tspan></text>
+        <g id="타원_8" data-name="타원 8" transform="translate(26 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <text id="메디인병원" transform="translate(306 1280)" font-size="15" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-32.41" y="0">메디인병원</tspan></text>
+        <g id="타원_23" data-name="타원 23" transform="translate(296 1246)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <g id="_02" data-name="02" transform="translate(0 -0.5)">
+      <g id="img-2" data-name="img" transform="translate(-3 -236.5)">
+        <text id="교하동_행정복지센터" data-name="교하동
+행정복지센터" transform="translate(132.695 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">교하동</tspan><tspan x="-31.113" y="16">행정복지센터</tspan></text>
+        <text id="교하파출소" transform="translate(223 1279.208)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-25.928" y="0">교하파출소</tspan></text>
+        <rect id="사각형_1059-2" data-name="사각형 1059" width="259" height="5" transform="translate(48 1251)" fill="#e1e4ec"/>
+        <g id="타원_12-2" data-name="타원 12" transform="translate(125.165 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <g id="타원_16-2" data-name="타원 16" transform="translate(214.871 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <text id="신성교_하차고지" data-name="신성교
+하차고지" transform="translate(44 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.557" y="0">신성교</tspan><tspan x="-20.742" y="16">하차고지</tspan></text>
+        <g id="타원_8-2" data-name="타원 8" transform="translate(36.5 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+        <text id="메디인병원-2" data-name="메디인병원" transform="translate(311 1280.203)" font-size="15" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-32.41" y="0">메디인병원</tspan></text>
+        <g id="타원_23-2" data-name="타원 23" transform="translate(304.5 1246)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+          <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

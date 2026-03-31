@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="321" height="52" viewBox="0 0 321 52">
+  <g id="loca_map_mo1" transform="translate(-23 -1246)">
+    <text id="교하동_행정복지센터" data-name="교하동
+행정복지센터" transform="translate(132.695 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.552" y="0">교하동</tspan><tspan x="-31.104" y="16">행정복지센터</tspan></text>
+    <text id="교하파출소" transform="translate(223 1279.208)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-25.92" y="0">교하파출소</tspan></text>
+    <rect id="사각형_1059" data-name="사각형 1059" width="259" height="5" transform="translate(48 1251)" fill="#e1e4ec"/>
+    <g id="타원_12" data-name="타원 12" transform="translate(125.165 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <g id="타원_16" data-name="타원 16" transform="translate(214.871 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <text id="신성교_하차고지" data-name="신성교
+하차고지" transform="translate(44 1279)" font-size="12" font-family="Pretendard-Regular, Pretendard"><tspan x="-15.552" y="0">신성교</tspan><tspan x="-20.736" y="16">하차고지</tspan></text>
+    <g id="타원_8" data-name="타원 8" transform="translate(36.5 1246)" fill="#fff" stroke="#e1e4ec" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+    <text id="메디인병원" transform="translate(311 1280.203)" font-size="15" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="-32.4" y="0">메디인병원</tspan></text>
+    <g id="타원_23" data-name="타원 23" transform="translate(304.5 1246)" fill="#fff" stroke="#0d64b7" stroke-width="2">
+      <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
+      <circle cx="7.5" cy="7.5" r="6.5" fill="none"/>
+    </g>
+  </g>
+</svg>
