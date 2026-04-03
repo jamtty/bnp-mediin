@@ -13,7 +13,9 @@ export default function AdminSidebar() {
   return (
     <aside className="adm_sidebar">
       <div className="adm_logo">
-        <Link to="/" target="_blank" rel="noopener noreferrer">참마중물재단</Link>
+        <Link to="/" target="_blank" rel="noopener noreferrer">
+          참마중물재단
+        </Link>
       </div>
       <nav className="adm_nav">
         <ul>
@@ -23,8 +25,12 @@ export default function AdminSidebar() {
                 to={item.to}
                 className={
                   item.to === '/admin'
-                    ? location.pathname === '/admin' ? 'active' : ''
-                    : location.pathname.startsWith(item.to) ? 'active' : ''
+                    ? location.pathname === '/admin'
+                      ? 'active'
+                      : ''
+                    : location.pathname.startsWith(item.to)
+                      ? 'active'
+                      : ''
                 }
               >
                 <span className="material-icons">{item.icon}</span>

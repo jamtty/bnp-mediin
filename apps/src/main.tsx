@@ -5,6 +5,4 @@ import '@/assets/css/style.css'
 import '@/assets/css/admin.css'
 import '@/assets/css/editor.css'
 
-createRoot(document.getElementById('root')!).render(
-  <App />
-)
+createRoot(document.getElementById('root')!).render(<App />)

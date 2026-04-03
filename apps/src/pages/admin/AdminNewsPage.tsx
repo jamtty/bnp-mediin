@@ -31,7 +31,9 @@ export default function AdminNewsPage() {
     }
   }, [])
 
-  useEffect(() => { load(page, keyword) }, [load, page, keyword])
+  useEffect(() => {
+    load(page, keyword)
+  }, [load, page, keyword])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,9 +48,7 @@ export default function AdminNewsPage() {
   }
 
   const handleCheckOne = (id: number) => {
-    setCheckedIds((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
-    )
+    setCheckedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]))
   }
 
   const handleDelete = async (id: number, title: string) => {
@@ -88,7 +88,9 @@ export default function AdminNewsPage() {
                   value={inputKeyword}
                   onChange={(e) => setInputKeyword(e.target.value)}
                 />
-                <button type="submit" className="adm_btn_secondary">검색</button>
+                <button type="submit" className="adm_btn_secondary">
+                  검색
+                </button>
               </form>
               <button className="adm_btn_primary" onClick={() => navigate('/admin/news/write')}>
                 + 글쓰기
@@ -113,41 +115,57 @@ export default function AdminNewsPage() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={7} className="adm_table_empty">불러오는 중...</td></tr>
-                  ) : items.length === 0 ? (
-                    <tr><td colSpan={7} className="adm_table_empty">게시글이 없습니다.</td></tr>
-                  ) : items.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td className="adm_td_center">
-                        <input
-                          type="checkbox"
-                          checked={checkedIds.includes(item.id)}
-                          onChange={() => handleCheckOne(item.id)}
-                        />
-                      </td>
-                      <td className="adm_td_center">{totalCount - (page - 1) * PAGE_SIZE - idx}</td>
-                      <td>
-                        <Link to={`/admin/news/edit/${item.id}`} className="adm_table_link">
-                          {item.title}
-                        </Link>
-                      </td>
-                      <td className="adm_td_center">{item.author_name}</td>
-                      <td className="adm_td_center">{item.created_at}</td>
-                      <td className="adm_td_center">{item.view_count.toLocaleString()}</td>
-                      <td className="adm_td_center">
-                        <div className="adm_action_btns">
-                          <button
-                            className="adm_btn_edit"
-                            onClick={() => navigate(`/admin/news/edit/${item.id}`)}
-                          >수정</button>
-                          <button
-                            className="adm_btn_delete"
-                            onClick={() => handleDelete(item.id, item.title)}
-                          >삭제</button>
-                        </div>
+                    <tr>
+                      <td colSpan={7} className="adm_table_empty">
+                        불러오는 중...
                       </td>
                     </tr>
-                  ))}
+                  ) : items.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="adm_table_empty">
+                        게시글이 없습니다.
+                      </td>
+                    </tr>
+                  ) : (
+                    items.map((item, idx) => (
+                      <tr key={item.id}>
+                        <td className="adm_td_center">
+                          <input
+                            type="checkbox"
+                            checked={checkedIds.includes(item.id)}
+                            onChange={() => handleCheckOne(item.id)}
+                          />
+                        </td>
+                        <td className="adm_td_center">
+                          {totalCount - (page - 1) * PAGE_SIZE - idx}
+                        </td>
+                        <td>
+                          <Link to={`/admin/news/edit/${item.id}`} className="adm_table_link">
+                            {item.title}
+                          </Link>
+                        </td>
+                        <td className="adm_td_center">{item.author_name}</td>
+                        <td className="adm_td_center">{item.created_at}</td>
+                        <td className="adm_td_center">{item.view_count.toLocaleString()}</td>
+                        <td className="adm_td_center">
+                          <div className="adm_action_btns">
+                            <button
+                              className="adm_btn_edit"
+                              onClick={() => navigate(`/admin/news/edit/${item.id}`)}
+                            >
+                              수정
+                            </button>
+                            <button
+                              className="adm_btn_delete"
+                              onClick={() => handleDelete(item.id, item.title)}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

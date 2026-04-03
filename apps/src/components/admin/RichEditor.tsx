@@ -19,31 +19,53 @@ import { resolveContentUrls } from '@/utils/uploadUrl'
 // FontSize — TextStyle 기반 커스텀 Extension
 const FontSize = Extension.create({
   name: 'fontSize',
-  addOptions() { return { types: ['textStyle'] } },
+  addOptions() {
+    return { types: ['textStyle'] }
+  },
   addGlobalAttributes() {
-    return [{
-      types: this.options.types,
-      attributes: {
-        fontSize: {
-          default: null,
-          parseHTML: el => el.style.fontSize || null,
-          renderHTML: attrs => attrs.fontSize ? { style: `font-size: ${attrs.fontSize}` } : {},
+    return [
+      {
+        types: this.options.types,
+        attributes: {
+          fontSize: {
+            default: null,
+            parseHTML: (el) => el.style.fontSize || null,
+            renderHTML: (attrs) =>
+              attrs.fontSize ? { style: `font-size: ${attrs.fontSize}` } : {},
+          },
         },
       },
-    }]
+    ]
   },
   addCommands() {
     return {
-      setFontSize: (size: string) => ({ chain }: any) =>
-        chain().setMark('textStyle', { fontSize: size }).run(),
-      unsetFontSize: () => ({ chain }: any) =>
-        chain().setMark('textStyle', { fontSize: null })
-               .removeEmptyTextStyle().run(),
+      setFontSize:
+        (size: string) =>
+        ({ chain }: any) =>
+          chain().setMark('textStyle', { fontSize: size }).run(),
+      unsetFontSize:
+        () =>
+        ({ chain }: any) =>
+          chain().setMark('textStyle', { fontSize: null }).removeEmptyTextStyle().run(),
     } as any
   },
 })
 
-const FONT_SIZES = ['10px','11px','12px','14px','16px','18px','20px','24px','28px','32px','36px','40px','48px']
+const FONT_SIZES = [
+  '10px',
+  '11px',
+  '12px',
+  '14px',
+  '16px',
+  '18px',
+  '20px',
+  '24px',
+  '28px',
+  '32px',
+  '36px',
+  '40px',
+  '48px',
+]
 
 interface Props {
   value: string
@@ -52,8 +74,18 @@ interface Props {
 }
 
 const COLORS = [
-  '#000000', '#434343', '#666666', '#999999', '#cccccc', '#ffffff',
-  '#e60000', '#ff6600', '#ffff00', '#008000', '#0000ff', '#9900ff',
+  '#000000',
+  '#434343',
+  '#666666',
+  '#999999',
+  '#cccccc',
+  '#ffffff',
+  '#e60000',
+  '#ff6600',
+  '#ffff00',
+  '#008000',
+  '#0000ff',
+  '#9900ff',
 ]
 
 export default function RichEditor({ value, onChange, placeholder }: Props) {
@@ -96,26 +128,28 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
     },
     editorProps: {
       transformPastedHTML(html: string): string {
-        return html
-          // <br>을 임시 마커로 보호 (div→p 변환 전에 처리)
-          .replace(/<br\s*\/?>/gi, '[[BR]]')
-          // div 블록 → p 변환 (Word, Google Docs, 다른 에디터 단락 처리)
-          .replace(/<div(\s[^>]*)?>/gi, '<p$1>')
-          .replace(/<\/div>/gi, '</p>')
-          // 임시 마커 → <br> 복원
-          .replace(/\[\[BR\]\]/g, '<br>')
-          // b/i → strong/em 정규화 (일부 에디터는 b, i 태그 사용)
-          .replace(/<b(\s[^>]*)?>/gi, '<strong$1>')
-          .replace(/<\/b>/gi, '</strong>')
-          .replace(/<i(\s[^>]*)?>/gi, '<em$1>')
-          .replace(/<\/i>/gi, '</em>')
-          // 불필요한 클래스 속성 제거 (Quill ql-*, Word MsoNormal 등)
-          .replace(/\s*class="[^"]*"/gi, '')
-          // MS Word 전용 태그·주석 제거
-          .replace(/<!--[\s\S]*?-->/g, '')
-          .replace(/<o:[^>]*>[\s\S]*?<\/o:[^>]*>/gi, '')
-          .replace(/<w:[^>]*>[\s\S]*?<\/w:[^>]*>/gi, '')
-          .replace(/<m:[^>]*>[\s\S]*?<\/m:[^>]*>/gi, '')
+        return (
+          html
+            // <br>을 임시 마커로 보호 (div→p 변환 전에 처리)
+            .replace(/<br\s*\/?>/gi, '[[BR]]')
+            // div 블록 → p 변환 (Word, Google Docs, 다른 에디터 단락 처리)
+            .replace(/<div(\s[^>]*)?>/gi, '<p$1>')
+            .replace(/<\/div>/gi, '</p>')
+            // 임시 마커 → <br> 복원
+            .replace(/\[\[BR\]\]/g, '<br>')
+            // b/i → strong/em 정규화 (일부 에디터는 b, i 태그 사용)
+            .replace(/<b(\s[^>]*)?>/gi, '<strong$1>')
+            .replace(/<\/b>/gi, '</strong>')
+            .replace(/<i(\s[^>]*)?>/gi, '<em$1>')
+            .replace(/<\/i>/gi, '</em>')
+            // 불필요한 클래스 속성 제거 (Quill ql-*, Word MsoNormal 등)
+            .replace(/\s*class="[^"]*"/gi, '')
+            // MS Word 전용 태그·주석 제거
+            .replace(/<!--[\s\S]*?-->/g, '')
+            .replace(/<o:[^>]*>[\s\S]*?<\/o:[^>]*>/gi, '')
+            .replace(/<w:[^>]*>[\s\S]*?<\/w:[^>]*>/gi, '')
+            .replace(/<m:[^>]*>[\s\S]*?<\/m:[^>]*>/gi, '')
+        )
       },
     },
   })
@@ -180,9 +214,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
     if (!editor) return
     const r = Math.max(1, Math.min(20, parseInt(tableRows) || 3))
     const c = Math.max(1, Math.min(20, parseInt(tableCols) || 3))
-    editor.chain().focus()
-      .insertTable({ rows: r, cols: c, withHeaderRow: false })
-      .run()
+    editor.chain().focus().insertTable({ rows: r, cols: c, withHeaderRow: false }).run()
     setShowTableDialog(false)
     setTableRows('3')
     setTableCols('3')
@@ -196,7 +228,9 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
       title={title}
       onClick={onClick}
       className={`te-btn${active ? ' is-active' : ''}`}
-    >{label}</button>
+    >
+      {label}
+    </button>
   )
 
   return (
@@ -207,15 +241,23 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
         <select
           className="te-select"
           value={
-            editor.isActive('heading', { level: 1 }) ? '1'
-              : editor.isActive('heading', { level: 2 }) ? '2'
-              : editor.isActive('heading', { level: 3 }) ? '3'
-              : '0'
+            editor.isActive('heading', { level: 1 })
+              ? '1'
+              : editor.isActive('heading', { level: 2 })
+                ? '2'
+                : editor.isActive('heading', { level: 3 })
+                  ? '3'
+                  : '0'
           }
-          onChange={e => {
+          onChange={(e) => {
             const v = Number(e.target.value)
             if (v === 0) editor.chain().focus().setParagraph().run()
-            else editor.chain().focus().setHeading({ level: v as 1|2|3 }).run()
+            else
+              editor
+                .chain()
+                .focus()
+                .setHeading({ level: v as 1 | 2 | 3 })
+                .run()
           }}
         >
           <option value="0">본문</option>
@@ -229,7 +271,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
           className="te-select"
           title="글자 크기"
           value={editor.getAttributes('textStyle').fontSize ?? ''}
-          onChange={e => {
+          onChange={(e) => {
             const v = e.target.value
             if (v === '') {
               ;(editor.chain().focus() as any).unsetFontSize().run()
@@ -239,18 +281,35 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
           }}
         >
           <option value="">크기</option>
-          {FONT_SIZES.map(s => (
-            <option key={s} value={s}>{s.replace('px', '')}</option>
+          {FONT_SIZES.map((s) => (
+            <option key={s} value={s}>
+              {s.replace('px', '')}
+            </option>
           ))}
         </select>
 
         <span className="te-sep" />
 
         {/* 서식 */}
-        {btn(editor.isActive('bold'),      () => editor.chain().focus().toggleBold().run(),          '굵게',   'B')}
-        {btn(editor.isActive('italic'),    () => editor.chain().focus().toggleItalic().run(),        '기울임', 'I')}
-        {btn(editor.isActive('underline'), () => editor.chain().focus().toggleUnderline().run(),     '밑줄',   'U')}
-        {btn(editor.isActive('strike'),    () => editor.chain().focus().toggleStrike().run(),        '취소선', 'S')}
+        {btn(editor.isActive('bold'), () => editor.chain().focus().toggleBold().run(), '굵게', 'B')}
+        {btn(
+          editor.isActive('italic'),
+          () => editor.chain().focus().toggleItalic().run(),
+          '기울임',
+          'I',
+        )}
+        {btn(
+          editor.isActive('underline'),
+          () => editor.chain().focus().toggleUnderline().run(),
+          '밑줄',
+          'U',
+        )}
+        {btn(
+          editor.isActive('strike'),
+          () => editor.chain().focus().toggleStrike().run(),
+          '취소선',
+          'S',
+        )}
 
         <span className="te-sep" />
 
@@ -260,7 +319,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
             type="button"
             className="te-btn te-color-btn"
             title="글자색"
-            onClick={() => setShowColorPicker(v => !v)}
+            onClick={() => setShowColorPicker((v) => !v)}
           >
             <span className="te-color-label">A</span>
             <span
@@ -270,9 +329,10 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
           </button>
           {showColorPicker && (
             <div className="te-color-picker" onMouseLeave={() => setShowColorPicker(false)}>
-              {COLORS.map(c => (
+              {COLORS.map((c) => (
                 <button
-                  key={c} type="button"
+                  key={c}
+                  type="button"
                   className="te-color-swatch"
                   style={{ background: c }}
                   onClick={() => {
@@ -288,7 +348,9 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
                   editor.chain().focus().unsetColor().run()
                   setShowColorPicker(false)
                 }}
-              >✕</button>
+              >
+                ✕
+              </button>
             </div>
           )}
         </div>
@@ -296,21 +358,48 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
         <span className="te-sep" />
 
         {/* 정렬 */}
-        {btn(editor.isActive({ textAlign: 'left' }),    () => editor.chain().focus().setTextAlign('left').run(),    '좌측',   '◀')}
-        {btn(editor.isActive({ textAlign: 'center' }),  () => editor.chain().focus().setTextAlign('center').run(),  '가운데', '≡')}
-        {btn(editor.isActive({ textAlign: 'right' }),   () => editor.chain().focus().setTextAlign('right').run(),   '우측',   '▶')}
+        {btn(
+          editor.isActive({ textAlign: 'left' }),
+          () => editor.chain().focus().setTextAlign('left').run(),
+          '좌측',
+          '◀',
+        )}
+        {btn(
+          editor.isActive({ textAlign: 'center' }),
+          () => editor.chain().focus().setTextAlign('center').run(),
+          '가운데',
+          '≡',
+        )}
+        {btn(
+          editor.isActive({ textAlign: 'right' }),
+          () => editor.chain().focus().setTextAlign('right').run(),
+          '우측',
+          '▶',
+        )}
 
         <span className="te-sep" />
 
         {/* 리스트 */}
-        {btn(editor.isActive('bulletList'),  () => editor.chain().focus().toggleBulletList().run(),  '글머리', '•')}
-        {btn(editor.isActive('orderedList'), () => editor.chain().focus().toggleOrderedList().run(), '번호',   '1.')}
+        {btn(
+          editor.isActive('bulletList'),
+          () => editor.chain().focus().toggleBulletList().run(),
+          '글머리',
+          '•',
+        )}
+        {btn(
+          editor.isActive('orderedList'),
+          () => editor.chain().focus().toggleOrderedList().run(),
+          '번호',
+          '1.',
+        )}
 
         <span className="te-sep" />
 
         {/* 링크·이미지 */}
         {btn(editor.isActive('link'), handleLink, '링크', '🔗')}
-        <button type="button" className="te-btn" title="이미지 업로드" onClick={handleImageInsert}>🖼</button>
+        <button type="button" className="te-btn" title="이미지 업로드" onClick={handleImageInsert}>
+          🖼
+        </button>
 
         <span className="te-sep" />
 
@@ -321,14 +410,16 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
           disabled={htmlMode}
           title="표 삽입"
           onClick={() => setShowTableDialog(true)}
-        >표</button>
-        {btn(false, () => editor.chain().focus().addColumnAfter().run(),  '열 추가', '+열')}
-        {btn(false, () => editor.chain().focus().addRowAfter().run(),     '행 추가', '+행')}
-        {btn(false, () => editor.chain().focus().deleteColumn().run(),    '열 삭제', '-열')}
-        {btn(false, () => editor.chain().focus().deleteRow().run(),       '행 삭제', '-행')}
-        {btn(false, () => editor.chain().focus().deleteTable().run(),     '표 삭제', '🗑표')}
-        {btn(false, () => editor.chain().focus().mergeCells().run(),      '셀 병합', '⊞')}
-        {btn(false, () => editor.chain().focus().splitCell().run(),       '셀 분리', '⊟')}
+        >
+          표
+        </button>
+        {btn(false, () => editor.chain().focus().addColumnAfter().run(), '열 추가', '+열')}
+        {btn(false, () => editor.chain().focus().addRowAfter().run(), '행 추가', '+행')}
+        {btn(false, () => editor.chain().focus().deleteColumn().run(), '열 삭제', '-열')}
+        {btn(false, () => editor.chain().focus().deleteRow().run(), '행 삭제', '-행')}
+        {btn(false, () => editor.chain().focus().deleteTable().run(), '표 삭제', '🗑표')}
+        {btn(false, () => editor.chain().focus().mergeCells().run(), '셀 병합', '⊞')}
+        {btn(false, () => editor.chain().focus().splitCell().run(), '셀 분리', '⊟')}
 
         <span className="te-sep" />
 
@@ -338,7 +429,9 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
           className={`te-btn${htmlMode ? ' is-active' : ''}`}
           title="HTML 소스 편집"
           onClick={handleHtmlToggle}
-        >HTML</button>
+        >
+          HTML
+        </button>
       </div>
 
       {/* ── 에디터 본문 ── */}
@@ -346,7 +439,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
         <textarea
           className="html_source_area"
           value={htmlSource}
-          onChange={e => {
+          onChange={(e) => {
             setHtmlSource(e.target.value)
             onChange(e.target.value)
           }}
@@ -358,30 +451,42 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
       {/* ── 표 삽입 다이얼로그 ── */}
       {showTableDialog && (
         <div className="table_dialog_overlay" onClick={() => setShowTableDialog(false)}>
-          <div className="table_dialog_box" onClick={e => e.stopPropagation()}>
+          <div className="table_dialog_box" onClick={(e) => e.stopPropagation()}>
             <h4 className="table_dialog_title">표 삽입</h4>
             <div className="table_dialog_fields">
               <label>
                 <span>행</span>
                 <input
-                  type="number" min="1" max="20"
+                  type="number"
+                  min="1"
+                  max="20"
                   value={tableRows}
-                  onChange={e => setTableRows(e.target.value)}
+                  onChange={(e) => setTableRows(e.target.value)}
                 />
               </label>
               <span className="table_dialog_x">×</span>
               <label>
                 <span>열</span>
                 <input
-                  type="number" min="1" max="20"
+                  type="number"
+                  min="1"
+                  max="20"
                   value={tableCols}
-                  onChange={e => setTableCols(e.target.value)}
+                  onChange={(e) => setTableCols(e.target.value)}
                 />
               </label>
             </div>
             <div className="table_dialog_btns">
-              <button type="button" className="btn_tbl_insert" onClick={handleInsertTable}>삽입</button>
-              <button type="button" className="btn_tbl_cancel" onClick={() => setShowTableDialog(false)}>취소</button>
+              <button type="button" className="btn_tbl_insert" onClick={handleInsertTable}>
+                삽입
+              </button>
+              <button
+                type="button"
+                className="btn_tbl_cancel"
+                onClick={() => setShowTableDialog(false)}
+              >
+                취소
+              </button>
             </div>
           </div>
         </div>

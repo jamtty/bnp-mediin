@@ -3,7 +3,7 @@ import apiClient from './axios'
 export interface NoticeListParams {
   page?: number
   size?: number
-  type?: number   // 0: 제목, 1: 내용, 2: 제목+내용
+  type?: number // 0: 제목, 1: 내용, 2: 제목+내용
   keyword?: string
 }
 
@@ -55,7 +55,9 @@ export interface NoticeDetailResponse {
 /**
  * 공지사항 목록 조회
  */
-export const fetchNoticeList = async (params: NoticeListParams = {}): Promise<NoticeListResponse> => {
+export const fetchNoticeList = async (
+  params: NoticeListParams = {},
+): Promise<NoticeListResponse> => {
   const { data } = await apiClient.get('/api/notice', { params })
   if (!data.success) throw new Error(data.message || '목록을 불러오지 못했습니다.')
   return data.data
@@ -65,8 +67,13 @@ export const fetchNoticeList = async (params: NoticeListParams = {}): Promise<No
  * 공지사항 상세 조회
  * @param preview true일 때 조회수 증가 안 함 (관리자 수정 페이지 용)
  */
-export const fetchNoticeDetail = async (id: number, preview = false): Promise<NoticeDetailResponse> => {
-  const { data } = await apiClient.get(`/api/notice/${id}`, { params: preview ? { preview: '1' } : {} })
+export const fetchNoticeDetail = async (
+  id: number,
+  preview = false,
+): Promise<NoticeDetailResponse> => {
+  const { data } = await apiClient.get(`/api/notice/${id}`, {
+    params: preview ? { preview: '1' } : {},
+  })
   if (!data.success) throw new Error(data.message || '데이터를 불러오지 못했습니다.')
   return data.data
 }
@@ -74,12 +81,18 @@ export const fetchNoticeDetail = async (id: number, preview = false): Promise<No
 /**
  * 공지사항 등록
  */
-export const createNotice = async (title: string, content: string, files?: File[]): Promise<{ id: number }> => {
+export const createNotice = async (
+  title: string,
+  content: string,
+  files?: File[],
+): Promise<{ id: number }> => {
   const form = new FormData()
   form.append('title', title)
   form.append('content', content)
-  files?.forEach(f => form.append('files[]', f))
-  const { data } = await apiClient.post('/api/notice', form, { headers: { 'Content-Type': undefined } })
+  files?.forEach((f) => form.append('files[]', f))
+  const { data } = await apiClient.post('/api/notice', form, {
+    headers: { 'Content-Type': undefined },
+  })
   if (!data.success) throw new Error(data.message || '저장에 실패했습니다.')
   return data.data
 }
@@ -87,12 +100,19 @@ export const createNotice = async (title: string, content: string, files?: File[
 /**
  * 공지사항 수정
  */
-export const updateNotice = async (id: number, title: string, content: string, files?: File[]): Promise<void> => {
+export const updateNotice = async (
+  id: number,
+  title: string,
+  content: string,
+  files?: File[],
+): Promise<void> => {
   const form = new FormData()
   form.append('title', title)
   form.append('content', content)
-  files?.forEach(f => form.append('files[]', f))
-  const { data } = await apiClient.post(`/api/notice/${id}`, form, { headers: { 'Content-Type': undefined } })
+  files?.forEach((f) => form.append('files[]', f))
+  const { data } = await apiClient.post(`/api/notice/${id}`, form, {
+    headers: { 'Content-Type': undefined },
+  })
   if (!data.success) throw new Error(data.message || '수정에 실패했습니다.')
 }
 

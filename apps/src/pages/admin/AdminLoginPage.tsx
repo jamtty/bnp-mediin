@@ -24,7 +24,13 @@ export default function AdminLoginPage() {
     try {
       const result = await loginAdmin(id, pw)
       setAuth(
-        { id: result.user.id, email: id, name: result.user.name, role: 'ADMIN', createdAt: new Date().toISOString() },
+        {
+          id: result.user.id,
+          email: id,
+          name: result.user.name,
+          role: 'ADMIN',
+          createdAt: new Date().toISOString(),
+        },
         result.token,
       )
       navigate('/admin', { replace: true })
@@ -76,9 +82,13 @@ export default function AdminLoginPage() {
                 aria-label={showPw ? '비밀번호 숨기기' : '비밀번호 보기'}
               >
                 {showPw ? (
-                  <span className="material-icons" style={{ fontSize: '2rem', color: '#9ca3af' }}>visibility_off</span>
+                  <span className="material-icons" style={{ fontSize: '2rem', color: '#9ca3af' }}>
+                    visibility_off
+                  </span>
                 ) : (
-                  <span className="material-icons" style={{ fontSize: '2rem', color: '#9ca3af' }}>visibility</span>
+                  <span className="material-icons" style={{ fontSize: '2rem', color: '#9ca3af' }}>
+                    visibility
+                  </span>
                 )}
               </button>
             </div>
@@ -91,4 +101,3 @@ export default function AdminLoginPage() {
     </div>
   )
 }
-

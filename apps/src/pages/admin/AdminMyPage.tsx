@@ -75,7 +75,9 @@ export default function AdminMyPage() {
                 />
               </div>
               <div className="adm_form_field">
-                <label>새 비밀번호 <small>(6자 이상)</small></label>
+                <label>
+                  새 비밀번호 <small>(6자 이상)</small>
+                </label>
                 <input
                   type="password"
                   name="next"

@@ -40,10 +40,10 @@ export default function AdminNewsFormPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return
     const added = Array.from(e.target.files!)
-    setNewFiles(prev => [...prev, ...added])
-    setNewFilePreviews(prev => [
+    setNewFiles((prev) => [...prev, ...added])
+    setNewFilePreviews((prev) => [
       ...prev,
-      ...added.map(f => isImageFile(f.name) ? URL.createObjectURL(f) : null),
+      ...added.map((f) => (isImageFile(f.name) ? URL.createObjectURL(f) : null)),
     ])
     e.target.value = ''
   }
@@ -51,15 +51,15 @@ export default function AdminNewsFormPage() {
   const removeNewFile = (index: number) => {
     const preview = newFilePreviews[index]
     if (preview) URL.revokeObjectURL(preview)
-    setNewFiles(prev => prev.filter((_, i) => i !== index))
-    setNewFilePreviews(prev => prev.filter((_, i) => i !== index))
+    setNewFiles((prev) => prev.filter((_, i) => i !== index))
+    setNewFilePreviews((prev) => prev.filter((_, i) => i !== index))
   }
 
   const handleDeleteExistingFile = async (fileId: number) => {
     if (!confirm('첨부파일을 삭제하시겠습니까?')) return
     try {
       await deleteNewsFile(fileId)
-      setExistingFiles(prev => prev.filter(f => f.id !== fileId))
+      setExistingFiles((prev) => prev.filter((f) => f.id !== fileId))
     } catch {
       alert('파일 삭제에 실패했습니다.')
     }
@@ -67,7 +67,10 @@ export default function AdminNewsFormPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!title.trim()) { alert('제목을 입력해주세요.'); return }
+    if (!title.trim()) {
+      alert('제목을 입력해주세요.')
+      return
+    }
 
     setLoading(true)
     try {
@@ -92,7 +95,9 @@ export default function AdminNewsFormPage() {
         <AdminSidebar />
         <div className="adm_content">
           <AdminHeader pageTitle="소식 관리" />
-          <main className="adm_main"><p style={{ padding: '2rem' }}>불러오는 중...</p></main>
+          <main className="adm_main">
+            <p style={{ padding: '2rem' }}>불러오는 중...</p>
+          </main>
         </div>
       </div>
     )
@@ -107,7 +112,9 @@ export default function AdminNewsFormPage() {
           <section className="adm_section">
             <form className="adm_post_form" onSubmit={handleSubmit}>
               <div className="adm_form_field">
-                <label>제목 <span className="adm_required">*</span></label>
+                <label>
+                  제목 <span className="adm_required">*</span>
+                </label>
                 <input
                   type="text"
                   value={title}
@@ -127,15 +134,30 @@ export default function AdminNewsFormPage() {
                 {/* 기존 파일 (수정 시) */}
                 {existingFiles.length > 0 && (
                   <ul className="adm_file_list">
-                    {existingFiles.map(f => (
+                    {existingFiles.map((f) => (
                       <li key={f.id} className="adm_file_item">
                         {/^(jpg|jpeg|png|gif|webp)$/i.test(f.file_ext) && (
-                          <img src={toAbsUrl(f.file_url)} className="adm_file_thumb" alt={f.ori_name} />
+                          <img
+                            src={toAbsUrl(f.file_url)}
+                            className="adm_file_thumb"
+                            alt={f.ori_name}
+                          />
                         )}
-                        <a href={toAbsUrl(f.file_url)} target="_blank" rel="noopener noreferrer" className="adm_file_name">
+                        <a
+                          href={toAbsUrl(f.file_url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="adm_file_name"
+                        >
                           {f.ori_name}
                         </a>
-                        <button type="button" className="adm_file_del" onClick={() => handleDeleteExistingFile(f.id)}><span className="material-icons">close</span></button>
+                        <button
+                          type="button"
+                          className="adm_file_del"
+                          onClick={() => handleDeleteExistingFile(f.id)}
+                        >
+                          <span className="material-icons">close</span>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -147,18 +169,29 @@ export default function AdminNewsFormPage() {
                       <img src={newFilePreviews[i]!} className="adm_file_thumb" alt={f.name} />
                     )}
                     <span className="adm_file_name">{f.name}</span>
-                    <button type="button" className="adm_file_del" onClick={() => removeNewFile(i)}><span className="material-icons">close</span></button>
+                    <button type="button" className="adm_file_del" onClick={() => removeNewFile(i)}>
+                      <span className="material-icons">close</span>
+                    </button>
                   </div>
                 ))}
                 <label className="adm_file_btn">
                   <span className="material-icons">attach_file</span>
                   파일 선택
-                  <input type="file" multiple onChange={handleFileChange} style={{ display: 'none' }} />
+                  <input
+                    type="file"
+                    multiple
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+                  />
                 </label>
               </div>
 
               <div className="adm_form_actions">
-                <button type="button" className="adm_btn_secondary" onClick={() => navigate('/admin/news')}>
+                <button
+                  type="button"
+                  className="adm_btn_secondary"
+                  onClick={() => navigate('/admin/news')}
+                >
                   목록
                 </button>
                 <button type="submit" className="adm_btn_primary" disabled={loading}>

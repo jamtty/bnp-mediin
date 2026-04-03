@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom'
-import ScrollTopButton from '@/components/ScrollTopButton'
+import SideFixMenu from '@/components/SideFixMenu'
 
 export default function MainLayout() {
   return (
     <>
       <Outlet />
-      <ScrollTopButton />
+      <SideFixMenu />
     </>
   )
 }

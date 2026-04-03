@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import MainLayout from '@/layouts/MainLayout'
 import HomePage from '@/pages/HomePage'
 // 관리자
 import AdminLayout from '@/layouts/AdminLayout'
@@ -20,7 +21,10 @@ import NonCoveredPage from '@/pages/care/NonCoveredPage'
 // 진료과안내
 import IntroDeptPage from '@/pages/department/IntroDeptPage'
 import ClinicPage from '@/pages/department/ClinicPage'
+import ClinicDetailPage from '@/pages/department/ClinicDetailPage'
 import SpecialCenterPage from '@/pages/department/SpecialCenterPage'
+import SpecialCenterDetailPage from '@/pages/department/SpecialCenterDetailPage'
+import IntroDeptDetailPage from '@/pages/department/IntroDeptDetailPage'
 // 병원소개
 import GreetingPage from '@/pages/about/GreetingPage'
 import MissionPage from '@/pages/about/MissionPage'
@@ -53,7 +57,54 @@ import VoicePage from '@/pages/community/VoicePage'
 
 export const router = createBrowserRouter(
   [
-    { path: '/', element: <HomePage /> },
+    {
+      element: <MainLayout />,
+      children: [
+        { path: '/', element: <HomePage /> },
+        // 진료안내
+        { path: '/care/outpatient', element: <OutpatientPage /> },
+        { path: '/care/emergency', element: <EmergencyPage /> },
+        { path: '/care/admission', element: <AdmissionPage /> },
+        { path: '/care/certificate', element: <CertificatePage /> },
+        { path: '/care/non-covered', element: <NonCoveredPage /> },
+        // 진료과안내
+        { path: '/department/intro', element: <IntroDeptPage /> },
+        { path: '/department/intro/:code', element: <IntroDeptDetailPage /> },
+        { path: '/department/clinic', element: <ClinicPage /> },
+        { path: '/department/clinic/:code', element: <ClinicDetailPage /> },
+        { path: '/department/special', element: <SpecialCenterPage /> },
+        { path: '/department/special/:code', element: <SpecialCenterDetailPage /> },
+        // 병원소개
+        { path: '/about/greeting', element: <GreetingPage /> },
+        { path: '/about/mission', element: <MissionPage /> },
+        { path: '/about/history', element: <HistoryPage /> },
+        { path: '/about/logo', element: <LogoPage /> },
+        { path: '/about/organization', element: <OrganizationPage /> },
+        { path: '/about/floormap', element: <FloormapPage /> },
+        { path: '/about/location', element: <LocationPage /> },
+        // 병원소식
+        { path: '/news/notice', element: <NoticePage /> },
+        { path: '/news/press', element: <PressPage /> },
+        { path: '/news/recruit', element: <RecruitPage /> },
+        // 건강증진센터
+        { path: '/health/program', element: <ProgramPage /> },
+        { path: '/health/preparation', element: <PreparationPage /> },
+        { path: '/health/exams', element: <ExamsPage /> },
+        { path: '/health/about', element: <HealthAboutPage /> },
+        // 진료협력센터
+        { path: '/cooperation', element: <CooperationPage /> },
+        // 장례식장
+        { path: '/funeral/status', element: <FuneralStatusPage /> },
+        { path: '/funeral/guide', element: <FuneralGuidePage /> },
+        { path: '/funeral/facilities', element: <FuneralFacilitiesPage /> },
+        { path: '/funeral/other', element: <FuneralOtherPage /> },
+        { path: '/funeral/location', element: <FuneralLocationPage /> },
+        // 고객마당
+        { path: '/community/health-info', element: <HealthInfoPage /> },
+        { path: '/community/consultation', element: <ConsultationPage /> },
+        { path: '/community/voice', element: <VoicePage /> },
+      ],
+    },
     // 관리자
     { path: '/admin/login', element: <AdminLoginPage /> },
     {
@@ -73,48 +124,8 @@ export const router = createBrowserRouter(
         { path: 'report/:id/edit', element: <AdminReportFormPage /> },
       ],
     },
-    // 진료안내
-    { path: '/care/outpatient', element: <OutpatientPage /> },
-    { path: '/care/emergency', element: <EmergencyPage /> },
-    { path: '/care/admission', element: <AdmissionPage /> },
-    { path: '/care/certificate', element: <CertificatePage /> },
-    { path: '/care/non-covered', element: <NonCoveredPage /> },
-    // 진료과안내
-    { path: '/department/intro', element: <IntroDeptPage /> },
-    { path: '/department/clinic', element: <ClinicPage /> },
-    { path: '/department/special', element: <SpecialCenterPage /> },
-    // 병원소개
-    { path: '/about/greeting', element: <GreetingPage /> },
-    { path: '/about/mission', element: <MissionPage /> },
-    { path: '/about/history', element: <HistoryPage /> },
-    { path: '/about/logo', element: <LogoPage /> },
-    { path: '/about/organization', element: <OrganizationPage /> },
-    { path: '/about/floormap', element: <FloormapPage /> },
-    { path: '/about/location', element: <LocationPage /> },
-    // 병원소식
-    { path: '/news/notice', element: <NoticePage /> },
-    { path: '/news/press', element: <PressPage /> },
-    { path: '/news/recruit', element: <RecruitPage /> },
-    // 건강증진센터
-    { path: '/health/program', element: <ProgramPage /> },
-    { path: '/health/preparation', element: <PreparationPage /> },
-    { path: '/health/exams', element: <ExamsPage /> },
-    { path: '/health/about', element: <HealthAboutPage /> },
-    // 진료협력센터
-    { path: '/cooperation', element: <CooperationPage /> },
-    // 장례식장
-    { path: '/funeral/status', element: <FuneralStatusPage /> },
-    { path: '/funeral/guide', element: <FuneralGuidePage /> },
-    { path: '/funeral/facilities', element: <FuneralFacilitiesPage /> },
-    { path: '/funeral/other', element: <FuneralOtherPage /> },
-    { path: '/funeral/location', element: <FuneralLocationPage /> },
-    // 고객마당
-    { path: '/community/health-info', element: <HealthInfoPage /> },
-    { path: '/community/consultation', element: <ConsultationPage /> },
-    { path: '/community/voice', element: <VoicePage /> },
   ],
   {
     basename: import.meta.env.BASE_URL,
   },
 )
-

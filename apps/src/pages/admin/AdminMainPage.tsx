@@ -57,7 +57,9 @@ export default function AdminMainPage() {
               ].map((item) => (
                 <div key={item.label} className="adm_stat_card">
                   <p className="adm_stat_label">{item.label}</p>
-                  <p className="adm_stat_count">{statsLoading ? '-' : item.count.toLocaleString()}</p>
+                  <p className="adm_stat_count">
+                    {statsLoading ? '-' : item.count.toLocaleString()}
+                  </p>
                   <p className="adm_stat_unit">건</p>
                 </div>
               ))}
@@ -68,15 +70,30 @@ export default function AdminMainPage() {
           <section className="adm_section">
             <h3 className="adm_section_title">바로가기</h3>
             <div className="adm_shortcuts">
-              <Link to="/news" target="_blank" rel="noopener noreferrer" className="adm_shortcut_card">
+              <Link
+                to="/news"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="adm_shortcut_card"
+              >
                 <span className="material-icons adm_shortcut_icon">newspaper</span>
                 <span className="adm_shortcut_label">소식</span>
               </Link>
-              <Link to="/report" target="_blank" rel="noopener noreferrer" className="adm_shortcut_card">
+              <Link
+                to="/report"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="adm_shortcut_card"
+              >
                 <span className="material-icons adm_shortcut_icon">description</span>
                 <span className="adm_shortcut_label">사업보고</span>
               </Link>
-              <Link to="/notice" target="_blank" rel="noopener noreferrer" className="adm_shortcut_card">
+              <Link
+                to="/notice"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="adm_shortcut_card"
+              >
                 <span className="material-icons adm_shortcut_icon">campaign</span>
                 <span className="adm_shortcut_label">공지사항</span>
               </Link>
@@ -87,4 +104,3 @@ export default function AdminMainPage() {
     </div>
   )
 }
-

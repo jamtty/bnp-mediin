@@ -27,12 +27,27 @@ export default function AdminHeader({ pageTitle }: Props) {
       <div className="adm_user" ref={dropdownRef}>
         <button className="adm_user_btn" onClick={() => setDropdownOpen((v) => !v)}>
           {user?.name ?? '관리자'}
-          <span className="material-icons" style={{ fontSize: '1.8rem' }}>expand_more</span>
+          <span className="material-icons" style={{ fontSize: '1.8rem' }}>
+            expand_more
+          </span>
         </button>
         {dropdownOpen && (
           <ul className="adm_dropdown">
-            <li><Link to="/admin/mypage" onClick={() => setDropdownOpen(false)}>마이페이지</Link></li>
-            <li><button onClick={() => { clearAuth(); setDropdownOpen(false) }}>로그아웃</button></li>
+            <li>
+              <Link to="/admin/mypage" onClick={() => setDropdownOpen(false)}>
+                마이페이지
+              </Link>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  clearAuth()
+                  setDropdownOpen(false)
+                }}
+              >
+                로그아웃
+              </button>
+            </li>
           </ul>
         )}
       </div>
