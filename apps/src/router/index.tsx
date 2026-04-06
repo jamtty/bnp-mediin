@@ -35,8 +35,10 @@ import FloormapPage from '@/pages/about/FloormapPage'
 import LocationPage from '@/pages/about/LocationPage'
 // 병원소식
 import NoticePage from '@/pages/news/NoticePage'
+import NoticeDetailPage from '@/pages/news/NoticeDetailPage'
 import PressPage from '@/pages/news/PressPage'
 import RecruitPage from '@/pages/news/RecruitPage'
+import RecruitDetailPage from '@/pages/news/RecruitDetailPage'
 // 건강증진센터
 import ProgramPage from '@/pages/health/ProgramPage'
 import PreparationPage from '@/pages/health/PreparationPage'
@@ -52,8 +54,15 @@ import FuneralOtherPage from '@/pages/funeral/FuneralOtherPage'
 import FuneralLocationPage from '@/pages/funeral/FuneralLocationPage'
 // 고객마당
 import HealthInfoPage from '@/pages/community/HealthInfoPage'
+import HealthInfoDetailPage from '@/pages/community/HealthInfoDetailPage'
 import ConsultationPage from '@/pages/community/ConsultationPage'
+import ConsultationDetailPage from '@/pages/community/ConsultationDetailPage'
+import ConsultationFormPage from '@/pages/community/ConsultationFormPage'
 import VoicePage from '@/pages/community/VoicePage'
+import VoiceFormPage from '@/pages/community/VoiceFormPage'
+import VoiceCheckPage from '@/pages/community/VoiceCheckPage'
+import VoiceMyListPage from '@/pages/community/VoiceMyListPage'
+import VoiceDetailPage from '@/pages/community/VoiceDetailPage'
 
 export const router = createBrowserRouter(
   [
@@ -84,8 +93,10 @@ export const router = createBrowserRouter(
         { path: '/about/location', element: <LocationPage /> },
         // 병원소식
         { path: '/news/notice', element: <NoticePage /> },
+        { path: '/news/notice/:id', element: <NoticeDetailPage /> },
         { path: '/news/press', element: <PressPage /> },
         { path: '/news/recruit', element: <RecruitPage /> },
+        { path: '/news/recruit/:id', element: <RecruitDetailPage /> },
         // 건강증진센터
         { path: '/health/program', element: <ProgramPage /> },
         { path: '/health/preparation', element: <PreparationPage /> },
@@ -101,8 +112,15 @@ export const router = createBrowserRouter(
         { path: '/funeral/location', element: <FuneralLocationPage /> },
         // 고객마당
         { path: '/community/health-info', element: <HealthInfoPage /> },
+        { path: '/community/health-info/:id', element: <HealthInfoDetailPage /> },
         { path: '/community/consultation', element: <ConsultationPage /> },
+        { path: '/community/consultation/new', element: <ConsultationFormPage /> },
+        { path: '/community/consultation/:id', element: <ConsultationDetailPage /> },
         { path: '/community/voice', element: <VoicePage /> },
+        { path: '/community/voice/new', element: <VoiceFormPage /> },
+        { path: '/community/voice/check', element: <VoiceCheckPage /> },
+        { path: '/community/voice/my-list', element: <VoiceMyListPage /> },
+        { path: '/community/voice/:id', element: <VoiceDetailPage /> },
       ],
     },
     // 관리자

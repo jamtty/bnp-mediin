@@ -1,18 +1,19 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import PopupLayer from './PopupLayer'
 
-export default function SideFixMenu() {
-  const [sideFixClosed, setSideFixClosed] = useState(false)
-  const [activePopup, setActivePopup] = useState<string | null>(null)
+type Props = {
+  sideFixClosed: boolean
+  setSideFixClosed: (v: boolean) => void
+  onOpenPopup: (popup: string) => void
+}
 
+export default function SideFixMenu({ sideFixClosed, setSideFixClosed, onOpenPopup }: Props) {
   return (
     <>
       <div id="side_fix" className={sideFixClosed ? 'close_side' : ''}>
         <button
           type="button"
           className="btn_side_toggle"
-          onClick={() => setSideFixClosed((prev) => !prev)}
+          onClick={() => setSideFixClosed(!sideFixClosed)}
         >
           사이드퀵 메뉴 열고 닫기
         </button>
@@ -26,7 +27,7 @@ export default function SideFixMenu() {
               <button
                 type="button"
                 className="quick_link"
-                onClick={() => setActivePopup('fast_reserv')}
+                onClick={() => onOpenPopup('fast_reserv')}
               >
                 <i className="ico_quick1"></i>
                 <p>빠른예약</p>
@@ -55,7 +56,6 @@ export default function SideFixMenu() {
           </div>
         </div>
       </div>
-      <PopupLayer activePopup={activePopup} onClose={() => setActivePopup(null)} />
     </>
   )
 }

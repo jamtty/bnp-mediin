@@ -14099,6 +14099,7 @@ body.h100 {
 .bbs_cont .bbs_view .view_cont_area {
   padding: 40px 30px;
   border-bottom: 1px solid #ccc;
+  font-size:1.4rem;
 }
 .bbs_cont .bbs_view .view_cont_area + .view_nav {
   border-top: 0;
@@ -14168,6 +14169,8 @@ body.h100 {
   background: #f9f9f9;
   border-radius: 10px;
   padding: 20px;
+  font-size:1.4rem;
+  line-height:1.5;
 }
 .bbs_cont .bbs_view .view_comment_area .comment_area .comment_item .btn_wt {
   width: 80px;

@@ -42,9 +42,9 @@ const topMenuItems = [
   { label: '진료과안내', to: '/department/intro', paths: ['/department'] },
   { label: '병원소개', to: '/about/greeting', paths: ['/about'] },
   { label: '병원소식', to: '/news/notice', paths: ['/news'] },
-  { label: '건강증진센터', href: '/well/', external: true, paths: [] as string[] },
+  { label: '건강증진센터', href: 'https://www.medi-yin.co.kr/well/', external: true, paths: [] as string[] },
   { label: '진료협력센터', to: '/cooperation', paths: ['/cooperation'] },
-  { label: '장례식장', href: '/fune/', external: true, paths: [] as string[] },
+  { label: '장례식장', href: 'https://www.medi-yin.co.kr/fune/', external: true, paths: [] as string[] },
   { label: '고객마당', to: '/community/voice', paths: ['/community'] },
 ]
 

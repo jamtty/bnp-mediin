@@ -1,11 +1,9 @@
 import { Outlet } from 'react-router-dom'
-import SideFixMenu from '@/components/SideFixMenu'
 
 export default function MainLayout() {
   return (
-    <>
+    <div id="wrap">
       <Outlet />
-      <SideFixMenu />
-    </>
+    </div>
   )
 }

@@ -1,9 +1,13 @@
 ﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logoImg from '../assets/images/logo_new.png'
+import SideFixMenu from './SideFixMenu'
+import PopupLayer from './PopupLayer'
 
 export default function SiteHeader() {
   const [gnbActive, setGnbActive] = useState(false)
+  const [sideFixClosed, setSideFixClosed] = useState(false)
+  const [activePopup, setActivePopup] = useState<string | null>(null)
 
   return (
     <div
@@ -18,6 +22,7 @@ export default function SiteHeader() {
           </Link>
         </h1>
         <div className="gnb_wrap" onMouseEnter={() => setGnbActive(true)}>
+          <SideFixMenu sideFixClosed={sideFixClosed} setSideFixClosed={setSideFixClosed} onOpenPopup={setActivePopup} />
           <div className="gnb_item">
             <Link to="/care/outpatient" className="gnb_link">
               진료안내
@@ -109,28 +114,28 @@ export default function SiteHeader() {
             </div>
           </div>
           <div className="gnb_item">
-            <a href="/well/" target="_blank" rel="noreferrer" className="gnb_link">
+            <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer" className="gnb_link">
               건강증진센터
             </a>
             <div className="gnb_sub">
               <ul>
                 <li>
-                  <a href="/well/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
                     건강검진프로그램
                   </a>
                 </li>
                 <li>
-                  <a href="/well/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
                     검진준비 및 유의사항
                   </a>
                 </li>
                 <li>
-                  <a href="/well/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
                     검사종류
                   </a>
                 </li>
                 <li>
-                  <a href="/well/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
                     센터소개
                   </a>
                 </li>
@@ -150,33 +155,33 @@ export default function SiteHeader() {
             </div>
           </div>
           <div className="gnb_item">
-            <a href="/fune/" target="_blank" rel="noreferrer" className="gnb_link">
+            <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer" className="gnb_link">
               장례식장
             </a>
             <div className="gnb_sub">
               <ul>
                 <li>
-                  <a href="/fune/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
                     현재빈소분향현황
                   </a>
                 </li>
                 <li>
-                  <a href="/fune/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
                     이용방법안내
                   </a>
                 </li>
                 <li>
-                  <a href="/fune/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
                     빈소시설 이용 안내
                   </a>
                 </li>
                 <li>
-                  <a href="/fune/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
                     기타시설 안내
                   </a>
                 </li>
                 <li>
-                  <a href="/fune/" target="_blank" rel="noreferrer">
+                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
                     오시는길
                   </a>
                 </li>
@@ -213,6 +218,7 @@ export default function SiteHeader() {
           <span></span>
         </button>
       </div>
+      <PopupLayer activePopup={activePopup} onClose={() => setActivePopup(null)} />
     </div>
   )
 }

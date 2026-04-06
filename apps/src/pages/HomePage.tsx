@@ -166,7 +166,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="quick_item">
-              <a href="/well/" target="_blank" rel="noreferrer">
+              <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
                 <dl>
                   <dt>건강증진센터</dt>
                   <dd>건강증진센터 안내</dd>
@@ -175,7 +175,7 @@ export default function HomePage() {
               </a>
             </div>
             <div className="quick_item">
-              <a href="/fune/" target="_blank" rel="noreferrer">
+              <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
                 <dl>
                   <dt>장례식장</dt>
                   <dd>
