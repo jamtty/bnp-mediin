@@ -39,7 +39,7 @@ export default function AdminSidebar() {
     <aside className="adm_sidebar">
       <div className="adm_logo">
         <Link to="/" target="_blank" rel="noopener noreferrer">
-          참마중물재단
+          메디인병원
         </Link>
       </div>
       <nav className="adm_nav">
