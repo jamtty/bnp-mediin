@@ -2,18 +2,33 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchVoiceMyList } from '../../api/voice'
 
 export default function VoiceCheckPage() {
   const navigate = useNavigate()
 
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent | React.MouseEvent) => {
+  const handleSubmit = async (e: React.FormEvent | React.MouseEvent) => {
     e.preventDefault()
-    // TODO: API 연동 — POST /api/voice/check (이름 + 비밀번호 검증)
-    // 검증 성공 시 접수 내역 목록 페이지로 이동
-    navigate('/community/voice/my-list', { state: { name, password } })
+    if (!name.trim()) { alert('이름을 입력해주세요.'); return }
+    if (!password.trim()) { alert('비밀번호를 입력해주세요.'); return }
+
+    setSubmitting(true)
+    try {
+      const result = await fetchVoiceMyList(name.trim(), password.trim(), { size: 1 })
+      if (result.total === 0) {
+        alert('일치하는 접수 내역이 없습니다.')
+        return
+      }
+      navigate('/community/voice/my-list', { state: { name: name.trim(), password: password.trim() } })
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '조회에 실패했습니다.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -46,7 +61,7 @@ export default function VoiceCheckPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="button" className="btn_confirm" onClick={handleSubmit}>확인</button>
+          <button type="button" className="btn_confirm" onClick={handleSubmit} disabled={submitting}>확인</button>
         </div>
       </div>
     </SubPageLayout>

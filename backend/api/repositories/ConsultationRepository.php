@@ -92,7 +92,7 @@ class ConsultationRepository extends BaseRepository
                 DATE_FORMAT(A.REPDATE, '%Y-%m-%d')           AS reply_date,
                 DATE_FORMAT(A.INPUTDATE, '%Y-%m-%d')         AS date
             FROM consultation_tbl A
-            WHERE A.AD_IDX = :id AND (A.AD_DEL_YN IS NULL OR A.AD_DEL_YN = 'N')",
+            WHERE A.AD_IDX = :id",
             [':id' => $id]
         );
     }
@@ -102,7 +102,7 @@ class ConsultationRepository extends BaseRepository
         return $this->selectOne(
             "SELECT AD_IDX AS id, AD_TITLE AS title
              FROM consultation_tbl
-             WHERE AD_IDX < :id AND (AD_DEL_YN IS NULL OR AD_DEL_YN = 'N')
+             WHERE AD_IDX < :id
              ORDER BY AD_IDX DESC LIMIT 1",
             [':id' => $id]
         );
@@ -113,7 +113,7 @@ class ConsultationRepository extends BaseRepository
         return $this->selectOne(
             "SELECT AD_IDX AS id, AD_TITLE AS title
              FROM consultation_tbl
-             WHERE AD_IDX > :id AND (AD_DEL_YN IS NULL OR AD_DEL_YN = 'N')
+             WHERE AD_IDX > :id
              ORDER BY AD_IDX ASC LIMIT 1",
             [':id' => $id]
         );
@@ -171,7 +171,7 @@ class ConsultationRepository extends BaseRepository
     public function softDelete(int $id): bool
     {
         return $this->execute(
-            "UPDATE consultation_tbl SET AD_DEL_YN = 'Y', DELDATE = NOW() WHERE AD_IDX = :id",
+            'DELETE FROM consultation_tbl WHERE AD_IDX = :id',
             [':id' => $id]
         ) > 0;
     }
@@ -180,7 +180,7 @@ class ConsultationRepository extends BaseRepository
     {
         return $this->execute(
             "UPDATE consultation_tbl SET AD_RE_CONT = :content, AD_RE_ID = :reply_id, REPDATE = NOW(), UPDATEDATE = NOW()
-             WHERE AD_IDX = :id AND (AD_DEL_YN IS NULL OR AD_DEL_YN = 'N')",
+             WHERE AD_IDX = :id",
             [':content' => $content, ':reply_id' => $replyId, ':id' => $id]
         ) > 0;
     }
@@ -257,7 +257,7 @@ class ConsultationRepository extends BaseRepository
 
     private function buildWhere(array $cond): array
     {
-        $where  = "WHERE (A.AD_DEL_YN IS NULL OR A.AD_DEL_YN = 'N')";
+        $where  = 'WHERE 1=1';
         $params = [];
 
         $keyword = trim($cond['keyword'] ?? '');

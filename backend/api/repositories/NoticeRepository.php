@@ -38,7 +38,6 @@ class NoticeRepository extends BaseRepository
                 0               AS file_count
             FROM board_tbl n
             WHERE n.BMT_IDX = :bmt_idx
-              AND n.BD_DEL_FLAG = 'N'
               AND n.BD_NOTICE_YN = 'Y'
             ORDER BY n.BD_IDX DESC
         ";
@@ -99,8 +98,7 @@ class NoticeRepository extends BaseRepository
                 DATE_FORMAT(n.UPDATEDATE, '%Y-%m-%d') AS updated_at
             FROM board_tbl n
             WHERE n.BD_IDX = :id
-              AND n.BMT_IDX = :bmt_idx
-              AND n.BD_DEL_FLAG = 'N'",
+              AND n.BMT_IDX = :bmt_idx",
             [':id' => $id, ':bmt_idx' => self::BMT_IDX]
         );
     }
@@ -134,7 +132,6 @@ class NoticeRepository extends BaseRepository
              FROM board_tbl
              WHERE BD_IDX < :id
                AND BMT_IDX = :bmt_idx
-               AND BD_DEL_FLAG = 'N'
              ORDER BY BD_IDX DESC LIMIT 1",
             [':id' => $id, ':bmt_idx' => self::BMT_IDX]
         );
@@ -150,7 +147,6 @@ class NoticeRepository extends BaseRepository
              FROM board_tbl
              WHERE BD_IDX > :id
                AND BMT_IDX = :bmt_idx
-               AND BD_DEL_FLAG = 'N'
              ORDER BY BD_IDX ASC LIMIT 1",
             [':id' => $id, ':bmt_idx' => self::BMT_IDX]
         );
@@ -203,8 +199,7 @@ class NoticeRepository extends BaseRepository
             "UPDATE board_tbl
              SET BD_TITLE = :title, BD_CONTENT = :content, BD_NOTICE_YN = :notice_yn, UPDATEDATE = NOW()
              WHERE BD_IDX = :id
-               AND BMT_IDX = :bmt_idx
-               AND BD_DEL_FLAG = 'N'",
+               AND BMT_IDX = :bmt_idx",
             [':title' => $title, ':content' => $content, ':notice_yn' => $noticeYn, ':id' => $id, ':bmt_idx' => self::BMT_IDX]
         ) > 0;
     }
@@ -215,8 +210,7 @@ class NoticeRepository extends BaseRepository
     public function softDelete(int $id): bool
     {
         return $this->execute(
-            "UPDATE board_tbl SET BD_DEL_FLAG = 'Y', DELDATE = NOW()
-             WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx",
+            'DELETE FROM board_tbl WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx',
             [':id' => $id, ':bmt_idx' => self::BMT_IDX]
         ) > 0;
     }
@@ -281,8 +275,8 @@ class NoticeRepository extends BaseRepository
      */
     private function buildSearchWhere(array $condition, bool $includePinned = true): array
     {
-        $base   = $includePinned ? "BD_DEL_FLAG = 'N'" : "BD_DEL_FLAG = 'N' AND BD_NOTICE_YN = 'N'";
-        $where  = "WHERE n.BMT_IDX = :bmt_idx AND n.$base";
+        $base   = $includePinned ? '1=1' : "BD_NOTICE_YN = 'N'";
+        $where  = $includePinned ? 'WHERE n.BMT_IDX = :bmt_idx' : "WHERE n.BMT_IDX = :bmt_idx AND n.$base";
         $params = [':bmt_idx' => self::BMT_IDX];
 
         $keyword = trim($condition['keyword'] ?? '');

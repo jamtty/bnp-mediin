@@ -67,3 +67,14 @@ $router->post('/consultation/{id}/verify',                [ConsultationControlle
 $router->post('/consultation/{id}/delete',                [ConsultationController::class, 'destroy']);
 $router->post('/consultation/{id}/reply',                 [ConsultationController::class, 'reply']);
 $router->post('/consultation/file/{fileId}/delete',       [ConsultationController::class, 'destroyFile']);
+
+// 고객의소리
+$router->get('/voice',                             [VoiceController::class, 'index']);
+$router->post('/voice',                            [VoiceController::class, 'store']);
+$router->post('/voice/my-list',                    [VoiceController::class, 'myList']);
+$router->get('/voice/{id}',                        [VoiceController::class, 'show']);
+$router->post('/voice/{id}/update',                [VoiceController::class, 'update']);
+$router->post('/voice/{id}/user-delete',           [VoiceController::class, 'userDelete']);
+$router->post('/voice/{id}/delete',                [VoiceController::class, 'destroy']);
+$router->post('/voice/{id}/reply',                 [VoiceController::class, 'reply']);
+$router->post('/voice/file/{fileId}/delete',       [VoiceController::class, 'destroyFile']);

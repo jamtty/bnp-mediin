@@ -2,39 +2,34 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchVoiceMyList, VOICE_CATEGORY_MAP } from '../../api/voice'
+import type { VoiceItem } from '../../api/voice'
 
-type VoiceStatus = '처리중' | '처리완료'
-
-type VoiceItem = {
-  id: number
-  num: number
-  category: string
-  title: string
-  date: string
-  status: VoiceStatus
-}
-
-// TODO: API 연동 시 제거 — 임시 목업 데이터
-const mockItems: VoiceItem[] = [
-  { id: 10, num: 10, category: '칭찬 및 감사', title: '친절한 간호사 선생님께 감사드립니다.', date: '2026-03-20', status: '처리완료' },
-  { id: 9,  num: 9,  category: '불편',         title: '주차 공간이 너무 부족합니다.',           date: '2026-02-15', status: '처리완료' },
-  { id: 8,  num: 8,  category: '제안 및 건의', title: '원무과 대기 시간 개선을 건의드립니다.', date: '2026-01-10', status: '처리중'   },
-]
-
-const TOTAL_COUNT = 3
-const TOTAL_PAGES = 1
 const PAGE_GROUP_SIZE = 10
 
 export default function VoiceMyListPage() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { name } = (location.state as { name: string } | null) ?? { name: '' }
+  const { name, password } = (location.state as { name: string; password: string } | null) ?? { name: '', password: '' }
 
+  const [items, setItems] = useState<VoiceItem[]>([])
+  const [total, setTotal] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchField, setSearchField] = useState('')
   const [searchValue, setSearchValue] = useState('')
+  const [inputValue, setInputValue] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!name || !password) {
+      navigate('/community/voice/check', { replace: true })
+      return
+    }
+    loadList(1, searchField, searchValue)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -46,23 +41,37 @@ export default function VoiceMyListPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  const loadList = async (page: number, type: string, keyword: string) => {
+    setLoading(true)
+    try {
+      const result = await fetchVoiceMyList(name, password, { page, size: 10, type, keyword })
+      setItems(result.items)
+      setTotal(result.total)
+      setTotalPages(result.total_pages)
+      setCurrentPage(page)
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '조회에 실패했습니다.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const searchFieldLabel =
     searchField === 'title' ? '제목' :
-    searchField === 'content' ? '내용' :
-    searchField === 'name' ? '이름' : '전체'
+    searchField === 'content' ? '내용' : '전체'
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: API 연동
+    setSearchValue(inputValue)
+    loadList(1, searchField, inputValue)
   }
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    // TODO: API 연동
+    loadList(page, searchField, searchValue)
   }
 
   const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
-  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, TOTAL_PAGES)
+  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages)
 
   return (
     <SubPageLayout
@@ -91,7 +100,6 @@ export default function VoiceMyListPage() {
                       <li><button type="button" onClick={() => { setSearchField(''); setDropdownOpen(false) }}>전체</button></li>
                       <li><button type="button" onClick={() => { setSearchField('title'); setDropdownOpen(false) }}>제목</button></li>
                       <li><button type="button" onClick={() => { setSearchField('content'); setDropdownOpen(false) }}>내용</button></li>
-                      <li><button type="button" onClick={() => { setSearchField('name'); setDropdownOpen(false) }}>이름</button></li>
                     </ul>
                   </div>
               </div>
@@ -100,8 +108,8 @@ export default function VoiceMyListPage() {
                 className="sh_ip"
                 name="sv"
                 id="sv"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
                 title="고객의 소리 검색어"
                 placeholder="검색어를 입력하세요"
               />
@@ -114,7 +122,7 @@ export default function VoiceMyListPage() {
           {/* e: 검색폼 */}
           <br />
           <div className="bbs_list_area">
-            <p className="bbs_count">총 {TOTAL_COUNT}건이 검색되었습니다.</p>
+            <p className="bbs_count">총 {total}건이 검색되었습니다.</p>
             <div className="bbs_list">
               <table>
                 <caption>고객의 소리 리스트표</caption>
@@ -135,16 +143,20 @@ export default function VoiceMyListPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockItems.map((item) => (
+                  {loading ? (
+                    <tr><td colSpan={5} style={{ textAlign: 'center' }}>불러오는 중...</td></tr>
+                  ) : items.length === 0 ? (
+                    <tr><td colSpan={5} style={{ textAlign: 'center' }}>접수 내역이 없습니다.</td></tr>
+                  ) : items.map((item, idx) => (
                     <tr key={item.id}>
-                      <td className="m_hide">{item.num}</td>
-                      <td>{item.category}</td>
+                      <td className="m_hide">{total - ((currentPage - 1) * 10) - idx}</td>
+                      <td>{VOICE_CATEGORY_MAP[item.category] ?? item.category}</td>
                       <td>
-                        <Link to={`/community/voice/${item.id}`}>{item.title}</Link>
+                        <Link to={`/community/voice/${item.id}`} state={{ password }}>{item.title}</Link>
                       </td>
                       <td className="m_hide">{item.date}</td>
                       <td>
-                        {item.status === '처리완료'
+                        {item.status === '답변완료'
                           ? <span className="t_blue">처리완료</span>
                           : <span className="t_red">처리중</span>
                         }
@@ -183,13 +195,13 @@ export default function VoiceMyListPage() {
               <button
                 type="button"
                 className="btn_arrow btn_next"
-                onClick={() => handlePageChange(Math.min(TOTAL_PAGES, currentPage + 1))}
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                 title="다음 페이지"
               >다음페이지로</button>
               <button
                 type="button"
                 className="btn_arrow btn_last"
-                onClick={() => handlePageChange(TOTAL_PAGES)}
+                onClick={() => handlePageChange(totalPages)}
                 title="마지막 페이지"
               >마지막페이지로</button>
             </div>

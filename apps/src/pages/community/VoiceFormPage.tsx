@@ -1,7 +1,8 @@
-﻿import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+﻿import { useState, useEffect } from 'react'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { createVoice, updateVoice, fetchVoiceDetail } from '../../api/voice'
 
 type VocCategory = '' | 'VC01000000' | 'VC02000000' | 'VC03000000' | 'VC04000000'
 
@@ -14,23 +15,108 @@ const VOC_CATEGORY_LABELS: Record<VocCategory, string> = {
   'VC04000000': '기타',
 }
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024
+const MAX_FILE_COUNT = 5
+
 export default function VoiceFormPage() {
+  const { id } = useParams<{ id?: string }>()
+  const isEdit = !!id
   const navigate = useNavigate()
+  const location = useLocation()
+  const locationState = location.state as { password?: string } | null
 
   const [category, setCategory] = useState<VocCategory>('')
   const [categoryOpen, setCategoryOpen] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState(locationState?.password ?? '')
   const [title, setTitle] = useState('')
   const [agreePrivacy, setAgreePrivacy] = useState(false)
-  const [fileCount, setFileCount] = useState(1)
   const [content, setContent] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [loadingDetail, setLoadingDetail] = useState(isEdit)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  type FileSlot = { id: number; file: File | null }
+  const [fileSlots, setFileSlots] = useState<FileSlot[]>([])
+  let slotIdCounter = 0
+
+  useEffect(() => {
+    if (!isEdit) return
+    fetchVoiceDetail(Number(id))
+      .then((detail) => {
+        setCategory((detail.category as VocCategory) || '')
+        setTitle(detail.title)
+        setContent(detail.content)
+        setName(detail.name)
+        setPhone(detail.phone ?? '')
+      })
+      .catch(() => {
+        alert('게시글을 불러오지 못했습니다.')
+        navigate('/community/voice/my-list')
+      })
+      .finally(() => setLoadingDetail(false))
+  }, [id, isEdit, navigate])
+
+  const handleSlotAdd = () => {
+    if (fileSlots.length >= MAX_FILE_COUNT) return
+    setFileSlots((prev) => [...prev, { id: Date.now() + slotIdCounter++, file: null }])
+  }
+
+  const handleSlotFileChange = (slotId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0] ?? null
+    if (selected && selected.size > MAX_FILE_SIZE) {
+      alert(`파일 크기가 10MB를 초과합니다: ${selected.name}`)
+      e.target.value = ''
+      return
+    }
+    setFileSlots((prev) => prev.map((s) => s.id === slotId ? { ...s, file: selected } : s))
+  }
+
+  const handleSlotRemove = (slotId: number) => {
+    setFileSlots((prev) => prev.filter((s) => s.id !== slotId))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: API 연동 — POST /api/voice
-    navigate('/community/voice')
+
+    if (!category) { alert('상담분류를 선택해주세요.'); return }
+    if (!/^\d{4}$/.test(password)) { alert('비밀번호는 숫자 4자리로 입력해주세요.'); return }
+    if (!isEdit && !agreePrivacy) { alert('개인정보처리방침에 동의해주세요.'); return }
+
+    if (!window.confirm(isEdit ? '수정하시겠습니까?' : '저장하시겠습니까?')) return
+
+    setSubmitting(true)
+    try {
+      if (isEdit) {
+        await updateVoice(Number(id), {
+          password,
+          category,
+          title,
+          content,
+          name,
+          phone,
+          files: fileSlots.map((s) => s.file).filter((f): f is File => f !== null),
+        })
+        alert('수정이 완료되었습니다.')
+        navigate(`/community/voice/${id}`, { state: { password } })
+      } else {
+        await createVoice({
+          category,
+          title,
+          content,
+          name,
+          phone,
+          password,
+          files: fileSlots.map((s) => s.file).filter((f): f is File => f !== null),
+        })
+        alert('접수가 완료되었습니다.')
+        navigate('/community/voice')
+      }
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : (isEdit ? '수정에 실패했습니다.' : '등록에 실패했습니다.'))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -41,6 +127,11 @@ export default function VoiceFormPage() {
       lnbItems={lnbItems}
     >
       <h3 className="cont_tit">고객의 소리</h3>
+      {loadingDetail ? (
+        <div className="con_area">
+          <p style={{ textAlign: 'center', padding: '60px 0' }}>불러오는 중...</p>
+        </div>
+      ) : (
       <div className="con_area">
         <div className="bbs_cont">
           <div className="bbs_write">
@@ -156,20 +247,25 @@ export default function VoiceFormPage() {
                           <button
                             type="button"
                             className="btn_del"
-                            onClick={() => setFileCount((n) => n + 1)}
+                            onClick={handleSlotAdd}
+                            disabled={fileSlots.length >= MAX_FILE_COUNT}
                           >
                             추가
                           </button>
                         </div>
                         <div style={{ paddingTop: '5px' }}>
-                          {Array.from({ length: fileCount }, (_, i) => (
-                            <div className="formText" key={i} style={{ paddingTop: i > 0 ? '5px' : undefined }}>
-                              <input type="file" name="attfile" title="첨부파일" />
+                          {fileSlots.map((slot, i) => (
+                            <div className="formText" key={slot.id} style={{ paddingTop: i > 0 ? '5px' : undefined }}>
+                              <input
+                                type="file"
+                                title="첨부파일"
+                                onChange={(e) => handleSlotFileChange(slot.id, e)}
+                              />
                               <button
                                 type="button"
                                 className="btn_del"
                                 style={{ height: '25px', borderRadius: '5px', padding: '0 10px', background: '#707070', fontSize: '15px', color: '#fff' }}
-                                onClick={() => setFileCount((n) => Math.max(1, n - 1))}
+                                onClick={() => handleSlotRemove(slot.id)}
                               >
                                 삭제
                               </button>
@@ -183,6 +279,8 @@ export default function VoiceFormPage() {
               </div>
 
               <div className="agree_area">
+                {!isEdit && (
+                <>
                 <div className="agree_privacy">
                   <div className="base_info_cont">
                     <div className="base_table">
@@ -617,19 +715,22 @@ export default function VoiceFormPage() {
                     <label htmlFor="agree_chk">개인정보처리방침에 동의합니다. (필수)</label>
                   </div>
                 </div>
+                </>
+                )}
               </div>
               <div className="bbs_btn_area">
-                <button type="button" className="btn btn_gray" onClick={() => navigate('/community/voice')}>
+                <button type="button" className="btn btn_gray" onClick={() => navigate(isEdit ? `/community/voice/${id}` : '/community/voice')} disabled={submitting}>
                   <span>취소</span>
                 </button>
-                <button type="submit" className="btn btn_emerald">
-                  <span>접수</span>
+                <button type="submit" className="btn btn_emerald" disabled={submitting}>
+                  <span>{submitting ? (isEdit ? '수정 중...' : '등록 중...') : (isEdit ? '수정' : '접수')}</span>
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
+      )}
     </SubPageLayout>
   )
 }

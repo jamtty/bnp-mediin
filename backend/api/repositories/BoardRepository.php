@@ -89,8 +89,7 @@ class BoardRepository extends BaseRepository
                 DATE_FORMAT(n.UPDATEDATE, '%Y-%m-%d') AS updated_at
             FROM board_tbl n
             WHERE n.BD_IDX   = :id
-              AND n.BMT_IDX  = :bmt_idx
-              AND n.BD_DEL_FLAG = 'N'",
+              AND n.BMT_IDX  = :bmt_idx",
             [':id' => $id, ':bmt_idx' => $this->bmtIdx]
         );
     }
@@ -100,7 +99,7 @@ class BoardRepository extends BaseRepository
         return $this->selectOne(
             "SELECT BD_IDX AS id, BD_TITLE AS title
              FROM board_tbl
-             WHERE BD_IDX < :id AND BMT_IDX = :bmt_idx AND BD_DEL_FLAG = 'N'
+             WHERE BD_IDX < :id AND BMT_IDX = :bmt_idx
              ORDER BY BD_IDX DESC LIMIT 1",
             [':id' => $id, ':bmt_idx' => $this->bmtIdx]
         );
@@ -111,7 +110,7 @@ class BoardRepository extends BaseRepository
         return $this->selectOne(
             "SELECT BD_IDX AS id, BD_TITLE AS title
              FROM board_tbl
-             WHERE BD_IDX > :id AND BMT_IDX = :bmt_idx AND BD_DEL_FLAG = 'N'
+             WHERE BD_IDX > :id AND BMT_IDX = :bmt_idx
              ORDER BY BD_IDX ASC LIMIT 1",
             [':id' => $id, ':bmt_idx' => $this->bmtIdx]
         );
@@ -174,7 +173,7 @@ class BoardRepository extends BaseRepository
              SET BD_TITLE = :title, BD_CONTENT = :content, BD_NOTICE_YN = :notice_yn,
                  BD_FIELD_1 = :field1, BD_FIELD_2 = :field2, BD_FIELD_3 = :field3,
                  UPDATEDATE = NOW()
-             WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx AND BD_DEL_FLAG = 'N'",
+             WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx",
             [
                 ':title'     => $title,
                 ':content'   => $content,
@@ -191,8 +190,7 @@ class BoardRepository extends BaseRepository
     public function softDelete(int $id): bool
     {
         return $this->execute(
-            "UPDATE board_tbl SET BD_DEL_FLAG = 'Y', DELDATE = NOW()
-             WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx",
+            'DELETE FROM board_tbl WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx',
             [':id' => $id, ':bmt_idx' => $this->bmtIdx]
         ) > 0;
     }
@@ -211,7 +209,7 @@ class BoardRepository extends BaseRepository
 
     private function buildWhere(array $condition): array
     {
-        $where  = "WHERE n.BMT_IDX = :bmt_idx AND n.BD_DEL_FLAG = 'N'";
+        $where  = 'WHERE n.BMT_IDX = :bmt_idx';
         $params = [':bmt_idx' => $this->bmtIdx];
 
         $keyword = trim($condition['keyword'] ?? '');

@@ -1,0 +1,207 @@
+import { useState, useEffect, useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import AdminHeader from '@/components/admin/AdminHeader'
+import AdminSidebar from '@/components/admin/AdminSidebar'
+import { fetchVoiceList, deleteVoice, VOICE_CATEGORY_MAP, type VoiceItem } from '@/api/voice'
+import '@/assets/css/style.css'
+
+const PAGE_SIZE = 15
+
+export default function AdminVoicePage() {
+  const navigate = useNavigate()
+  const [items, setItems] = useState<VoiceItem[]>([])
+  const [totalCount, setTotalCount] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+  const [page, setPage] = useState(1)
+  const [keyword, setKeyword] = useState('')
+  const [inputKeyword, setInputKeyword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [checkedIds, setCheckedIds] = useState<number[]>([])
+
+  const load = useCallback(async (p: number, kw: string) => {
+    setLoading(true)
+    try {
+      const res = await fetchVoiceList({ page: p, size: PAGE_SIZE, keyword: kw })
+      setItems(res.items)
+      setTotalCount(res.total)
+      setTotalPages(res.total_pages)
+      setCheckedIds([])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    load(page, keyword)
+  }, [load, page, keyword])
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    setPage(1)
+    setKeyword(inputKeyword)
+  }
+
+  const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
+
+  const handleCheckAll = () => {
+    setCheckedIds(allChecked ? [] : items.map((item) => item.id))
+  }
+
+  const handleCheckOne = (id: number) => {
+    setCheckedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]))
+  }
+
+  const handleDelete = async (id: number, title: string) => {
+    if (!confirm(`"${title}" 을(를) 삭제하시겠습니까?\n첨부파일도 함께 삭제됩니다.`)) return
+    try {
+      await deleteVoice(id)
+      load(page, keyword)
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    if (checkedIds.length === 0) return
+    if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?\n첨부파일도 함께 삭제됩니다.`)) return
+    try {
+      await Promise.all(checkedIds.map((id) => deleteVoice(id)))
+      load(page, keyword)
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
+    }
+  }
+
+  return (
+    <div className="adm_wrap">
+      <AdminSidebar />
+      <div className="adm_content">
+        <AdminHeader pageTitle="고객의소리 관리" />
+        <main className="adm_main">
+          <section className="adm_section">
+            <div className="adm_toolbar">
+              <form className="adm_search_form" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="제목/내용 검색"
+                  value={inputKeyword}
+                  onChange={(e) => setInputKeyword(e.target.value)}
+                />
+                <button type="submit" className="adm_btn_secondary">
+                  검색
+                </button>
+              </form>
+            </div>
+
+            <div className="adm_table_wrap">
+              <table className="adm_table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '4%' }}>
+                      <input type="checkbox" checked={allChecked} onChange={handleCheckAll} />
+                    </th>
+                    <th style={{ width: '5%' }}>번호</th>
+                    <th>제목</th>
+                    <th style={{ width: '10%' }}>분류</th>
+                    <th style={{ width: '9%' }}>작성자</th>
+                    <th style={{ width: '8%' }}>등록일</th>
+                    <th style={{ width: '9%' }}>상태</th>
+                    <th style={{ width: '12%' }}>관리</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {loading ? (
+                    <tr>
+                      <td colSpan={8} className="adm_table_empty">
+                        불러오는 중...
+                      </td>
+                    </tr>
+                  ) : items.length === 0 ? (
+                    <tr>
+                      <td colSpan={8} className="adm_table_empty">
+                        게시글이 없습니다.
+                      </td>
+                    </tr>
+                  ) : (
+                    items.map((item, idx) => (
+                      <tr key={item.id}>
+                        <td className="adm_td_center">
+                          <input
+                            type="checkbox"
+                            checked={checkedIds.includes(item.id)}
+                            onChange={() => handleCheckOne(item.id)}
+                          />
+                        </td>
+                        <td className="adm_td_center">
+                          {totalCount - (page - 1) * PAGE_SIZE - idx}
+                        </td>
+                        <td>
+                          <Link
+                            to={`/admin/voice/${item.id}`}
+                            className="adm_table_link"
+                          >
+                            {item.title}
+                          </Link>
+                        </td>
+                        <td className="adm_td_center">
+                          {VOICE_CATEGORY_MAP[item.category] ?? item.category ?? '-'}
+                        </td>
+                        <td className="adm_td_center">{item.name}</td>
+                        <td className="adm_td_center">{item.date}</td>
+                        <td className="adm_td_center">
+                          <span
+                            className={`adm_status_badge ${item.status === '답변완료' ? 'adm_status_done' : 'adm_status_wait'}`}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
+                        <td className="adm_td_center">
+                          <div className="adm_action_btns">
+                            <button
+                              className="adm_btn_edit"
+                              onClick={() => navigate(`/admin/voice/${item.id}`)}
+                            >
+                              상세/답변
+                            </button>
+                            <button
+                              className="adm_btn_delete"
+                              onClick={() => handleDelete(item.id, item.title)}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="adm_pagination">
+              <div className="adm_pagination_left">
+                {checkedIds.length > 0 && (
+                  <button className="adm_btn_delete" onClick={handleBulkDelete}>
+                    선택 삭제 ({checkedIds.length})
+                  </button>
+                )}
+                <span className="adm_total_count">총 {totalCount.toLocaleString()}건</span>
+              </div>
+              <div className="adm_page_btns">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    className={`adm_page_btn${page === p ? ' active' : ''}`}
+                    onClick={() => setPage(p)}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  )
+}

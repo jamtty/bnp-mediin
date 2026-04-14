@@ -128,6 +128,8 @@ export default function ConsultationFormPage() {
       return
     }
 
+    if (!window.confirm('저장하시겠습니까?')) return
+
     setSubmitting(true)
     try {
       await createConsultation({
@@ -141,6 +143,7 @@ export default function ConsultationFormPage() {
         is_secret: isSecret,
         files: fileSlots.map((s) => s.file).filter((f): f is File => f !== null),
       })
+      alert('접수가 완료되었습니다.')
       navigate('/community/consultation')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : '등록에 실패했습니다.')

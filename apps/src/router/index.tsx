@@ -20,6 +20,8 @@ import AdminHealthInfoPage from '@/pages/admin/AdminHealthInfoPage'
 import AdminHealthInfoFormPage from '@/pages/admin/AdminHealthInfoFormPage'
 import AdminConsultationPage from '@/pages/admin/AdminConsultationPage'
 import AdminConsultationDetailPage from '@/pages/admin/AdminConsultationDetailPage'
+import AdminVoicePage from '@/pages/admin/AdminVoicePage'
+import AdminVoiceDetailPage from '@/pages/admin/AdminVoiceDetailPage'
 // 진료안내
 import OutpatientPage from '@/pages/care/OutpatientPage'
 import EmergencyPage from '@/pages/care/EmergencyPage'
@@ -128,6 +130,7 @@ export const router = createBrowserRouter(
         { path: '/community/voice/new', element: <VoiceFormPage /> },
         { path: '/community/voice/check', element: <VoiceCheckPage /> },
         { path: '/community/voice/my-list', element: <VoiceMyListPage /> },
+        { path: '/community/voice/:id/edit', element: <VoiceFormPage /> },
         { path: '/community/voice/:id', element: <VoiceDetailPage /> },
       ],
     },
@@ -159,6 +162,8 @@ export const router = createBrowserRouter(
         { path: 'health-info/edit/:id', element: <AdminHealthInfoFormPage /> },
         { path: 'consultation', element: <AdminConsultationPage /> },
         { path: 'consultation/:id', element: <AdminConsultationDetailPage /> },
+        { path: 'voice', element: <AdminVoicePage /> },
+        { path: 'voice/:id', element: <AdminVoiceDetailPage /> },
       ],
     },
   ],

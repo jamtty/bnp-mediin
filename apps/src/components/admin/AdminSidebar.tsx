@@ -24,6 +24,7 @@ export const sideMenuSections: MenuSection[] = [
     sectionLabel: '운영관리',
     items: [
       { label: '건강상담 관리', to: '/admin/consultation', icon: 'forum' },
+      { label: '고객의소리 관리', to: '/admin/voice', icon: 'record_voice_over' },
     ],
   },
 ]

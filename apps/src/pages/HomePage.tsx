@@ -253,44 +253,24 @@ export default function HomePage() {
             <div className="swiper" ref={swiperRef}>
               <div className="swiper-wrapper">
                 {[
-                  { href: '/main/content/view/MN02020100.do', img: slide1, name: '내시경 클리닉' },
-                  {
-                    href: '/main/content/view/MN02020200.do',
-                    img: slide2,
-                    name: '인공관절 클리닉',
-                  },
-                  { href: '/main/content/view/MN02020300.do', img: slide3, name: '척추 클리닉' },
-                  {
-                    href: '/main/content/view/MN02020400.do',
-                    img: slide4,
-                    name: '수지접합 클리닉',
-                  },
-                  { href: '/main/content/view/MN02020500.do', img: slide5, name: '항문 클리닉' },
-                  { href: '/main/content/view/MN02020600.do', img: slide6, name: '복강경 클리닉' },
-                  { href: '/main/content/view/MN02020700.do', img: slide7, name: '성인병 클리닉' },
-                  {
-                    href: '/main/content/view/MN02020800.do',
-                    img: slide8,
-                    name: '중재시술 클리닉',
-                  },
-                  {
-                    href: '/main/content/view/MN02020900.do',
-                    img: slide9,
-                    name: '뇌신경질환 클리닉',
-                  },
-                  {
-                    href: '/main/content/view/MN02021000.do',
-                    img: slide10,
-                    name: '요로결석 클리닉',
-                  },
+                  { href: '/department/clinic/endoscopy',    img: slide1,  name: '내시경 클리닉' },
+                  { href: '/department/clinic/arthroplasty', img: slide2,  name: '인공관절 클리닉' },
+                  { href: '/department/clinic/spine',        img: slide3,  name: '척추 클리닉' },
+                  { href: '/department/clinic/hand',         img: slide4,  name: '수지접합 클리닉' },
+                  { href: '/department/clinic/anus',         img: slide5,  name: '항문 클리닉' },
+                  { href: '/department/clinic/laparoscopy',  img: slide6,  name: '복강경 클리닉' },
+                  { href: '/department/clinic/adult-disease',img: slide7,  name: '성인병 클리닉' },
+                  { href: '/department/clinic/intervention', img: slide8,  name: '중재시술 클리닉' },
+                  { href: '/department/clinic/neuro',        img: slide9,  name: '뇌신경질환 클리닉' },
+                  { href: '/department/clinic/urolithiasis', img: slide10, name: '요로결석 클리닉' },
                 ].map((item) => (
                   <div key={item.href} className="slide_item swiper-slide">
-                    <a href={item.href}>
+                    <Link to={item.href}>
                       <div className="special_img">
                         <img src={item.img} alt={item.name} />
                       </div>
                       <div className="special_name">{item.name}</div>
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>
