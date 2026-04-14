@@ -1,35 +1,31 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
-import { fetchNoticeList, deleteNotice, type NoticeItem } from '@/api/notice'
+import { fetchHealthInfoList, deleteHealthInfo, type HealthInfoItem } from '@/api/board'
 import '@/assets/css/style.css'
 
 const PAGE_SIZE = 15
 
-export default function AdminNoticePage() {
+export default function AdminHealthInfoPage() {
   const navigate = useNavigate()
-  const [items, setItems] = useState<NoticeItem[]>([])
+  const [items, setItems]           = useState<HealthInfoItem[]>([])
   const [totalCount, setTotalCount] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
-  const [page, setPage] = useState(1)
-  const [keyword, setKeyword] = useState('')
+  const [page, setPage]             = useState(1)
+  const [keyword, setKeyword]       = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading]       = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
-  const [error, setError] = useState<string | null>(null)
 
   const load = useCallback(async (p: number, kw: string) => {
     setLoading(true)
-    setError(null)
     try {
-      const res = await fetchNoticeList({ page: p, size: PAGE_SIZE, keyword: kw, type: 2 })
+      const res = await fetchHealthInfoList({ page: p, size: PAGE_SIZE, keyword: kw, type: 2 })
       setItems(res.items)
-      setTotalCount(res.totalCount)
-      setTotalPages(res.totalPages)
+      setTotalCount(res.total)
+      setTotalPages(res.total_pages)
       setCheckedIds([])
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : '목록을 불러오지 못했습니다.')
     } finally {
       setLoading(false)
     }
@@ -45,20 +41,23 @@ export default function AdminNoticePage() {
     setKeyword(inputKeyword)
   }
 
-  const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
+  const allChecked =
+    items.length > 0 && items.every((item) => checkedIds.includes(item.id))
 
   const handleCheckAll = () => {
     setCheckedIds(allChecked ? [] : items.map((item) => item.id))
   }
 
   const handleCheckOne = (id: number) => {
-    setCheckedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]))
+    setCheckedIds((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
+    )
   }
 
   const handleDelete = async (id: number, title: string) => {
-    if (!confirm(`"${title}" 을(를) 삭제하시겠습니까?`)) return
+    if (!confirm(`"${title}"을(를) 삭제하시겠습니까?`)) return
     try {
-      await deleteNotice(id)
+      await deleteHealthInfo(id)
       load(page, keyword)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
@@ -69,7 +68,7 @@ export default function AdminNoticePage() {
     if (checkedIds.length === 0) return
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
-      await Promise.all(checkedIds.map((id) => deleteNotice(id)))
+      await Promise.all(checkedIds.map((id) => deleteHealthInfo(id)))
       load(page, keyword)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
@@ -80,7 +79,7 @@ export default function AdminNoticePage() {
     <div className="adm_wrap">
       <AdminSidebar />
       <div className="adm_content">
-        <AdminHeader pageTitle="공지사항 관리" />
+        <AdminHeader pageTitle="건강정보 관리" />
         <main className="adm_main">
           <section className="adm_section">
             <div className="adm_toolbar">
@@ -95,7 +94,10 @@ export default function AdminNoticePage() {
                   검색
                 </button>
               </form>
-              <button className="adm_btn_primary" onClick={() => navigate('/admin/notice/write')}>
+              <button
+                className="adm_btn_primary"
+                onClick={() => navigate('/admin/health-info/write')}
+              >
                 + 글쓰기
               </button>
             </div>
@@ -105,7 +107,11 @@ export default function AdminNoticePage() {
                 <thead>
                   <tr>
                     <th style={{ width: '4%' }}>
-                      <input type="checkbox" checked={allChecked} onChange={handleCheckAll} />
+                      <input
+                        type="checkbox"
+                        checked={allChecked}
+                        onChange={handleCheckAll}
+                      />
                     </th>
                     <th style={{ width: '5%' }}>번호</th>
                     <th>제목</th>
@@ -120,12 +126,6 @@ export default function AdminNoticePage() {
                     <tr>
                       <td colSpan={7} className="adm_table_empty">
                         불러오는 중...
-                      </td>
-                    </tr>
-                  ) : error ? (
-                    <tr>
-                      <td colSpan={7} className="adm_table_empty">
-                        오류: {error}
                       </td>
                     </tr>
                   ) : items.length === 0 ? (
@@ -148,18 +148,25 @@ export default function AdminNoticePage() {
                           {totalCount - (page - 1) * PAGE_SIZE - idx}
                         </td>
                         <td>
-                          <Link to={`/admin/notice/edit/${item.id}`} className="adm_table_link">
+                          <button
+                            className="adm_table_link"
+                            onClick={() => navigate(`/admin/health-info/edit/${item.id}`)}
+                          >
                             {item.title}
-                          </Link>
+                          </button>
                         </td>
                         <td className="adm_td_center">{item.author_name}</td>
                         <td className="adm_td_center">{item.created_at}</td>
-                        <td className="adm_td_center">{item.view_count.toLocaleString()}</td>
+                        <td className="adm_td_center">
+                          {item.view_count.toLocaleString()}
+                        </td>
                         <td className="adm_td_center">
                           <div className="adm_action_btns">
                             <button
                               className="adm_btn_edit"
-                              onClick={() => navigate(`/admin/notice/edit/${item.id}`)}
+                              onClick={() =>
+                                navigate(`/admin/health-info/edit/${item.id}`)
+                              }
                             >
                               수정
                             </button>
@@ -185,7 +192,9 @@ export default function AdminNoticePage() {
                     선택 삭제 ({checkedIds.length})
                   </button>
                 )}
-                <span className="adm_total_count">총 {totalCount.toLocaleString()}건</span>
+                <span className="adm_total_count">
+                  총 {totalCount.toLocaleString()}건
+                </span>
               </div>
               <div className="adm_page_btns">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (

@@ -14,16 +14,25 @@ class NoticeService
 
     /**
      * 목록 조회
+     * - 키워드 없을 때: 고정글(항상 상단) + 일반글(페이징)
+     * - 키워드 있을 때: 고정글+일반글 통합 검색 결과(페이징)
      */
     public function getList(int $page, int $size, array $searchCondition): array
     {
-        $page   = max(1, $page);
-        $size   = min(50, max(1, $size));
-        $offset = ($page - 1) * $size;
+        $page    = max(1, $page);
+        $size    = min(50, max(1, $size));
+        $offset  = ($page - 1) * $size;
+        $keyword = trim($searchCondition['keyword'] ?? '');
 
         $totalCount = $this->repo->countList($searchCondition);
-        $totalPages = (int)ceil($totalCount / $size);
+        $totalPages = $totalCount > 0 ? (int)ceil($totalCount / $size) : 1;
         $items      = $this->repo->findList($searchCondition, $size, $offset);
+
+        // 키워드 검색이 없을 때만 고정글을 최상단에 추가
+        if ($keyword === '') {
+            $pinned = $this->repo->findPinnedList();
+            $items  = array_merge($pinned, $items);
+        }
 
         return [
             'items'      => $items,
@@ -52,7 +61,11 @@ class NoticeService
             $this->repo->incrementViewCount($id);
         }
 
-        $files = $this->repo->findFiles($id);
+        try {
+            $files = $this->repo->findFiles($id);
+        } catch (PDOException $e) {
+            $files = [];
+        }
         $prev  = $this->repo->findPrev($id) ?: null;
         $next  = $this->repo->findNext($id) ?: null;
 
@@ -64,16 +77,16 @@ class NoticeService
         ];
     }
 
-    public function create(string $title, string $content, string $authorId, string $authorName): int
+    public function create(string $title, string $content, string $authorId, string $authorName, bool $isPinned = false): int
     {
         if (trim($title) === '') throw new RuntimeException('제목을 입력해주세요.');
-        return $this->repo->create(trim($title), $content, $authorId, $authorName);
+        return $this->repo->create(trim($title), $content, $authorId, $authorName, $isPinned);
     }
 
-    public function update(int $id, string $title, string $content): void
+    public function update(int $id, string $title, string $content, bool $isPinned = false): void
     {
         if (trim($title) === '') throw new RuntimeException('제목을 입력해주세요.');
-        $ok = $this->repo->update($id, trim($title), $content);
+        $ok = $this->repo->update($id, trim($title), $content, $isPinned);
         if (!$ok) throw new RuntimeException('게시글이 존재하지 않습니다.', 404);
     }
 

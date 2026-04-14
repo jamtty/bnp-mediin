@@ -1,60 +1,67 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchNoticeList, type NoticeItem } from '../../api/notice'
 
-type SearchType = '' | 'BD.BD_TITLE' | 'BD.BD_CONTENT'
-
-type NoticeItem = {
-  id: number
-  num: number | null
-  title: string
-  date: string
-  views: number
-  isPinned: boolean
-}
+type SearchType = '' | '0' | '1'
 
 const SEARCH_TYPE_LABELS: Record<SearchType, string> = {
   '': '전체',
-  'BD.BD_TITLE': '제목',
-  'BD.BD_CONTENT': '내용',
+  '0': '제목',
+  '1': '내용',
 }
 
-const noticeList: NoticeItem[] = [
-  { id: 464, num: null, isPinned: true,  title: '2026년 1분기 친절사원 포상',                     date: '2026-04-02', views: 40 },
-  { id: 462, num: null, isPinned: true,  title: "내'무릎'이 보내는 경고! 무릎관절염",              date: '2026-03-27', views: 86 },
-  { id: 456, num: null, isPinned: true,  title: "내 '간'이 보내는 위험신호! A형 · E형 간염",       date: '2026-03-13', views: 189 },
-  { id: 441, num: null, isPinned: true,  title: '3월 의료진 휴진안내',                             date: '2026-02-03', views: 2349 },
-  { id: 438, num: null, isPinned: true,  title: '허리디스크 양방향 내시경 수술',                   date: '2026-01-23', views: 979 },
-  { id: 435, num: null, isPinned: true,  title: '파주시 유일 류마티스 내과',                       date: '2026-01-13', views: 1788 },
-  { id: 100, num: null, isPinned: true,  title: '대장내시경 약 복용법 - 오전 검사',                date: '2023-05-02', views: 11819 },
-  { id: 99,  num: null, isPinned: true,  title: '대장내시경 약 복용법 - 오후 검사',                date: '2023-05-02', views: 20439 },
-  { id: 461, num: 193,  isPinned: false, title: '4주기 의료기관인증 중간현장조사',                  date: '2026-03-20', views: 133 },
-  { id: 460, num: 192,  isPinned: false, title: '정형외과와 함께할 새로운 의료진을 소개 합니다.',   date: '2026-03-20', views: 346 },
-]
-
-const TOTAL_COUNT = 201
-const TOTAL_PAGES = 21
+const PAGE_SIZE = 10
 const PAGE_GROUP_SIZE = 10
 
 export default function NoticePage() {
-  const [searchType, setSearchType] = useState<SearchType>('')
-  const [searchValue, setSearchValue] = useState('')
-  const [selectOpen, setSelectOpen] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [items, setItems]             = useState<NoticeItem[]>([])
+  const [totalCount, setTotalCount]   = useState(0)
+  const [totalPages, setTotalPages]   = useState(1)
+  const [page, setPage]               = useState(1)
+  const [searchType, setSearchType]   = useState<SearchType>('')
+  const [inputValue, setInputValue]   = useState('')
+  const [keyword, setKeyword]         = useState('')
+  const [selectOpen, setSelectOpen]   = useState(false)
+  const [loading, setLoading]         = useState(false)
+
+  const load = useCallback(async (p: number, kw: string, type: SearchType) => {
+    setLoading(true)
+    try {
+      const params: Parameters<typeof fetchNoticeList>[0] = { page: p, size: PAGE_SIZE }
+      if (kw) {
+        params.keyword = kw
+        params.type    = type === '' ? 2 : Number(type)
+      }
+      const res = await fetchNoticeList(params)
+      setItems(res.items)
+      setTotalCount(res.totalCount)
+      setTotalPages(res.totalPages || 1)
+    } catch {
+      // 오류 무시 (빈 목록 유지)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    load(page, keyword, searchType)
+  }, [load, page, keyword, searchType])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: API 연동
+    setPage(1)
+    setKeyword(inputValue)
   }
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    // TODO: API 연동
+  const handlePageChange = (p: number) => {
+    setPage(p)
+    window.scrollTo({ top: 0 })
   }
 
-  const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
-  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, TOTAL_PAGES)
+  const pageGroupStart = Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
+  const pageGroupEnd   = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages)
 
   return (
     <SubPageLayout
@@ -98,8 +105,8 @@ export default function NoticePage() {
                 className="sh_ip"
                 title="공지사항 검색어"
                 placeholder="검색어를 입력하세요"
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
               />
               <button type="submit" className="btn_sh">
                 <span>검색</span>
@@ -109,7 +116,9 @@ export default function NoticePage() {
           </form>
 
           <div className="bbs_list_area">
-            <p className="bbs_count">총 {TOTAL_COUNT.toLocaleString()}건이 검색되었습니다.</p>
+            <p className="bbs_count">
+              총 {totalCount.toLocaleString()}건이 검색되었습니다.
+            </p>
             <div className="bbs_list">
               <table>
                 <caption>공지사항 리스트표</caption>
@@ -128,23 +137,45 @@ export default function NoticePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {noticeList.map(item => (
-                    <tr key={item.id}>
-                      <td>
-                        {item.isPinned
-                          ? <span className="t_notice">공지</span>
-                          : item.num
-                        }
+                  {loading ? (
+                    <tr>
+                      <td colSpan={4} style={{ textAlign: 'center', padding: '2rem' }}>
+                        불러오는 중...
                       </td>
-                      <td>
-                        <Link to={`/news/notice/${item.id}`}>
-                          {item.title}
-                        </Link>
-                      </td>
-                      <td className="m_hide">{item.date}</td>
-                      <td className="m_hide">{item.views.toLocaleString()}</td>
                     </tr>
-                  ))}
+                  ) : items.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} style={{ textAlign: 'center', padding: '2rem' }}>
+                        게시글이 없습니다.
+                      </td>
+                    </tr>
+                  ) : (
+                    (() => {
+                      let regularIdx = 0
+                      return items.map(item => {
+                        const rowNum = item.is_pinned
+                          ? null
+                          : totalCount - (page - 1) * PAGE_SIZE - regularIdx++
+                        return (
+                          <tr key={item.id}>
+                            <td>
+                              {item.is_pinned
+                                ? <span className="t_notice">공지</span>
+                                : rowNum
+                              }
+                            </td>
+                            <td>
+                              <Link to={`/news/notice/${item.id}`}>
+                                {item.title}
+                              </Link>
+                            </td>
+                            <td className="m_hide">{item.created_at}</td>
+                            <td className="m_hide">{item.view_count.toLocaleString()}</td>
+                          </tr>
+                        )
+                      })
+                    })()
+                  )}
                 </tbody>
               </table>
             </div>
@@ -168,22 +199,22 @@ export default function NoticePage() {
               이전페이지로
             </button>
             <div className="page_num_list">
-              {Array.from({ length: pageGroupEnd - pageGroupStart + 1 }, (_, i) => pageGroupStart + i).map(page => (
+              {Array.from({ length: pageGroupEnd - pageGroupStart + 1 }, (_, i) => pageGroupStart + i).map(p => (
                 <button
-                  key={page}
+                  key={p}
                   type="button"
-                  className={`btn_num${page === currentPage ? ' active_num' : ''}`}
-                  onClick={() => handlePageChange(page)}
-                  title={page === currentPage ? '현재 페이지' : undefined}
+                  className={`btn_num${p === page ? ' active_num' : ''}`}
+                  onClick={() => handlePageChange(p)}
+                  title={p === page ? '현재 페이지' : undefined}
                 >
-                  {page}
+                  {p}
                 </button>
               ))}
             </div>
             <button
               type="button"
               className="btn_arrow btn_next"
-              onClick={() => handlePageChange(Math.min(TOTAL_PAGES, pageGroupEnd + 1))}
+              onClick={() => handlePageChange(Math.min(totalPages, pageGroupEnd + 1))}
               title="다음 페이지"
             >
               다음페이지로
@@ -191,7 +222,7 @@ export default function NoticePage() {
             <button
               type="button"
               className="btn_arrow btn_last"
-              onClick={() => handlePageChange(TOTAL_PAGES)}
+              onClick={() => handlePageChange(totalPages)}
               title="마지막 페이지"
             >
               마지막페이지로

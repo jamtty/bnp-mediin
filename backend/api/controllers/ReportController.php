@@ -117,6 +117,13 @@ class ReportController
         if ($id <= 0) { Response::error('잘못된 요청입니다.'); }
 
         try {
+            // 첨부파일 물리 삭제
+            $filePaths = $this->repo->findFilePathsByReportId($id);
+            $this->repo->deleteFilesByReportId($id);
+            foreach ($filePaths as $path) {
+                FileUploader::delete($path);
+            }
+
             $this->service->delete($id);
             Response::ok(null, '삭제되었습니다.');
         } catch (RuntimeException $e) {

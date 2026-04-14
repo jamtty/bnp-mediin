@@ -1,60 +1,68 @@
-﻿import { useState } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchHealthInfoList, type HealthInfoItem } from '../../api/board'
 
-type SearchType = '' | 'BD.BD_TITLE' | 'BD.BD_CONTENT'
-
-type HealthInfoItem = {
-  id: number
-  title: string
-  thumb: string
-  date: string
-}
+type SearchType = '' | '0' | '1'
 
 const SEARCH_TYPE_LABELS: Record<SearchType, string> = {
   '': '전체',
-  'BD.BD_TITLE': '제목',
-  'BD.BD_CONTENT': '내용',
+  '0': '제목',
+  '1': '내용',
 }
 
-// TODO: API 연동 시 제거 — 임시 목업 데이터
-const mockItems: HealthInfoItem[] = [
-  { id: 457, title: "내 '간'이 보내는 위험신호! A형 · E형 간염",              thumb: '/upfilePath/bd/BD_202603131011234100.png', date: '2026-03-13' },
-  { id: 453, title: '심장 건강의 이상신호! 심장판막질환',                      thumb: '/upfilePath/bd/BD_202602270307538430.png', date: '2026-02-27' },
-  { id: 452, title: '바람만 스쳐도 눈물이? 당신의 관절이 보내는 경고,  ...',    thumb: '/upfilePath/bd/BD_202602270257589830.png', date: '2026-02-27' },
-  { id: 447, title: '내 몸의 균형을 무너뜨리는 척추측만증',                    thumb: '/upfilePath/bd/BD_202602120209227090.png', date: '2026-02-12' },
-  { id: 445, title: '파주시 유일 류마티스 내과',                               thumb: '/upfilePath/bd/BD_202602061119029720.png', date: '2026-02-06' },
-  { id: 444, title: '허리디스크 양방향 내시경 수술',                           thumb: '/upfilePath/bd/BD_202602061117216920.png', date: '2026-02-06' },
-  { id: 439, title: '메디인병원 건강증진센터',                                  thumb: '/upfilePath/bd/BD_202601290208026710.jpg',  date: '2026-01-29' },
-  { id: 430, title: '겨울철, 한파가 예보된다면 한랭질환을 조심하세요!',          thumb: '/upfilePath/bd/BD_202512260206333880.jpg',  date: '2025-12-26' },
-  { id: 426, title: '건강한 콩팥, 건강한 삶 ',                                 thumb: '/upfilePath/bd/BD_202512120215510570.jpg',  date: '2025-12-12' },
-  { id: 423, title: '최소 절개, 흉터없이 안전한 복강경 수술, 담낭절제술',       thumb: '/upfilePath/bd/BD_202512050236573940.jpg',  date: '2025-12-05' },
-]
-
-const TOTAL_COUNT = 161
-const TOTAL_PAGES = 17
+const PAGE_SIZE = 10
 const PAGE_GROUP_SIZE = 10
 
 export default function HealthInfoPage() {
+  const [items, setItems]           = useState<HealthInfoItem[]>([])
+  const [totalCount, setTotalCount] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+  const [page, setPage]             = useState(1)
   const [searchType, setSearchType] = useState<SearchType>('')
-  const [searchValue, setSearchValue] = useState('')
+  const [inputValue, setInputValue] = useState('')
+  const [keyword, setKeyword]       = useState('')
   const [selectOpen, setSelectOpen] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading]       = useState(false)
+
+  const load = useCallback(async (p: number, kw: string, type: SearchType) => {
+    setLoading(true)
+    try {
+      const params: Parameters<typeof fetchHealthInfoList>[0] = { page: p, size: PAGE_SIZE }
+      if (kw) {
+        params.keyword = kw
+        params.type    = type === '' ? 2 : Number(type)
+      }
+      const res = await fetchHealthInfoList(params)
+      setItems(res.items)
+      setTotalCount(res.total)
+      setTotalPages(res.total_pages || 1)
+    } catch {
+      // 오류 무시
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    load(page, keyword, searchType)
+  }, [load, page, keyword, searchType])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    setCurrentPage(1)
-    // TODO: API 연동
+    setPage(1)
+    setKeyword(inputValue)
   }
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    // TODO: API 연동
+  const handlePageChange = (p: number) => {
+    setPage(p)
+    window.scrollTo({ top: 0 })
   }
 
-  const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
-  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, TOTAL_PAGES)
+  const pageGroupStart =
+    Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
+  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages)
 
   return (
     <SubPageLayout
@@ -67,7 +75,6 @@ export default function HealthInfoPage() {
       <div className="con_area">
         <div className="bbs_cont">
           <form onSubmit={handleSearch}>
-            <input type="hidden" name="sc" value={searchType} readOnly />
             <div className="bbs_search_area">
               <div className={`select_area${selectOpen ? ' open' : ''}`}>
                 <button
@@ -97,8 +104,8 @@ export default function HealthInfoPage() {
                 className="sh_ip"
                 title="건강정보 검색어"
                 placeholder="검색어를 입력하세요"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
               />
               <button type="submit" className="btn_sh">
                 <span>검색</span>
@@ -108,23 +115,31 @@ export default function HealthInfoPage() {
           </form>
 
           <div className="bbs_list_area">
-            <p className="bbs_count">총 {TOTAL_COUNT}건이 검색되었습니다.</p>
-            <div className="bbs_list2">
-              {mockItems.map((item) => (
-                <div className="bbs_item" key={item.id}>
-                  <Link to={`/community/health-info/${item.id}`}>
-                    <div className="bbs_thumb">
-                      <img src={item.thumb} alt="" />
-                    </div>
-                    <div className="bbs_item_cont">
-                      <p className="bbs_name">{item.title}</p>
-                      <p className="bbs_disc"></p>
-                      <p className="bbs_date">{item.date}</p>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
+            <p className="bbs_count">총 {totalCount}건이 검색되었습니다.</p>
+            {loading ? (
+              <p style={{ textAlign: 'center', padding: '40px 0' }}>불러오는 중...</p>
+            ) : items.length === 0 ? (
+              <p style={{ textAlign: 'center', padding: '40px 0' }}>등록된 건강정보가 없습니다.</p>
+            ) : (
+              <div className="bbs_list2">
+                {items.map((item) => (
+                  <div className="bbs_item" key={item.id}>
+                    <Link to={`/community/health-info/${item.id}`}>
+                      <div className="bbs_thumb">
+                        <img src={item.thumbnail ?? '/images/default_thumb.png'} alt="" />
+                      </div>
+                      <div className="bbs_item_cont">
+                        <p className="bbs_name">{item.title}</p>
+                        <p className="bbs_disc">
+                          {item.content ? item.content.replace(/<[^>]*>/g, '').slice(0, 60) : ''}
+                        </p>
+                        <p className="bbs_date">{item.created_at}</p>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="pagination" role="navigation">
@@ -133,7 +148,7 @@ export default function HealthInfoPage() {
               className="btn_arrow btn_first"
               title="첫 페이지"
               onClick={() => handlePageChange(1)}
-              disabled={currentPage === 1}
+              disabled={page === 1}
             >
               처음페이지로
             </button>
@@ -141,21 +156,24 @@ export default function HealthInfoPage() {
               type="button"
               className="btn_arrow btn_prev"
               title="이전 페이지"
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
+              onClick={() => handlePageChange(Math.max(1, page - 1))}
+              disabled={page === 1}
             >
               이전페이지로
             </button>
             <div className="page_num_list">
-              {Array.from({ length: pageGroupEnd - pageGroupStart + 1 }, (_, i) => pageGroupStart + i).map((page) => (
+              {Array.from(
+                { length: pageGroupEnd - pageGroupStart + 1 },
+                (_, i) => pageGroupStart + i,
+              ).map((p) => (
                 <button
-                  key={page}
+                  key={p}
                   type="button"
-                  className={`btn_num${currentPage === page ? ' active_num' : ''}`}
-                  title={currentPage === page ? '현재 페이지' : undefined}
-                  onClick={() => handlePageChange(page)}
+                  className={`btn_num${page === p ? ' active_num' : ''}`}
+                  title={page === p ? '현재 페이지' : undefined}
+                  onClick={() => handlePageChange(p)}
                 >
-                  {page}
+                  {p}
                 </button>
               ))}
             </div>
@@ -163,8 +181,8 @@ export default function HealthInfoPage() {
               type="button"
               className="btn_arrow btn_next"
               title="다음 페이지"
-              onClick={() => handlePageChange(Math.min(TOTAL_PAGES, currentPage + 1))}
-              disabled={currentPage === TOTAL_PAGES}
+              onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
+              disabled={page === totalPages}
             >
               다음페이지로
             </button>
@@ -172,8 +190,8 @@ export default function HealthInfoPage() {
               type="button"
               className="btn_arrow btn_last"
               title="마지막 페이지"
-              onClick={() => handlePageChange(TOTAL_PAGES)}
-              disabled={currentPage === TOTAL_PAGES}
+              onClick={() => handlePageChange(totalPages)}
+              disabled={page === totalPages}
             >
               마지막페이지로
             </button>

@@ -1,11 +1,35 @@
 import { Link, useLocation } from 'react-router-dom'
 
-export const sideMenuItems = [
-  { label: '대시보드', to: '/admin', icon: 'dashboard' },
-  { label: '소식 관리', to: '/admin/news', icon: 'newspaper' },
-  { label: '사업보고 관리', to: '/admin/report', icon: 'description' },
-  { label: '공지사항 관리', to: '/admin/notice', icon: 'campaign' },
+type MenuSection = {
+  sectionLabel?: string
+  items: { label: string; to: string; icon: string }[]
+}
+
+export const sideMenuSections: MenuSection[] = [
+  {
+    items: [
+      { label: '대시보드', to: '/admin', icon: 'dashboard' },
+    ],
+  },
+  {
+    sectionLabel: '게시판',
+    items: [
+      { label: '공지사항 관리', to: '/admin/notice', icon: 'campaign' },
+      { label: '보도자료 관리', to: '/admin/press', icon: 'newspaper' },
+      { label: '채용정보 관리', to: '/admin/recruit', icon: 'work' },
+      { label: '건강정보 관리', to: '/admin/health-info', icon: 'health_and_safety' },
+    ],
+  },
+  {
+    sectionLabel: '운영관리',
+    items: [
+      { label: '건강상담 관리', to: '/admin/consultation', icon: 'forum' },
+    ],
+  },
 ]
+
+// 기존 코드와의 하위호환을 위해 sideMenuItems 도 export
+export const sideMenuItems = sideMenuSections.flatMap((s) => s.items)
 
 export default function AdminSidebar() {
   const location = useLocation()
@@ -19,23 +43,32 @@ export default function AdminSidebar() {
       </div>
       <nav className="adm_nav">
         <ul>
-          {sideMenuItems.map((item) => (
-            <li key={item.to}>
-              <Link
-                to={item.to}
-                className={
-                  item.to === '/admin'
-                    ? location.pathname === '/admin'
-                      ? 'active'
-                      : ''
-                    : location.pathname.startsWith(item.to)
-                      ? 'active'
-                      : ''
-                }
-              >
-                <span className="material-icons">{item.icon}</span>
-                {item.label}
-              </Link>
+          {sideMenuSections.map((section, si) => (
+            <li key={si} className="adm_nav_section">
+              {section.sectionLabel && (
+                <span className="adm_nav_section_label">{section.sectionLabel}</span>
+              )}
+              <ul>
+                {section.items.map((item) => (
+                  <li key={item.to}>
+                    <Link
+                      to={item.to}
+                      className={
+                        item.to === '/admin'
+                          ? location.pathname === '/admin'
+                            ? 'active'
+                            : ''
+                          : location.pathname.startsWith(item.to)
+                            ? 'active'
+                            : ''
+                      }
+                    >
+                      <span className="material-icons">{item.icon}</span>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

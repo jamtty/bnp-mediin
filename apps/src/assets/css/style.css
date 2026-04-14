@@ -13366,6 +13366,23 @@ body.h100 {
 .file_list {
   padding: 20px 0 10px;
 }
+.bbs_cont .bbs_view .view_info ul li .file_list {
+  width: calc(100% - 125px);
+  flex: 1;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+@media screen and (max-width: 767px) {
+  .bbs_cont .bbs_view .view_info ul li .file_list {
+    min-height: unset;
+  }
+}
 .file_list li {
   display: flex;
   align-items: center;
@@ -13381,7 +13398,7 @@ body.h100 {
 }
 .file_list li a {
   max-width: calc(100% - 25px);
-  font-size: 18px;
+  font-size: 16px;
   color: #707070;
   line-height: 20px;
 }
@@ -13921,18 +13938,18 @@ body.h100 {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
-.bbs_cont .bbs_view .view_info ul {
+.bbs_cont .bbs_view .view_info > ul {
   display: flex;
 }
-.bbs_cont .bbs_view .view_info ul li {
+.bbs_cont .bbs_view .view_info > ul > li {
   width: 280px;
   display: flex;
 }
-.bbs_cont .bbs_view .view_info ul li:nth-child(1) {
+.bbs_cont .bbs_view .view_info > ul > li:nth-child(1) {
   flex: 1;
-  width: calc(100% - 560px);
+  width:100%;
 }
-.bbs_cont .bbs_view .view_info ul li .label {
+.bbs_cont .bbs_view .view_info > ul > li .label {
   background: #efefef;
   height: 56px;
   width: 125px;
@@ -14099,7 +14116,7 @@ body.h100 {
 .bbs_cont .bbs_view .view_cont_area {
   padding: 40px 30px;
   border-bottom: 1px solid #ccc;
-  font-size:1.4rem;
+  font-size:1.5rem;
 }
 .bbs_cont .bbs_view .view_cont_area + .view_nav {
   border-top: 0;
@@ -14340,7 +14357,7 @@ body.h100 {
     width: 50%;
     display: flex;
   }
-  .bbs_cont .bbs_view .view_info ul li:nth-child(1) {
+  .bbs_cont .bbs_view .view_info > ul > li:nth-child(1) {
     flex: 1 1 100%;
     width: 100%;
     border-bottom: 1px solid #ccc;
@@ -14681,18 +14698,19 @@ body.h100 {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
   }
-  .bbs_cont .bbs_view .view_info ul {
+  .bbs_cont .bbs_view .view_info > ul {
     display: block;
   }
-  .bbs_cont .bbs_view .view_info ul li {
+  .bbs_cont .bbs_view .view_info > ul > li {
     width: 100%;
     display: flex;
     flex: 1;
+    padding:0.5rem 0;
   }
-  .bbs_cont .bbs_view .view_info ul li:nth-child(1) {
+  .bbs_cont .bbs_view .view_info > ul > li:nth-child(1) {
     width: 100%;
   }
-  .bbs_cont .bbs_view .view_info ul li .label {
+  .bbs_cont .bbs_view .view_info > ul > li .label {
     background: none;
     height: 30px;
     width: 70px;
@@ -14891,3 +14909,7 @@ body.h100 {
     margin: 30px auto 0;
   }
 }
+
+.pw_error { font-size:1.4rem; text-align:center; margin:1rem 0 0; color:#e53935; }
+
+

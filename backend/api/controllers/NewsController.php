@@ -132,6 +132,13 @@ class NewsController
         if ($id <= 0) { Response::error('잘못된 요청입니다.'); }
 
         try {
+            // 첨부파일 물리 삭제
+            $filePaths = $this->repo->findFilePathsByNewsId($id);
+            $this->repo->deleteFilesByNewsId($id);
+            foreach ($filePaths as $path) {
+                FileUploader::delete($path);
+            }
+
             $this->service->delete($id);
             Response::ok(null, '삭제되었습니다.');
         } catch (RuntimeException $e) {
@@ -140,10 +147,6 @@ class NewsController
         }
     }
 
-    /**
-     * 첨부파일 삭제
-     * POST /api/news/file/{fileId}/delete
-     */
     public function destroyFile(Request $request, array $params): void
     {
         $payload = Token::fromRequest();

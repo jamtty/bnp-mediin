@@ -224,6 +224,24 @@
   font-weight: 600;
   border-left-color: #2563eb;
 }
+.adm_nav_section {
+  list-style: none;
+}
+.adm_nav_section > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.adm_nav_section_label {
+  display: block;
+  padding: 1.2rem 2rem 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #aaa;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
 
 /* 콘텐츠 영역 */
 .adm_content {
@@ -703,4 +721,169 @@
   height: 4.4rem;
   padding: 0 2.4rem;
   font-size: 1.4rem;
+}
+
+/* ── adm_form 계열 (보도자료·채용·건강정보 폼) ── */
+.adm_form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+.adm_form_row {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 0.4rem 0;
+}
+.adm_form_row_col {
+  flex-direction: column;
+  align-items: stretch;
+}
+.adm_form_label {
+  min-width: 12rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #374151;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+.adm_form_row_col .adm_form_label {
+  margin-bottom: 0.6rem;
+}
+.adm_form_input {
+  flex: 1;
+  height: 4.4rem;
+  padding: 0 1.2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+  background: #fff;
+}
+.adm_form_input:focus {
+  border-color: #2563eb;
+}
+.adm_checkbox_label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #374151;
+}
+.adm_checkbox_label input[type='checkbox'] {
+  width: 1.6rem;
+  height: 1.6rem;
+  accent-color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.adm_form_btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+.adm_form_btns .adm_btn_secondary,
+.adm_form_btns .adm_btn_primary {
+  height: 4.4rem;
+  padding: 0 2.4rem;
+  font-size: 1.4rem;
+}
+.required {
+  color: #dc2626;
+}
+
+/* ── 상태 배지 ── */
+.adm_status_badge {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.adm_status_done {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.adm_status_wait {
+  background: #fef9c3;
+  color: #b45309;
+}
+
+/* ── 상세 보기 테이블 ── */
+.adm_view_table_wrap {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.6rem;
+  overflow: hidden;
+}
+.adm_view_table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+.adm_view_table th,
+.adm_view_table td {
+  padding: 1.2rem 1.6rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.6;
+}
+.adm_view_table tr:last-child th,
+.adm_view_table tr:last-child td {
+  border-bottom: none;
+}
+.adm_view_table th {
+  width: 12rem;
+  background: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+.adm_view_content {
+  line-height: 1.8;
+  word-break: break-word;
+}
+.adm_view_content img {
+  max-width: 100%;
+}
+.adm_empty_text {
+  color: #9ca3af;
+}
+
+/* ── 답변 섹션 ── */
+.adm_reply_section {
+  margin-top: 2.4rem;
+}
+.adm_reply_header {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  border-bottom: 2px solid #1e3a5f;
+  margin-bottom: 0;
+  padding:1rem;
+}
+.adm_reply_textarea {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  line-height: 1.6;
+  transition: border-color 0.15s;
+}
+.adm_reply_textarea:focus {
+  border-color: #2563eb;
 }

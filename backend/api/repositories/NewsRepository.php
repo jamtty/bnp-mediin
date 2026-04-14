@@ -193,6 +193,20 @@ class NewsRepository extends BaseRepository
     }
 
     /**
+     * 게시글의 전체 첨부파일 경로 목록 (삭제용)
+     */
+    public function findFilePathsByNewsId(int $newsId): array
+    {
+        $rows = $this->select('SELECT file_path FROM news_file WHERE news_id = :id', [':id' => $newsId]);
+        return array_column($rows, 'file_path');
+    }
+
+    public function deleteFilesByNewsId(int $newsId): void
+    {
+        $this->execute('DELETE FROM news_file WHERE news_id = :id', [':id' => $newsId]);
+    }
+
+    /**
      * 첨부파일 DB 삭제
      */
     public function deleteFile(int $fileId): bool

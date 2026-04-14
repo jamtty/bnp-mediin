@@ -15,6 +15,7 @@ export interface NoticeItem {
   view_count: number
   content: string | null
   file_count: number
+  is_pinned: number // 1: 고정(공지), 0: 일반
 }
 
 export interface NoticeDetail {
@@ -24,6 +25,7 @@ export interface NoticeDetail {
   author_name: string
   content: string
   view_count: number
+  is_pinned: number // 1: 고정(공지), 0: 일반
   created_at: string
   updated_at: string | null
 }
@@ -85,10 +87,12 @@ export const createNotice = async (
   title: string,
   content: string,
   files?: File[],
+  isPinned = false,
 ): Promise<{ id: number }> => {
   const form = new FormData()
   form.append('title', title)
   form.append('content', content)
+  form.append('is_pinned', isPinned ? '1' : '0')
   files?.forEach((f) => form.append('files[]', f))
   const { data } = await apiClient.post('/api/notice', form, {
     headers: { 'Content-Type': undefined },
@@ -105,10 +109,12 @@ export const updateNotice = async (
   title: string,
   content: string,
   files?: File[],
+  isPinned = false,
 ): Promise<void> => {
   const form = new FormData()
   form.append('title', title)
   form.append('content', content)
+  form.append('is_pinned', isPinned ? '1' : '0')
   files?.forEach((f) => form.append('files[]', f))
   const { data } = await apiClient.post(`/api/notice/${id}`, form, {
     headers: { 'Content-Type': undefined },

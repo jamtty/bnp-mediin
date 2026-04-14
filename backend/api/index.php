@@ -43,15 +43,23 @@ require_once __DIR__ . '/repositories/NewsRepository.php';
 require_once __DIR__ . '/repositories/ReportRepository.php';
 require_once __DIR__ . '/repositories/NoticeRepository.php';
 require_once __DIR__ . '/repositories/MemberRepository.php';
+require_once __DIR__ . '/repositories/BoardRepository.php';
 require_once __DIR__ . '/services/NewsService.php';
 require_once __DIR__ . '/services/ReportService.php';
 require_once __DIR__ . '/services/NoticeService.php';
 require_once __DIR__ . '/services/AuthService.php';
+require_once __DIR__ . '/services/BoardService.php';
 require_once __DIR__ . '/controllers/NewsController.php';
 require_once __DIR__ . '/controllers/ReportController.php';
 require_once __DIR__ . '/controllers/NoticeController.php';
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/UploadController.php';
+require_once __DIR__ . '/controllers/PressController.php';
+require_once __DIR__ . '/controllers/RecruitController.php';
+require_once __DIR__ . '/controllers/HealthInfoController.php';
+require_once __DIR__ . '/repositories/ConsultationRepository.php';
+require_once __DIR__ . '/services/ConsultationService.php';
+require_once __DIR__ . '/controllers/ConsultationController.php';
 
 // ── 라우터 초기화 및 디스패치 ─────────────────────────────────
 $router = new Router();

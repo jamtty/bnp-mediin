@@ -180,6 +180,20 @@ class ReportRepository extends BaseRepository
     }
 
     /**
+     * 게시글의 전체 첨부파일 경로 목록 (삭제용)
+     */
+    public function findFilePathsByReportId(int $reportId): array
+    {
+        $rows = $this->select('SELECT file_path FROM report_file WHERE report_id = :id', [':id' => $reportId]);
+        return array_column($rows, 'file_path');
+    }
+
+    public function deleteFilesByReportId(int $reportId): void
+    {
+        $this->execute('DELETE FROM report_file WHERE report_id = :id', [':id' => $reportId]);
+    }
+
+    /**
      * 첨부파일 DB 삭제
      */
     public function deleteFile(int $fileId): bool

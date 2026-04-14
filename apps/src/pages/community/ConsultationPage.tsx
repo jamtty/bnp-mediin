@@ -1,20 +1,11 @@
-﻿import { useState } from 'react'
-import { Link } from 'react-router-dom'
+﻿import { useState, useEffect, useCallback } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchConsultationList, type ConsultationItem } from '../../api/consultation'
+import { JB_CD_MAP } from './_jbCdMap'
 
 type SearchType = '' | 'A.AD_TITLE' | 'A.AD_CONT' | 'A.AD_NAME'
-
-type ConsultationItem = {
-  id: number
-  num: number
-  dept: string
-  title: string
-  date: string
-  views: number
-  isSecret: boolean
-  status: '답변완료' | '답변대기'
-}
 
 const SEARCH_TYPE_LABELS: Record<SearchType, string> = {
   '': '전체',
@@ -23,43 +14,61 @@ const SEARCH_TYPE_LABELS: Record<SearchType, string> = {
   'A.AD_NAME': '이름',
 }
 
-// TODO: API 연동 시 제거 — 임시 목업 데이터
-const mockItems: ConsultationItem[] = [
-  { id: 90, num: 40, dept: '신경과',   title: '두통',                                              date: '2026-03-18', views: 56,  isSecret: false, status: '답변완료' },
-  { id: 89, num: 39, dept: '내과',     title: '호흡기 내과 기관지염 통증지속에 관해 궁금하여 상담 ...', date: '2026-02-11', views: 175, isSecret: false, status: '답변완료' },
-  { id: 86, num: 38, dept: '심장내과', title: '고지혈증 치료제 관련 질문',                           date: '2026-01-18', views: 0,   isSecret: true,  status: '답변완료' },
-  { id: 85, num: 37, dept: '내과',     title: '진료예약 변경신청합니당',                              date: '2025-11-21', views: 456, isSecret: false, status: '답변완료' },
-  { id: 84, num: 36, dept: '내과',     title: '진료예약 변경신청합니당',                              date: '2025-11-18', views: 402, isSecret: false, status: '답변완료' },
-  { id: 83, num: 35, dept: '내과',     title: '내과진료',                                           date: '2025-11-13', views: 403, isSecret: false, status: '답변완료' },
-  { id: 82, num: 34, dept: '정형외과', title: '수술부위관련',                                        date: '2025-11-03', views: 0,   isSecret: true,  status: '답변완료' },
-  { id: 81, num: 33, dept: '내과',     title: '진료예약 변경신청합니당',                              date: '2025-11-03', views: 388, isSecret: false, status: '답변완료' },
-  { id: 80, num: 32, dept: '내과',     title: '왼쪽무릎 안쪽부분 통증',                              date: '2025-11-03', views: 0,   isSecret: true,  status: '답변완료' },
-  { id: 79, num: 31, dept: '신경과',   title: '삼차신경통',                                          date: '2025-10-31', views: 0,   isSecret: true,  status: '답변완료' },
-]
-
-const TOTAL_COUNT = 40
-const TOTAL_PAGES = 4
+const PAGE_SIZE = 10
 const PAGE_GROUP_SIZE = 10
 
 export default function ConsultationPage() {
-  const [searchType, setSearchType] = useState<SearchType>('')
-  const [searchValue, setSearchValue] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const currentPage = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const appliedSearchType = (searchParams.get('type') ?? '') as SearchType
+  const appliedSearchValue = searchParams.get('keyword') ?? ''
+
+  // 입력 중인 값 (URL에는 검색 버튼 눌러야 반영)
+  const [searchType, setSearchType] = useState<SearchType>(appliedSearchType)
+  const [searchValue, setSearchValue] = useState(appliedSearchValue)
   const [selectOpen, setSelectOpen] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [items, setItems] = useState<ConsultationItem[]>([])
+  const [totalCount, setTotalCount] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(false)
+
+  // URL 파라미터가 바뀌면 입력 필드도 동기화 (헤더 메뉴 클릭으로 파라미터 초기화 시)
+  useEffect(() => {
+    setSearchType(appliedSearchType)
+    setSearchValue(appliedSearchValue)
+  }, [appliedSearchType, appliedSearchValue])
+
+  const loadList = useCallback(async (page: number, keyword: string, type: SearchType) => {
+    setLoading(true)
+    try {
+      const result = await fetchConsultationList({ page, size: PAGE_SIZE, keyword, type })
+      setItems(result.items)
+      setTotalCount(result.total)
+      setTotalPages(result.total_pages)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    loadList(currentPage, appliedSearchValue, appliedSearchType)
+  }, [currentPage, appliedSearchValue, appliedSearchType, loadList])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    setCurrentPage(1)
-    // TODO: API 연동
+    setSearchParams({ type: searchType, keyword: searchValue, page: '1' })
   }
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    // TODO: API 연동
+    setSearchParams({ type: appliedSearchType, keyword: appliedSearchValue, page: String(page) })
+    window.scrollTo(0, 0)
   }
 
   const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
-  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, TOTAL_PAGES)
+  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages)
 
   return (
     <SubPageLayout
@@ -76,7 +85,7 @@ export default function ConsultationPage() {
             빠르고 친절하게 답변해드리겠습니다.
           </p>
           <form onSubmit={handleSearch}>
-            <input type="hidden" name="sc" value={searchType} readOnly />
+            <input type="hidden" name="sc" value={appliedSearchType} readOnly />
             <div className="bbs_search_area">
               <div className={`select_area${selectOpen ? ' open' : ''}`}>
                 <button
@@ -118,7 +127,7 @@ export default function ConsultationPage() {
           </form>
 
           <div className="bbs_list_area">
-            <p className="bbs_count">총 {TOTAL_COUNT}건이 검색되었습니다.</p>
+            <p className="bbs_count">총 {totalCount}건이 검색되었습니다.</p>
             <div className="bbs_list">
               <table>
                 <caption>건강상담 리스트표</caption>
@@ -133,7 +142,7 @@ export default function ConsultationPage() {
                 <thead>
                   <tr>
                     <th scope="col" className="m_hide">번호</th>
-                    <th scope="col">진료과</th>
+                    <th scope="col">분류</th>
                     <th scope="col">제목</th>
                     <th scope="col" className="m_hide">등록일</th>
                     <th scope="col" className="m_hide">조회수</th>
@@ -141,21 +150,28 @@ export default function ConsultationPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockItems.map((item) => (
-                    <tr key={item.id}>
-                      <td className="m_hide">{item.num}</td>
-                      <td>{item.dept}</td>
-                      <td>
-                        <Link to={`/community/consultation/${item.id}`}>
-                          {item.title}
-                        </Link>
-                        {item.isSecret && <i className="ico_secret"></i>}
-                      </td>
-                      <td className="m_hide">{item.date}</td>
-                      <td className="m_hide">{item.views}</td>
-                      <td>{item.status}</td>
-                    </tr>
-                  ))}
+                  {loading ? (
+                    <tr><td colSpan={6} style={{ textAlign: 'center' }}>불러오는 중...</td></tr>
+                  ) : items.length === 0 ? (
+                    <tr><td colSpan={6} style={{ textAlign: 'center' }}>등록된 상담이 없습니다.</td></tr>
+                  ) : items.map((item, idx) => {
+                    const rowNum = totalCount - (currentPage - 1) * PAGE_SIZE - idx
+                    return (
+                      <tr key={item.id}>
+                        <td className="m_hide">{rowNum}</td>
+                        <td>{item.jb_cd ? (JB_CD_MAP[item.jb_cd]?.label ?? item.jb_cd) : '-'}</td>
+                        <td>
+                          <Link to={`/community/consultation/${item.id}`}>
+                            {item.title}
+                            {item.is_secret === 'Y' && <i className="ico_secret"></i>}
+                          </Link>
+                        </td>
+                        <td className="m_hide">{item.date}</td>
+                        <td className="m_hide">{item.view_count}</td>
+                        <td>{item.status}</td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
@@ -198,8 +214,8 @@ export default function ConsultationPage() {
                 type="button"
                 className="btn_arrow btn_next"
                 title="다음 페이지"
-                onClick={() => handlePageChange(Math.min(TOTAL_PAGES, currentPage + 1))}
-                disabled={currentPage === TOTAL_PAGES}
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
               >
                 다음페이지로
               </button>
@@ -207,8 +223,8 @@ export default function ConsultationPage() {
                 type="button"
                 className="btn_arrow btn_last"
                 title="마지막 페이지"
-                onClick={() => handlePageChange(TOTAL_PAGES)}
-                disabled={currentPage === TOTAL_PAGES}
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
               >
                 마지막페이지로
               </button>

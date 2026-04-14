@@ -50,10 +50,17 @@ class Token
 
     /**
      * Authorization: Bearer 헤더에서 토큰 추출 + 검증
+     * Apache 환경에서 HTTP_AUTHORIZATION이 Strip될 수 있으므로 getallheaders() fallback 사용
      */
     public static function fromRequest(): ?array
     {
         $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+
+        if (empty($auth) && function_exists('getallheaders')) {
+            $headers = getallheaders();
+            $auth = $headers['Authorization'] ?? $headers['authorization'] ?? '';
+        }
+
         if (!str_starts_with($auth, 'Bearer ')) return null;
         return self::verify(substr($auth, 7));
     }

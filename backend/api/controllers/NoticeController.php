@@ -54,8 +54,12 @@ class NoticeController
             $preview = $request->query('preview') === '1';
             $result = $this->service->getDetail($id, $preview);
             Response::ok($result);
+        } catch (PDOException $e) {
+            error_log('[Notice] DB Error in show: ' . $e->getMessage());
+            Response::error('데이터베이스 오류가 발생했습니다.', 500);
         } catch (RuntimeException $e) {
-            $status = $e->getCode() ?: 400;
+            $code   = $e->getCode();
+            $status = (is_int($code) && $code >= 400 && $code < 600) ? $code : 400;
             Response::error($e->getMessage(), $status);
         }
     }
@@ -65,12 +69,13 @@ class NoticeController
         $payload = Token::fromRequest();
         if (!$payload) { Response::error('인증이 필요합니다.', 401); }
 
-        $title   = trim((string)$request->input('title', ''));
-        $content = (string)$request->input('content', '');
+        $title    = trim((string)$request->input('title', ''));
+        $content  = (string)$request->input('content', '');
+        $isPinned = $request->input('is_pinned', '0') === '1';
         if ($title === '') { Response::error('제목을 입력해주세요.'); }
 
         try {
-            $id = $this->service->create($title, $content, (string)$payload['name'], (string)$payload['name']);
+            $id = $this->service->create($title, $content, (string)$payload['name'], (string)$payload['name'], $isPinned);
 
             foreach (FileUploader::process('files', 'notice') as $f) {
                 $this->repo->saveFile($id, $f['ori_name'], $f['save_name'], $f['file_path'], $f['file_size'], $f['file_ext']);
@@ -87,15 +92,16 @@ class NoticeController
         $payload = Token::fromRequest();
         if (!$payload) { Response::error('인증이 필요합니다.', 401); }
 
-        $id      = (int)($params['id'] ?? 0);
-        $title   = trim((string)$request->input('title', ''));
-        $content = (string)$request->input('content', '');
+        $id       = (int)($params['id'] ?? 0);
+        $title    = trim((string)$request->input('title', ''));
+        $content  = (string)$request->input('content', '');
+        $isPinned = $request->input('is_pinned', '0') === '1';
 
         if ($id <= 0)      { Response::error('잘못된 요청입니다.'); }
         if ($title === '') { Response::error('제목을 입력해주세요.'); }
 
         try {
-            $this->service->update($id, $title, $content);
+            $this->service->update($id, $title, $content, $isPinned);
 
             foreach (FileUploader::process('files', 'notice') as $f) {
                 $this->repo->saveFile($id, $f['ori_name'], $f['save_name'], $f['file_path'], $f['file_size'], $f['file_ext']);
@@ -117,6 +123,13 @@ class NoticeController
         if ($id <= 0) { Response::error('잘못된 요청입니다.'); }
 
         try {
+            // 첨부파일 물리 삭제
+            $filePaths = $this->repo->findFilePathsByNoticeId($id);
+            $this->repo->deleteFilesByNoticeId($id);
+            foreach ($filePaths as $path) {
+                FileUploader::delete($path);
+            }
+
             $this->service->delete($id);
             Response::ok(null, '삭제되었습니다.');
         } catch (RuntimeException $e) {

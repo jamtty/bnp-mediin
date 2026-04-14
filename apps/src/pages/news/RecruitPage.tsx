@@ -1,62 +1,75 @@
-﻿import { useState } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchRecruitList, type RecruitItem } from '../../api/board'
 
-type SearchType = '' | 'BD.BD_TITLE' | 'BD.BD_CONTENT'
-
-type RecruitItem = {
-  id: number
-  title: string
-  periodStart: string
-  periodEnd: string
-  date: string
-  status: string
-}
+type SearchType = '' | '0' | '1'
 
 const SEARCH_TYPE_LABELS: Record<SearchType, string> = {
   '': '전체',
-  'BD.BD_TITLE': '제목',
-  'BD.BD_CONTENT': '내용',
+  '0': '제목',
+  '1': '내용',
 }
 
-// TODO: API 연동 시 제거 — 임시 목업 데이터
-const mockItems: RecruitItem[] = [
-  { id: 414, title: '2026년도 신규 간호사 모집공고',          periodStart: '2025-10-31', periodEnd: '2025-11-23', date: '2025-10-31', status: '채용마감' },
-  { id: 275, title: '2025년도 신규 간호사 모집공고',          periodStart: '2024-09-30', periodEnd: '2024-10-23', date: '2024-09-30', status: '채용마감' },
-  { id: 224, title: '내시경실 간호사 채용공고',               periodStart: '2024-03-18', periodEnd: '2024-04-30', date: '2024-03-18', status: '채용마감' },
-  { id: 223, title: '임상병리사 채용공고',                    periodStart: '2024-03-18', periodEnd: '2024-04-30', date: '2024-03-18', status: '채용마감' },
-  { id: 219, title: '외래 간호조무사 채용공고',               periodStart: '2024-02-29', periodEnd: '2024-08-31', date: '2024-02-29', status: '채용마감' },
-  { id: 218, title: '외래 간호사 채용공고',                   periodStart: '2024-02-29', periodEnd: '2024-12-30', date: '2024-02-29', status: '채용마감' },
-  { id: 217, title: '병동(3교대) 간호조무사 채용공고',        periodStart: '2024-02-29', periodEnd: '2024-12-31', date: '2024-02-29', status: '채용마감' },
-  { id: 216, title: '간호사 채용공고',                        periodStart: '2024-02-29', periodEnd: '2024-09-29', date: '2024-02-29', status: '채용마감' },
-  { id: 211, title: '내시경식 소독 및 세척 도우미 채용공고',  periodStart: '2024-02-22', periodEnd: '2024-03-31', date: '2024-02-22', status: '채용마감' },
-  { id: 210, title: '야간원무팀 채용공고',                    periodStart: '2024-02-22', periodEnd: '2024-04-01', date: '2024-02-22', status: '채용마감' },
-]
-
-const TOTAL_COUNT = 18
-const TOTAL_PAGES = 2
+const PAGE_SIZE = 10
 const PAGE_GROUP_SIZE = 10
 
 export default function RecruitPage() {
+  const [items, setItems]           = useState<RecruitItem[]>([])
+  const [totalCount, setTotalCount] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+  const [page, setPage]             = useState(1)
   const [searchType, setSearchType] = useState<SearchType>('')
-  const [searchValue, setSearchValue] = useState('')
+  const [inputValue, setInputValue] = useState('')
+  const [keyword, setKeyword]       = useState('')
   const [selectOpen, setSelectOpen] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading]       = useState(false)
+
+  const today = new Date().toISOString().slice(0, 10)
+
+  const getStatus = (periodEnd: string | null) => {
+    if (!periodEnd) return '채용중'
+    return periodEnd < today ? '채용마감' : '채용중'
+  }
+
+  const load = useCallback(async (p: number, kw: string, type: SearchType) => {
+    setLoading(true)
+    try {
+      const params: Parameters<typeof fetchRecruitList>[0] = { page: p, size: PAGE_SIZE }
+      if (kw) {
+        params.keyword = kw
+        params.type    = type === '' ? 2 : Number(type)
+      }
+      const res = await fetchRecruitList(params)
+      setItems(res.items)
+      setTotalCount(res.total)
+      setTotalPages(res.total_pages || 1)
+    } catch {
+      // 오류 무시
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    load(page, keyword, searchType)
+  }, [load, page, keyword, searchType])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    setCurrentPage(1)
-    // TODO: API 연동
+    setPage(1)
+    setKeyword(inputValue)
   }
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    // TODO: API 연동
+  const handlePageChange = (p: number) => {
+    setPage(p)
+    window.scrollTo({ top: 0 })
   }
 
-  const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
-  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, TOTAL_PAGES)
+  const pageGroupStart =
+    Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1
+  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages)
 
   return (
     <SubPageLayout
@@ -69,7 +82,6 @@ export default function RecruitPage() {
       <div className="con_area">
         <div className="bbs_cont">
           <form onSubmit={handleSearch}>
-            <input type="hidden" name="sc" value={searchType} readOnly />
             <div className="bbs_search_area">
               <div className={`select_area${selectOpen ? ' open' : ''}`}>
                 <button
@@ -99,8 +111,8 @@ export default function RecruitPage() {
                 className="sh_ip"
                 title="채용정보 검색어"
                 placeholder="검색어를 입력하세요"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
               />
               <button type="submit" className="btn_sh">
                 <span>검색</span>
@@ -110,7 +122,7 @@ export default function RecruitPage() {
           </form>
 
           <div className="bbs_list_area">
-            <p className="bbs_count">총 {TOTAL_COUNT}건이 검색되었습니다.</p>
+            <p className="bbs_count">총 {totalCount}건이 검색되었습니다.</p>
             <div className="bbs_list">
               <table>
                 <caption>채용정보 리스트표</caption>
@@ -131,19 +143,23 @@ export default function RecruitPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockItems.map((item, idx) => (
+                  {loading ? (
+                    <tr><td colSpan={5} style={{ textAlign: 'center' }}>불러오는 중...</td></tr>
+                  ) : items.length === 0 ? (
+                    <tr><td colSpan={5} style={{ textAlign: 'center' }}>등록된 채용공고가 없습니다.</td></tr>
+                  ) : items.map((item, idx) => (
                     <tr key={item.id}>
-                      <td>{TOTAL_COUNT - ((currentPage - 1) * 10) - idx}</td>
+                      <td>{totalCount - ((page - 1) * PAGE_SIZE) - idx}</td>
                       <td>
                         <Link to={`/news/recruit/${item.id}`}>{item.title}</Link>
                       </td>
                       <td>
-                        {item.periodStart}
+                        {item.period_start ?? '-'}
                         <br />~<br />
-                        {item.periodEnd}
+                        {item.period_end ?? '-'}
                       </td>
-                      <td className="m_hide">{item.date}</td>
-                      <td>{item.status}</td>
+                      <td className="m_hide">{item.created_at}</td>
+                      <td>{getStatus(item.period_end)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -157,7 +173,7 @@ export default function RecruitPage() {
               className="btn_arrow btn_first"
               title="첫 페이지"
               onClick={() => handlePageChange(1)}
-              disabled={currentPage === 1}
+              disabled={page === 1}
             >
               처음페이지로
             </button>
@@ -165,21 +181,24 @@ export default function RecruitPage() {
               type="button"
               className="btn_arrow btn_prev"
               title="이전 페이지"
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
+              onClick={() => handlePageChange(Math.max(1, page - 1))}
+              disabled={page === 1}
             >
               이전페이지로
             </button>
             <div className="page_num_list">
-              {Array.from({ length: pageGroupEnd - pageGroupStart + 1 }, (_, i) => pageGroupStart + i).map((page) => (
+              {Array.from(
+                { length: pageGroupEnd - pageGroupStart + 1 },
+                (_, i) => pageGroupStart + i,
+              ).map((p) => (
                 <button
-                  key={page}
+                  key={p}
                   type="button"
-                  className={`btn_num${currentPage === page ? ' active_num' : ''}`}
-                  title={currentPage === page ? '현재 페이지' : undefined}
-                  onClick={() => handlePageChange(page)}
+                  className={`btn_num${page === p ? ' active_num' : ''}`}
+                  title={page === p ? '현재 페이지' : undefined}
+                  onClick={() => handlePageChange(p)}
                 >
-                  {page}
+                  {p}
                 </button>
               ))}
             </div>
@@ -187,8 +206,8 @@ export default function RecruitPage() {
               type="button"
               className="btn_arrow btn_next"
               title="다음 페이지"
-              onClick={() => handlePageChange(Math.min(TOTAL_PAGES, currentPage + 1))}
-              disabled={currentPage === TOTAL_PAGES}
+              onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
+              disabled={page === totalPages}
             >
               다음페이지로
             </button>
@@ -196,8 +215,8 @@ export default function RecruitPage() {
               type="button"
               className="btn_arrow btn_last"
               title="마지막 페이지"
-              onClick={() => handlePageChange(TOTAL_PAGES)}
-              disabled={currentPage === TOTAL_PAGES}
+              onClick={() => handlePageChange(totalPages)}
+              disabled={page === totalPages}
             >
               마지막페이지로
             </button>
@@ -207,3 +226,4 @@ export default function RecruitPage() {
     </SubPageLayout>
   )
 }
+

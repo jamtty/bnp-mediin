@@ -6,12 +6,20 @@ import AdminLayout from '@/layouts/AdminLayout'
 import AdminLoginPage from '@/pages/admin/AdminLoginPage'
 import AdminMainPage from '@/pages/admin/AdminMainPage'
 import AdminMyPage from '@/pages/admin/AdminMyPage'
-import AdminNewsPage from '@/pages/admin/AdminNewsPage'
-import AdminNewsFormPage from '@/pages/admin/AdminNewsFormPage'
 import AdminNoticePage from '@/pages/admin/AdminNoticePage'
 import AdminNoticeFormPage from '@/pages/admin/AdminNoticeFormPage'
 import AdminReportPage from '@/pages/admin/AdminReportPage'
 import AdminReportFormPage from '@/pages/admin/AdminReportFormPage'
+import AdminNewsPage from '@/pages/admin/AdminNewsPage'
+import AdminNewsFormPage from '@/pages/admin/AdminNewsFormPage'
+import AdminPressPage from '@/pages/admin/AdminPressPage'
+import AdminPressFormPage from '@/pages/admin/AdminPressFormPage'
+import AdminRecruitPage from '@/pages/admin/AdminRecruitPage'
+import AdminRecruitFormPage from '@/pages/admin/AdminRecruitFormPage'
+import AdminHealthInfoPage from '@/pages/admin/AdminHealthInfoPage'
+import AdminHealthInfoFormPage from '@/pages/admin/AdminHealthInfoFormPage'
+import AdminConsultationPage from '@/pages/admin/AdminConsultationPage'
+import AdminConsultationDetailPage from '@/pages/admin/AdminConsultationDetailPage'
 // 진료안내
 import OutpatientPage from '@/pages/care/OutpatientPage'
 import EmergencyPage from '@/pages/care/EmergencyPage'
@@ -131,15 +139,26 @@ export const router = createBrowserRouter(
       children: [
         { index: true, element: <AdminMainPage /> },
         { path: 'my', element: <AdminMyPage /> },
-        { path: 'news', element: <AdminNewsPage /> },
-        { path: 'news/new', element: <AdminNewsFormPage /> },
-        { path: 'news/:id/edit', element: <AdminNewsFormPage /> },
         { path: 'notice', element: <AdminNoticePage /> },
-        { path: 'notice/new', element: <AdminNoticeFormPage /> },
-        { path: 'notice/:id/edit', element: <AdminNoticeFormPage /> },
+        { path: 'notice/write', element: <AdminNoticeFormPage /> },
+        { path: 'notice/edit/:id', element: <AdminNoticeFormPage /> },
+        { path: 'news', element: <AdminNewsPage /> },
+        { path: 'news/write', element: <AdminNewsFormPage /> },
+        { path: 'news/edit/:id', element: <AdminNewsFormPage /> },
         { path: 'report', element: <AdminReportPage /> },
-        { path: 'report/new', element: <AdminReportFormPage /> },
-        { path: 'report/:id/edit', element: <AdminReportFormPage /> },
+        { path: 'report/write', element: <AdminReportFormPage /> },
+        { path: 'report/edit/:id', element: <AdminReportFormPage /> },
+        { path: 'press', element: <AdminPressPage /> },
+        { path: 'press/write', element: <AdminPressFormPage /> },
+        { path: 'press/edit/:id', element: <AdminPressFormPage /> },
+        { path: 'recruit', element: <AdminRecruitPage /> },
+        { path: 'recruit/write', element: <AdminRecruitFormPage /> },
+        { path: 'recruit/edit/:id', element: <AdminRecruitFormPage /> },
+        { path: 'health-info', element: <AdminHealthInfoPage /> },
+        { path: 'health-info/write', element: <AdminHealthInfoFormPage /> },
+        { path: 'health-info/edit/:id', element: <AdminHealthInfoFormPage /> },
+        { path: 'consultation', element: <AdminConsultationPage /> },
+        { path: 'consultation/:id', element: <AdminConsultationDetailPage /> },
       ],
     },
   ],

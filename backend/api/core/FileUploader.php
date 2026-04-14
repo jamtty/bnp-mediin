@@ -13,10 +13,13 @@ class FileUploader
      *
      * @param string $fieldName  HTML input name (예: 'files[]')
      * @param string $subDir     하위 디렉터리 (예: 'news', 'report', 'notice')
+     * @param int    $maxSize    파일당 최대 허용 바이트 (0 = 기본 20MB)
      * @return array<int, array{ori_name:string, save_name:string, file_path:string, file_size:int, file_ext:string}>
      */
-    public static function process(string $fieldName, string $subDir): array
+    public static function process(string $fieldName, string $subDir, int $maxSize = 0): array
     {
+        $limit = $maxSize > 0 ? $maxSize : self::MAX_SIZE;
+
         // 파일이 없으면 빈 배열 반환
         $key = str_replace('[]', '', $fieldName); // files[] → files
         if (empty($_FILES[$key])) return [];
@@ -53,8 +56,9 @@ class FileUploader
                 continue;
             }
 
-            if ((int)$sizes[$i] > self::MAX_SIZE) {
-                throw new RuntimeException('"' . $displayName . '" 파일이 너무 큽니다. (최대 20MB)');
+            if ((int)$sizes[$i] > $limit) {
+                $maxMb = round($limit / 1024 / 1024);
+                throw new RuntimeException('"' . $displayName . '" 파일이 너무 큽니다. (최대 ' . $maxMb . 'MB)');
             }
 
             if (!is_uploaded_file($tmpNames[$i])) continue;
