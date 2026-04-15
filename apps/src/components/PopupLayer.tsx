@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createFastReserve } from '@/api/fastReserve'
 
 interface PopupLayerProps {
   activePopup: string | null
@@ -9,8 +10,9 @@ function FastReservPopup({ onClose }: { onClose: () => void }) {
   const [agreed, setAgreed] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!agreed) {
       alert('개인정보처리방침에 동의 해주세요.')
       return
@@ -23,14 +25,21 @@ function FastReservPopup({ onClose }: { onClose: () => void }) {
       alert('연락처는 필수값 입니다.')
       return
     }
-    // TODO: 백엔드 연동
-    alert(
-      '상담신청이 완료 되었습니다.\n 전문상담원이 전화 드리겠습니다. \n (상담원 통화 후 예약이 확정됩니다.)',
-    )
-    setName('')
-    setPhone('')
-    setAgreed(false)
-    onClose()
+    setSubmitting(true)
+    try {
+      await createFastReserve({ name: name.trim(), phone: phone.trim(), pri_yn: agreed ? 'Y' : 'N' })
+      alert(
+        '상담신청이 완료 되었습니다.\n 전문상담원이 전화 드리겠습니다. \n (상담원 통화 후 예약이 확정됩니다.)',
+      )
+      setName('')
+      setPhone('')
+      setAgreed(false)
+      onClose()
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '신청에 실패했습니다.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -94,8 +103,8 @@ function FastReservPopup({ onClose }: { onClose: () => void }) {
                     />
                   </li>
                 </ul>
-                <button type="button" className="btn_confirm confirm" onClick={handleSubmit}>
-                  <span>신청하기</span>
+                <button type="button" className="btn_confirm confirm" onClick={handleSubmit} disabled={submitting}>
+                  <span>{submitting ? '신청 중...' : '신청하기'}</span>
                 </button>
               </div>
             </div>

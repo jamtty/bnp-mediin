@@ -188,15 +188,40 @@ export default function AdminVoicePage() {
                 <span className="adm_total_count">총 {totalCount.toLocaleString()}건</span>
               </div>
               <div className="adm_page_btns">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                  <button
-                    key={p}
-                    className={`adm_page_btn${page === p ? ' active' : ''}`}
-                    onClick={() => setPage(p)}
-                  >
-                    {p}
-                  </button>
-                ))}
+                <button
+                  className="adm_page_btn"
+                  disabled={page <= 1}
+                  onClick={() => setPage(1)}
+                >{'<<'}</button>
+                <button
+                  className="adm_page_btn"
+                  disabled={page <= 1}
+                  onClick={() => setPage((p) => p - 1)}
+                >{'<'}</button>
+                {(() => {
+                  const delta = 4
+                  const start = Math.max(1, page - delta)
+                  const end = Math.min(totalPages, page + delta)
+                  return Array.from({ length: end - start + 1 }, (_, i) => start + i).map((p) => (
+                    <button
+                      key={p}
+                      className={`adm_page_btn${page === p ? ' active' : ''}`}
+                      onClick={() => setPage(p)}
+                    >
+                      {p}
+                    </button>
+                  ))
+                })()}
+                <button
+                  className="adm_page_btn"
+                  disabled={page >= totalPages}
+                  onClick={() => setPage((p) => p + 1)}
+                >{'>'}</button>
+                <button
+                  className="adm_page_btn"
+                  disabled={page >= totalPages}
+                  onClick={() => setPage(totalPages)}
+                >{'>>'}</button>
               </div>
             </div>
           </section>

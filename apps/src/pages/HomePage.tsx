@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PopupLayer from '../components/PopupLayer'
+import SiteBannerPopup from '../components/SiteBannerPopup'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import Swiper from 'swiper'
@@ -401,6 +402,7 @@ export default function HomePage() {
       </div>
       <SiteFooter onOpenPopup={setActivePopup} />
       <PopupLayer activePopup={activePopup} onClose={() => setActivePopup(null)} />
+      <SiteBannerPopup site="MAIN" />
     </div>
   )
 }

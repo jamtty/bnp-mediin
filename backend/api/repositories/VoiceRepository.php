@@ -25,6 +25,14 @@
 class VoiceRepository extends BaseRepository
 {
     // ──────────────────────────────────────────────────────────────
+    // 비밀번호 암호화 (MySQL PASSWORD() 포맷: *SHA1(SHA1))
+    // ──────────────────────────────────────────────────────────────
+    private function hashPassword(string $password): string
+    {
+        return '*' . strtoupper(sha1(sha1($password, true)));
+    }
+
+    // ──────────────────────────────────────────────────────────────
     // 목록 · 검색
     // ──────────────────────────────────────────────────────────────
 
@@ -145,7 +153,7 @@ class VoiceRepository extends BaseRepository
                 ':content'   => $content,
                 ':name'      => $name,
                 ':phone'     => $phone,
-                ':password'  => $password,
+                ':password'  => $this->hashPassword($password),
             ]
         );
         return $nextId;
@@ -181,7 +189,7 @@ class VoiceRepository extends BaseRepository
                 ':name'     => $name,
                 ':phone'    => $phone,
                 ':id'       => $id,
-                ':password' => $password,
+                ':password' => $this->hashPassword($password),
             ]
         ) > 0;
     }
@@ -190,7 +198,7 @@ class VoiceRepository extends BaseRepository
     {
         return $this->execute(
             'DELETE FROM voc_tbl WHERE VC_IDX = :id AND VC_PWD = :password',
-            [':id' => $id, ':password' => $password]
+            [':id' => $id, ':password' => $this->hashPassword($password)]
         ) > 0;
     }
 
@@ -347,7 +355,7 @@ class VoiceRepository extends BaseRepository
     private function buildMyWhere(string $name, string $password, string $keyword, string $type): array
     {
         $where  = 'WHERE A.VC_NAME = :name AND A.VC_PWD = :password';
-        $params = [':name' => $name, ':password' => $password];
+        $params = [':name' => $name, ':password' => $this->hashPassword($password)];
 
         if ($keyword !== '') {
             $like = '%' . $keyword . '%';

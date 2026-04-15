@@ -16,7 +16,7 @@ const VOC_CATEGORY_LABELS: Record<VocCategory, string> = {
 }
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
-const MAX_FILE_COUNT = 5
+const MAX_FILE_COUNT = 3
 
 export default function VoiceFormPage() {
   const { id } = useParams<{ id?: string }>()
@@ -241,30 +241,38 @@ export default function VoiceFormPage() {
                       </td>
                     </tr>
                     <tr>
-                      <th>*첨부파일</th>
+                      <th>첨부파일</th>
                       <td>
                         <div className="file_add_area">
-                          <button
-                            type="button"
-                            className="btn_del"
-                            onClick={handleSlotAdd}
-                            disabled={fileSlots.length >= MAX_FILE_COUNT}
-                          >
-                            추가
-                          </button>
+                          {fileSlots.length < MAX_FILE_COUNT && (
+                            <button type="button" className="btn_del" onClick={handleSlotAdd}>
+                              추가
+                            </button>
+                          )}
                         </div>
-                        <div style={{ paddingTop: '5px' }}>
-                          {fileSlots.map((slot, i) => (
-                            <div className="formText" key={slot.id} style={{ paddingTop: i > 0 ? '5px' : undefined }}>
-                              <input
-                                type="file"
-                                title="첨부파일"
-                                onChange={(e) => handleSlotFileChange(slot.id, e)}
-                              />
+                        <div id="file_ul" style={{ paddingTop: '5px' }}>
+                          {fileSlots.map((slot) => (
+                            <div key={slot.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingTop: '5px' }}>
+                              <label className="btn_del" style={{ cursor: 'pointer', flexShrink: 0 }}>
+                                파일 선택
+                                <input
+                                  type="file"
+                                  style={{ display: 'none' }}
+                                  onChange={(e) => handleSlotFileChange(slot.id, e)}
+                                />
+                              </label>
+                              <span style={{ flex: 1, fontSize: '13px', color: slot.file ? '#333' : '#999' }}>
+                                {slot.file ? slot.file.name : '선택된 파일 없음'}
+                              </span>
+                              {slot.file && (
+                                <span style={{ color: '#999', fontSize: '12px', flexShrink: 0 }}>
+                                  ({(slot.file.size / 1024).toFixed(1)}KB)
+                                </span>
+                              )}
                               <button
                                 type="button"
                                 className="btn_del"
-                                style={{ height: '25px', borderRadius: '5px', padding: '0 10px', background: '#707070', fontSize: '15px', color: '#fff' }}
+                                style={{ height: '25px', borderRadius: '5px', padding: '0 10px', background: '#707070', fontSize: '13px', color: '#fff', flexShrink: 0 }}
                                 onClick={() => handleSlotRemove(slot.id)}
                               >
                                 삭제
@@ -272,6 +280,7 @@ export default function VoiceFormPage() {
                             </div>
                           ))}
                         </div>
+                        <p style={{ marginTop: '4px', fontSize: '12px', color: '#999' }}>※ 파일당 최대 10MB / 최대 {MAX_FILE_COUNT}개</p>
                       </td>
                     </tr>
                   </tbody>

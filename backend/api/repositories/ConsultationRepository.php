@@ -25,6 +25,14 @@
  */
 class ConsultationRepository extends BaseRepository
 {
+    // ──────────────────────────────────────────────────────────────
+    // 비밀번호 암호화 (MySQL PASSWORD() 포맷: *SHA1(SHA1))
+    // ──────────────────────────────────────────────────────────────
+    private function hashPassword(string $password): string
+    {
+        return '*' . strtoupper(sha1(sha1($password, true)));
+    }
+
     // ─────────────────────────────────────────────────────────────
     // 목록 · 검색
     // ─────────────────────────────────────────────────────────────
@@ -153,7 +161,7 @@ class ConsultationRepository extends BaseRepository
                 ':name'      => $name,
                 ':phone'     => $phone,
                 ':email'     => $email,
-                ':password'  => $password,
+                ':password'  => $this->hashPassword($password),
                 ':is_secret' => $isSecret,
             ]
         );

@@ -78,3 +78,19 @@ $router->post('/voice/{id}/user-delete',           [VoiceController::class, 'use
 $router->post('/voice/{id}/delete',                [VoiceController::class, 'destroy']);
 $router->post('/voice/{id}/reply',                 [VoiceController::class, 'reply']);
 $router->post('/voice/file/{fileId}/delete',       [VoiceController::class, 'destroyFile']);
+
+// 빠른예약
+$router->get('/fast-reserve',                        [FastReserveController::class, 'index']);
+$router->post('/fast-reserve',                       [FastReserveController::class, 'store']);
+$router->get('/fast-reserve/{id}',                   [FastReserveController::class, 'show']);
+$router->post('/fast-reserve/{id}/succ',             [FastReserveController::class, 'updateSucc']);
+$router->post('/fast-reserve/{id}/delete',           [FastReserveController::class, 'destroy']);
+
+// 팝업 배너
+$router->get('/popup-banner',                        [PopupBannerController::class, 'index']);
+$router->post('/popup-banner',                       [PopupBannerController::class, 'store']);
+$router->get('/popup-banner/{id}',                   [PopupBannerController::class, 'show']);
+$router->post('/popup-banner/{id}',                  [PopupBannerController::class, 'update']);
+$router->post('/popup-banner/{id}/use',              [PopupBannerController::class, 'updateUseYn']);
+$router->post('/popup-banner/{id}/sort',             [PopupBannerController::class, 'updateSortOrder']);
+$router->post('/popup-banner/{id}/delete',           [PopupBannerController::class, 'destroy']);

@@ -109,7 +109,7 @@ export default function VoiceDetailPage() {
                   </li>
                 </ul>
               </div>
-              <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+              <div dangerouslySetInnerHTML={{ __html: (detail.content ?? '').replace(/\n/g, '<br>') }} />
             </div>
 
             <div className="view_control_area">

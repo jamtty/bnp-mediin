@@ -63,6 +63,12 @@ require_once __DIR__ . '/controllers/ConsultationController.php';
 require_once __DIR__ . '/repositories/VoiceRepository.php';
 require_once __DIR__ . '/services/VoiceService.php';
 require_once __DIR__ . '/controllers/VoiceController.php';
+require_once __DIR__ . '/repositories/FastReserveRepository.php';
+require_once __DIR__ . '/services/FastReserveService.php';
+require_once __DIR__ . '/controllers/FastReserveController.php';
+require_once __DIR__ . '/repositories/PopupBannerRepository.php';
+require_once __DIR__ . '/services/PopupBannerService.php';
+require_once __DIR__ . '/controllers/PopupBannerController.php';
 
 // ── 라우터 초기화 및 디스패치 ─────────────────────────────────
 $router = new Router();
@@ -72,8 +78,8 @@ try {
     $router->dispatch();
 } catch (PDOException $e) {
     error_log('[API] DB Error: ' . $e->getMessage());
-    Response::serverError();
+    Response::serverError('서버 오류가 발생했습니다.');
 } catch (Throwable $e) {
     error_log('[API] Error: ' . $e->getMessage());
-    Response::serverError();
+    Response::serverError('서버 오류가 발생했습니다.');
 }

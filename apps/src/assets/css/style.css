@@ -14913,3 +14913,67 @@ body.h100 {
 .pw_error { font-size:1.4rem; text-align:center; margin:1rem 0 0; color:#e53935; }
 
 
+
+/* ===== 사이트 배너 팝업 ===== */
+.site_popup_card {
+  position: fixed;
+  z-index: 9000;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+  max-width: 400px;
+}
+.site_popup_img {
+  display: block;
+  line-height: 0;
+}
+.site_popup_img img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+.site_popup_brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a4a3a;
+  padding: 10px 14px;
+}
+.site_popup_brand_logo {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+.site_popup_brand_text {
+  font-size: 11px;
+  color: #fff;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+.site_popup_footer {
+  display: flex;
+  border-top: 1px solid #e5e7eb;
+}
+.site_popup_btn {
+  flex: 1;
+  background: #fff;
+  border: none;
+  padding: 13px 0;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: -0.02em;
+}
+.site_popup_btn:first-child {
+  border-right: 1px solid #e5e7eb;
+}
+.site_popup_btn:hover {
+  background: #f3f4f6;
+}

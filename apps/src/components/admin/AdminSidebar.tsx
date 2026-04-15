@@ -25,6 +25,8 @@ export const sideMenuSections: MenuSection[] = [
     items: [
       { label: '건강상담 관리', to: '/admin/consultation', icon: 'forum' },
       { label: '고객의소리 관리', to: '/admin/voice', icon: 'record_voice_over' },
+      { label: '빠른예약 관리', to: '/admin/fast-reserve', icon: 'event_available' },
+      { label: '팝업 관리', to: '/admin/popup-banner', icon: 'web_asset' },
     ],
   },
 ]
