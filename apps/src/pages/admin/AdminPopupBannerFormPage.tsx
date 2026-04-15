@@ -60,8 +60,8 @@ export default function AdminPopupBannerFormPage() {
         setImgOriName(item.img_ori_name)
         setCreatedBy(item.created_by)
         setCreatedAt(item.created_at)
-        setUpdatedBy(item.updated_by)
-        setUpdatedAt(item.updated_at)
+        setUpdatedBy(item.updated_by ?? '')
+        setUpdatedAt(item.updated_at ?? '')
       })
       .catch(() => {
         alert('데이터를 불러오지 못했습니다.')
