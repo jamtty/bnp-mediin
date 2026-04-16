@@ -94,3 +94,13 @@ $router->post('/popup-banner/{id}',                  [PopupBannerController::cla
 $router->post('/popup-banner/{id}/use',              [PopupBannerController::class, 'updateUseYn']);
 $router->post('/popup-banner/{id}/sort',             [PopupBannerController::class, 'updateSortOrder']);
 $router->post('/popup-banner/{id}/delete',           [PopupBannerController::class, 'destroy']);
+
+// 의료진
+$router->get('/doctor',                              [DoctorController::class, 'index']);
+$router->post('/doctor',                             [DoctorController::class, 'store']);
+$router->get('/doctor/by-dept/{code}',               [DoctorController::class, 'byDept']);
+$router->get('/doctor/{id}',                         [DoctorController::class, 'show']);
+$router->post('/doctor/{id}',                        [DoctorController::class, 'update']);
+$router->post('/doctor/{id}/use',                    [DoctorController::class, 'updateUseYn']);
+$router->post('/doctor/{id}/sort',                   [DoctorController::class, 'updateSortOrder']);
+$router->post('/doctor/{id}/delete',                 [DoctorController::class, 'destroy']);

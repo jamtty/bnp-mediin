@@ -84,8 +84,9 @@ class FastReserveRepository extends BaseRepository
         $params = [];
         if ($keyword !== '') {
             $like = '%' . $keyword . '%';
-            $where .= ' AND (RT_NAME LIKE :keyword OR RT_PHONE LIKE :keyword)';
+            $where .= ' AND (RT_NAME LIKE :keyword OR RT_PHONE LIKE :keyword_phone)';
             $params[':keyword'] = $like;
+            $params[':keyword_phone'] = $like;
         }
         return [$where, $params];
     }

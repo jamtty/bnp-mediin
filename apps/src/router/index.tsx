@@ -25,6 +25,8 @@ import AdminVoiceDetailPage from '@/pages/admin/AdminVoiceDetailPage'
 import AdminFastReservePage from '@/pages/admin/AdminFastReservePage'
 import AdminPopupBannerPage from '@/pages/admin/AdminPopupBannerPage'
 import AdminPopupBannerFormPage from '@/pages/admin/AdminPopupBannerFormPage'
+import AdminDoctorPage from '@/pages/admin/AdminDoctorPage'
+import AdminDoctorFormPage from '@/pages/admin/AdminDoctorFormPage'
 // 진료안내
 import OutpatientPage from '@/pages/care/OutpatientPage'
 import EmergencyPage from '@/pages/care/EmergencyPage'
@@ -171,6 +173,9 @@ export const router = createBrowserRouter(
         { path: 'popup-banner', element: <AdminPopupBannerPage /> },
         { path: 'popup-banner/write', element: <AdminPopupBannerFormPage /> },
         { path: 'popup-banner/edit/:id', element: <AdminPopupBannerFormPage /> },
+        { path: 'doctor', element: <AdminDoctorPage /> },
+        { path: 'doctor/write', element: <AdminDoctorFormPage /> },
+        { path: 'doctor/edit/:id', element: <AdminDoctorFormPage /> },
       ],
     },
   ],

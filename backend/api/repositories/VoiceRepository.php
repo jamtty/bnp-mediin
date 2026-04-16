@@ -344,9 +344,12 @@ class VoiceRepository extends BaseRepository
             } elseif ($type === 'A.VC_NAME') {
                 $where .= ' AND A.VC_NAME LIKE :keyword';
             } else {
-                $where .= ' AND (A.VC_TITLE LIKE :keyword OR A.VC_CONT LIKE :keyword)';
+                $where .= ' AND (A.VC_TITLE LIKE :keyword OR A.VC_CONT LIKE :keyword_content)';
             }
             $params[':keyword'] = $like;
+            if ($type !== 'A.VC_TITLE' && $type !== 'A.VC_CONT' && $type !== 'A.VC_NAME') {
+                $params[':keyword_content'] = $like;
+            }
         }
 
         return [$where, $params];
@@ -364,9 +367,12 @@ class VoiceRepository extends BaseRepository
             } elseif ($type === 'content') {
                 $where .= ' AND A.VC_CONT LIKE :keyword';
             } else {
-                $where .= ' AND (A.VC_TITLE LIKE :keyword OR A.VC_CONT LIKE :keyword)';
+                $where .= ' AND (A.VC_TITLE LIKE :keyword OR A.VC_CONT LIKE :keyword_content)';
             }
             $params[':keyword'] = $like;
+            if ($type !== 'title' && $type !== 'content') {
+                $params[':keyword_content'] = $like;
+            }
         }
 
         return [$where, $params];

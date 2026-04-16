@@ -280,9 +280,12 @@ class ConsultationRepository extends BaseRepository
             } elseif ($type === 'A.AD_NAME') {
                 $where .= ' AND A.AD_NAME LIKE :keyword';
             } else {
-                $where .= ' AND (A.AD_TITLE LIKE :keyword OR A.AD_CONT LIKE :keyword)';
+                $where .= ' AND (A.AD_TITLE LIKE :keyword OR A.AD_CONT LIKE :keyword_content)';
             }
             $params[':keyword'] = $like;
+            if ($type !== 'A.AD_TITLE' && $type !== 'A.AD_CONT' && $type !== 'A.AD_NAME') {
+                $params[':keyword_content'] = $like;
+            }
         }
 
         return [$where, $params];

@@ -2,6 +2,7 @@
 import { useParams, Link } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import { fetchDoctorsByDept, parseSchedule, type DoctorItem } from '../../api/doctor'
 import thumb2211 from '../../assets/images/thumb2_2_1_1.png'
 import thumb2212 from '../../assets/images/thumb2_2_1_2.png'
 import thumb2213 from '../../assets/images/thumb2_2_1_3.png'
@@ -57,7 +58,151 @@ import thumb22108 from '../../assets/images/thumb2_2_10_8.png'
 import thumb22109 from '../../assets/images/thumb2_2_10_9.png'
 import thumb221010 from '../../assets/images/thumb2_2_10_10.png'
 import thumb221011 from '../../assets/images/thumb2_2_10_11.png'
-import msKyd from '../../assets/images/ms_kyd.jpg'
+
+const SCHEDULE_DAY_LABELS = [
+  { key: 'mon',   label: '월' },
+  { key: 'tue',   label: '화' },
+  { key: 'wed',   label: '수' },
+  { key: 'thu',   label: '목' },
+  { key: 'fri',   label: '금' },
+  { key: 'sat13', label: '토(1,3주)' },
+  { key: 'sat24', label: '토(2,4주)' },
+  { key: 'sat5',  label: '토(5주)' },
+]
+
+function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () => void }) {
+  const schedule = parseSchedule(doctor.schedule_json)
+  const specialty = doctor.doc_specialty?.split('\n').filter(Boolean) ?? []
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+  return (
+    <div className="pop show" style={{ zIndex: 100 }}>
+      <div className="pop-wrap">
+        <div className="pop-box" style={{ maxHeight: 'calc(100vh - 60px)', overflowY: 'auto' }}>
+          <div className="ms_detail_cont">
+            <div className="pop_tit">
+              <strong>진료시간표</strong>
+              <button type="button" className="btn-pop-close" onClick={onClose}>
+                <span className="blind">닫기</span>
+              </button>
+            </div>
+            <div className="pop_cont">
+              <div className="ms_thumb">
+                {doctor.img_url ? (
+                  <img src={doctor.img_url} alt={doctor.doc_name} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', background: '#e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: '#999', fontSize: 13 }}>사진없음</span>
+                  </div>
+                )}
+              </div>
+              <div className="ms_cont">
+                <div className="ms_tit">
+                  <strong className="name">{doctor.doc_name}{doctor.doc_title ? ` ${doctor.doc_title}` : ''}</strong>
+                  {doctor.doc_major && <span className="major">{doctor.doc_major}</span>}
+                </div>
+                <dl>
+                  {specialty.length > 0 && (
+                    <>
+                      <dt>진료분야</dt>
+                      <dd><ul>{specialty.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
+                    </>
+                  )}
+                  {schedule && (
+                    <>
+                      <dt>진료일정</dt>
+                      <dd>
+                        <div className="medical_schedule">
+                          <table>
+                            <caption>진료일정표</caption>
+                            <thead>
+                              <tr>
+                                <th rowSpan={2}>구분</th>
+                                {SCHEDULE_DAY_LABELS.slice(0, 5).map((d) => (
+                                  <th key={d.key} rowSpan={2}>{d.label}</th>
+                                ))}
+                                <th colSpan={3}>토</th>
+                              </tr>
+                              <tr>
+                                {SCHEDULE_DAY_LABELS.slice(5).map((d) => (
+                                  <th key={d.key}>{d.label.replace('토(', '').replace(')', '')}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {(['am', 'pm'] as const).map((period) => (
+                                <tr key={period}>
+                                  <td>{period === 'am' ? '오전' : '오후'}</td>
+                                  {SCHEDULE_DAY_LABELS.map((d) => (
+                                    <td key={d.key}>{(schedule[period] as Record<string, string>)[d.key] || '-'}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                        <p style={{ marginTop: 12, fontSize: 14, color: '#888', lineHeight: '22px' }}>
+                          * 병원사정에 따라 진료시간이 변경될 수 있습니다.<br />
+                          * 정확한 진료 시간은 1566-1991로 문의 부탁 드립니다.
+                        </p>
+                      </dd>
+                    </>
+                  )}
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="pop_bg" onClick={onClose}></div>
+    </div>
+  )
+}
+
+function DoctorListSection({ doctors, loading, onShowSchedule }: { doctors: DoctorItem[]; loading: boolean; onShowSchedule: (d: DoctorItem) => void }) {
+  if (loading) return <p style={{ padding: '20px 0', color: '#888' }}>의료진 정보를 불러오는 중입니다...</p>
+  if (doctors.length === 0) return <p className="no_doctor_msg">등록된 의료진이 없습니다.</p>
+  return (
+    <div className="medical_staff_list">
+      {doctors.map((doctor) => {
+        const career = doctor.doc_career?.split('\n').filter(Boolean) ?? []
+        return (
+          <div key={doctor.id} className="medical_staff">
+            <div className="ms_thumb">
+              {doctor.img_url ? (
+                <img src={doctor.img_url} alt={doctor.doc_name} />
+              ) : (
+                <div style={{ width: 150, height: 190, background: '#e8e8e8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ color: '#aaa', fontSize: 12 }}>사진없음</span>
+                </div>
+              )}
+            </div>
+            <div className="ms_cont">
+              <div className="ms_tit">
+                <strong className="name">{doctor.doc_name}{doctor.doc_title ? ` ${doctor.doc_title}` : ''}</strong>
+                {doctor.doc_major && <span className="major">{doctor.doc_major}</span>}
+              </div>
+              {career.length > 0 && (
+                <dl>
+                  <dt>{doctor.career_label ?? '약력'}</dt>
+                  <dd><ul>{career.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
+                </dl>
+              )}
+              {doctor.schedule_json && (
+                <button type="button" onClick={() => onShowSchedule(doctor)}>
+                  <i className="ico_calendar"></i>
+                  <span>진료시간표</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 const clinicNames: Record<string, string> = {
   endoscopy:      '내시경클리닉',
@@ -81,10 +226,25 @@ const clinicThirdItems = Object.entries(clinicNames).map(([code, name]) => ({
 export default function ClinicDetailPage() {
   const { code } = useParams<{ code: string }>()
   const [inTab, setInTab] = useState('in_tab01')
+  const [outerTab, setOuterTab] = useState('out_tab01')
+  const [doctors, setDoctors] = useState<DoctorItem[]>([])
+  const [loadingDocs, setLoadingDocs] = useState(false)
+  const [scheduleDoctor, setScheduleDoctor] = useState<DoctorItem | null>(null)
   const clinicName = code ? clinicNames[code] : undefined
 
   useEffect(() => {
     setInTab('in_tab01')
+    setOuterTab('out_tab01')
+    setDoctors([])
+  }, [code])
+
+  useEffect(() => {
+    if (!code) return
+    setLoadingDocs(true)
+    fetchDoctorsByDept(code)
+      .then(setDoctors)
+      .catch(() => {})
+      .finally(() => setLoadingDocs(false))
   }, [code])
 
   if (!clinicName) {
@@ -105,6 +265,7 @@ export default function ClinicDetailPage() {
   }
 
   return (
+    <>
     <SubPageLayout
       visualClass="vs2"
       visualTitle="진료과안내"
@@ -119,6 +280,11 @@ export default function ClinicDetailPage() {
         {code === 'endoscopy' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">내시경클리닉</p>
                 <p className="info_disc">
@@ -361,6 +527,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -369,11 +539,20 @@ export default function ClinicDetailPage() {
         {code === 'arthroplasty' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">인공관절클리닉</p>
                 <p className="info_disc">
                   인공관절이란 관절의 통증이나 관절운동 제한, 그 외에 걸음걸이가 힘들 때 이러한 관절들을 제거하고 인공제질로 된 관절로 바꾸어 주는 수술입니다.
                 </p>
+              </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
               </div>
             </div>
           </>
@@ -383,6 +562,11 @@ export default function ClinicDetailPage() {
         {code === 'spine' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">척추클리닉</p>
                 <p className="info_disc">
@@ -778,6 +962,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -786,6 +974,11 @@ export default function ClinicDetailPage() {
         {code === 'hand' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">수지접합클리닉</p>
                 <p className="info_disc">
@@ -882,6 +1075,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -890,6 +1087,11 @@ export default function ClinicDetailPage() {
         {code === 'anus' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">항문클리닉</p>
                 <p className="info_disc">
@@ -1094,6 +1296,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -1102,6 +1308,11 @@ export default function ClinicDetailPage() {
         {code === 'laparoscopy' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">복강경클리닉</p>
                 <p className="info_disc">
@@ -1223,6 +1434,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -1231,6 +1446,11 @@ export default function ClinicDetailPage() {
         {code === 'adult-disease' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">성인병클리닉</p>
                 <p className="info_disc">
@@ -1684,6 +1904,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -1692,6 +1916,11 @@ export default function ClinicDetailPage() {
         {code === 'intervention' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">중재시술/유방클리닉</p>
                 <p className="info_disc">
@@ -1951,6 +2180,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -1959,6 +2192,11 @@ export default function ClinicDetailPage() {
         {code === 'neuro' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">뇌신경질환클리닉</p>
                 <p className="info_disc">
@@ -2043,6 +2281,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -2051,6 +2293,11 @@ export default function ClinicDetailPage() {
         {code === 'urolithiasis' && (
           <>
             <div className="con_area">
+              <div className="tab_area">
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
+              </div>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
               <div className="emergency_sec first_sec">
                 <p className="info_tit">요로결석클리닉</p>
                 <p className="info_disc">
@@ -2134,6 +2381,10 @@ export default function ClinicDetailPage() {
                   </div>
                 </div>
               </div>
+              </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+              </div>
             </div>
           </>
         )}
@@ -2143,10 +2394,10 @@ export default function ClinicDetailPage() {
           <>
             <div className="con_area">
               <div className="tab_area">
-                <button type="button" className={inTab === 'in_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setInTab('in_tab01')}><span>진료과 소개</span></button>
-                <button type="button" className={inTab === 'in_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setInTab('in_tab02')}><span>의료진 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab01' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab01')}><span>진료과 소개</span></button>
+                <button type="button" className={outerTab === 'out_tab02' ? 'btn_tab active_tab' : 'btn_tab'} onClick={() => setOuterTab('out_tab02')}><span>의료진 소개</span></button>
               </div>
-              <div className={inTab === 'in_tab01' ? 'cont_area active_cont' : 'cont_area'}>
+              <div className={outerTab === 'out_tab01' ? 'cont_area active_cont' : 'cont_area'}>
                 <div className="emergency_sec">
                   <p className="info_tit">신경통증클리닉</p>
                   <p className="info_disc">
@@ -2176,41 +2427,17 @@ export default function ClinicDetailPage() {
                   </ul>
                 </div>
               </div>
-              <div className={inTab === 'in_tab02' ? 'cont_area active_cont' : 'cont_area'}>
-                <div className="medical_staff_list">
-                  <div className="medical_staff">
-                    <div className="ms_thumb"><img src={msKyd} alt="" /></div>
-                    <div className="ms_cont">
-                      <div className="ms_tit">
-                        <strong className="name">권용덕 진료과장</strong>
-                        <span className="major">신경통증클리닉</span>
-                      </div>
-                      <dl>
-                        <dt>약력</dt>
-                        <dd>
-                          <ul>
-                            <li>한양대학교 의과대학 졸업</li>
-                            <li>한양대학교 마취통증의학과 전공의</li>
-                            <li>고려대학교 마취통증의학과 전임의</li>
-                            <li>세연마취통증의학과의원 부원장</li>
-                            <li>서울고든병원 마취통증의학과 원장</li>
-                            <li>대한통증학회 통증분과 인증의</li>
-                            <li>대한통증학회 정회원</li>
-                          </ul>
-                        </dd>
-                      </dl>
-                      <button type="button">
-                        <i className="ico_calendar"></i>
-                        <span>진료시간표</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              <div className={outerTab === 'out_tab02' ? 'cont_area active_cont' : 'cont_area'}>
+                <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
               </div>
             </div>
           </>
         )}
 
     </SubPageLayout>
+    {scheduleDoctor && (
+      <ScheduleModal doctor={scheduleDoctor} onClose={() => setScheduleDoctor(null)} />
+    )}
+    </>
   )
 }

@@ -2,16 +2,150 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
-import msLjm from '../../assets/images/ms_ljm.jpg'
-import msKyd from '../../assets/images/ms_kyd.jpg'
-import msKth from '../../assets/images/ms_kth.jpg'
-import msSwy from '../../assets/images/ms_swy.jpg'
-import msJih from '../../assets/images/ms_jih.jpg'
-import msLjh from '../../assets/images/ms_ljh.jpg'
-import msKjh from '../../assets/images/ms_kjh.jpg'
-import msLhw from '../../assets/images/ms_lhw.jpg'
-import msLhc from '../../assets/images/ms_lhc.jpg'
-import noImg from '../../assets/images/no_img.jpg'
+import { fetchDoctorsByDept, parseSchedule, type DoctorItem } from '../../api/doctor'
+
+
+
+const SCHEDULE_DAY_LABELS = [
+  { key: 'mon',   label: '월' },
+  { key: 'tue',   label: '화' },
+  { key: 'wed',   label: '수' },
+  { key: 'thu',   label: '목' },
+  { key: 'fri',   label: '금' },
+  { key: 'sat13', label: '토(1,3주)' },
+  { key: 'sat24', label: '토(2,4주)' },
+  { key: 'sat5',  label: '토(5주)' },
+]
+
+function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () => void }) {
+  const schedule = parseSchedule(doctor.schedule_json)
+  const specialty = doctor.doc_specialty?.split('\n').filter(Boolean) ?? []
+  return (
+    <div className="pop show" style={{ zIndex: 100 }}>
+      <div className="pop-wrap">
+        <div className="pop-box" style={{ maxHeight: 'calc(100vh - 60px)', overflowY: 'auto' }}>
+          <div className="ms_detail_cont">
+            <div className="pop_tit">
+              <strong>진료시간표</strong>
+              <button type="button" className="btn-pop-close" onClick={onClose}>
+                <span className="blind">닫기</span>
+              </button>
+            </div>
+            <div className="pop_cont">
+              <div className="ms_thumb">
+                {doctor.img_url ? (
+                  <img src={doctor.img_url} alt={doctor.doc_name} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', background: '#e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: '#999', fontSize: 13 }}>사진없음</span>
+                  </div>
+                )}
+              </div>
+              <div className="ms_cont">
+                <div className="ms_tit">
+                  <strong className="name">{doctor.doc_name}{doctor.doc_title ? ` ${doctor.doc_title}` : ''}</strong>
+                  {doctor.doc_major && <span className="major">{doctor.doc_major}</span>}
+                </div>
+                <dl>
+                  {specialty.length > 0 && (
+                    <>
+                      <dt>진료분야</dt>
+                      <dd><ul>{specialty.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
+                    </>
+                  )}
+                  {schedule && (
+                    <>
+                      <dt>진료일정</dt>
+                      <dd>
+                        <div className="medical_schedule">
+                          <table>
+                            <caption>진료일정표</caption>
+                            <thead>
+                              <tr>
+                                <th rowSpan={2}>구분</th>
+                                {SCHEDULE_DAY_LABELS.slice(0, 5).map((d) => (
+                                  <th key={d.key} rowSpan={2}>{d.label}</th>
+                                ))}
+                                <th colSpan={3}>토</th>
+                              </tr>
+                              <tr>
+                                {SCHEDULE_DAY_LABELS.slice(5).map((d) => (
+                                  <th key={d.key}>{d.label.replace('토(', '').replace(')', '')}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {(['am', 'pm'] as const).map((period) => (
+                                <tr key={period}>
+                                  <td>{period === 'am' ? '오전' : '오후'}</td>
+                                  {SCHEDULE_DAY_LABELS.map((d) => (
+                                    <td key={d.key}>{(schedule[period] as Record<string, string>)[d.key] || '-'}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                        <p style={{ marginTop: 12, fontSize: 14, color: '#888', lineHeight: '22px' }}>
+                          * 병원사정에 따라 진료시간이 변경될 수 있습니다.<br />
+                          * 정확한 진료 시간은 1566-1991로 문의 부탁 드립니다.
+                        </p>
+                      </dd>
+                    </>
+                  )}
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="pop_bg" onClick={onClose}></div>
+    </div>
+  )
+}
+
+function DoctorListSection({ doctors, loading, onShowSchedule }: { doctors: DoctorItem[]; loading: boolean; onShowSchedule: (d: DoctorItem) => void }) {
+  if (loading) return <p style={{ padding: '20px 0', color: '#888' }}>의료진 정보를 불러오는 중입니다...</p>
+  if (doctors.length === 0) return <p className="no_doctor_msg">등록된 의료진이 없습니다.</p>
+  return (
+    <div className="medical_staff_list">
+      {doctors.map((doctor) => {
+        const career = doctor.doc_career?.split('\n').filter(Boolean) ?? []
+        return (
+          <div key={doctor.id} className="medical_staff">
+            <div className="ms_thumb">
+              {doctor.img_url ? (
+                <img src={doctor.img_url} alt={doctor.doc_name} />
+              ) : (
+                <div style={{ width: 150, height: 190, background: '#e8e8e8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ color: '#aaa', fontSize: 12 }}>사진없음</span>
+                </div>
+              )}
+            </div>
+            <div className="ms_cont">
+              <div className="ms_tit">
+                <strong className="name">{doctor.doc_name}{doctor.doc_title ? ` ${doctor.doc_title}` : ''}</strong>
+                {doctor.doc_major && <span className="major">{doctor.doc_major}</span>}
+              </div>
+              {career.length > 0 && (
+                <dl>
+                  <dt>{doctor.career_label ?? '약력'}</dt>
+                  <dd><ul>{career.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
+                </dl>
+              )}
+              {doctor.schedule_json && (
+                <button type="button" onClick={() => onShowSchedule(doctor)}>
+                  <i className="ico_calendar"></i>
+                  <span>진료시간표</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 const centerNames: Record<string, string> = {
   cardiovascular:   '심혈관센터',
@@ -30,10 +164,23 @@ const centerThirdItems = Object.entries(centerNames).map(([code, name]) => ({
 export default function SpecialCenterDetailPage() {
   const { code } = useParams<{ code: string }>()
   const [activeTab, setActiveTab] = useState('tab01')
+  const [doctors, setDoctors] = useState<DoctorItem[]>([])
+  const [loadingDocs, setLoadingDocs] = useState(false)
+  const [scheduleDoctor, setScheduleDoctor] = useState<DoctorItem | null>(null)
   const centerName = code ? centerNames[code] : undefined
 
   useEffect(() => {
     setActiveTab('tab01')
+    setDoctors([])
+  }, [code])
+
+  useEffect(() => {
+    if (!code) return
+    setLoadingDocs(true)
+    fetchDoctorsByDept(code)
+      .then(setDoctors)
+      .catch(() => {})
+      .finally(() => setLoadingDocs(false))
   }, [code])
 
   if (!centerName) {
@@ -54,6 +201,7 @@ export default function SpecialCenterDetailPage() {
   }
 
   return (
+    <>
     <SubPageLayout
       visualClass="vs2"
       visualTitle="진료과안내"
@@ -67,6 +215,24 @@ export default function SpecialCenterDetailPage() {
       {/* ===== 심혈관센터 ===== */}
       {code === 'cardiovascular' && (
         <div className="con_area">
+          <div className="tab_area">
+            <button
+              type="button"
+              className={`btn_tab${activeTab === 'tab01' ? ' active_tab' : ''}`}
+              onClick={() => setActiveTab('tab01')}
+            >
+              <span>진료과 소개</span>
+            </button>
+            <button
+              type="button"
+              className={`btn_tab${activeTab === 'tab02' ? ' active_tab' : ''}`}
+              onClick={() => setActiveTab('tab02')}
+            >
+              <span>의료진 소개</span>
+            </button>
+          </div>
+          {/* 탭01: 진료과 소개 */}
+          <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
           <div className="emergency_sec first_sec">
             <p className="info_tit">심혈관센터</p>
             <p className="info_disc">
@@ -162,12 +328,35 @@ export default function SpecialCenterDetailPage() {
               </ol>
             </div>
           </div>
+          </div>
+          {/* 탭02: 의료진 소개 */}
+          <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+          </div>
         </div>
       )}
 
       {/* ===== 척추비수술센터 ===== */}
       {code === 'spine-nonsurgery' && (
         <div className="con_area">
+          <div className="tab_area">
+            <button
+              type="button"
+              className={`btn_tab${activeTab === 'tab01' ? ' active_tab' : ''}`}
+              onClick={() => setActiveTab('tab01')}
+            >
+              <span>진료과 소개</span>
+            </button>
+            <button
+              type="button"
+              className={`btn_tab${activeTab === 'tab02' ? ' active_tab' : ''}`}
+              onClick={() => setActiveTab('tab02')}
+            >
+              <span>의료진 소개</span>
+            </button>
+          </div>
+          {/* 탭01: 진료과 소개 */}
+          <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
           <div className="emergency_sec first_sec">
             <p className="info_tit">척추비수술센터</p>
             <p className="info_disc">
@@ -246,6 +435,11 @@ export default function SpecialCenterDetailPage() {
                 </li>
               </ol>
             </div>
+          </div>
+          </div>
+          {/* 탭02: 의료진 소개 */}
+          <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
           </div>
         </div>
       )}
@@ -450,63 +644,7 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <div className="medical_staff_list">
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msLjm} alt="이제민 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">이제민 진료과장</strong>&nbsp;<span className="major">척추센터</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>정형외과 의학박사</li>
-                        <li>단국대학교병원 정형외과 전임 부교수</li>
-                        <li>단국대학교병원 권역외상센터 외상전담의</li>
-                        <li>분당 서울대학교병원 척추 전임의</li>
-                        <li>대한정형외과학회 정회원</li>
-                        <li>대한척추외과학회 정회원</li>
-                        <li>대한경추연구학회 정회원 (현직 인사위원장)</li>
-                        <li>대한고관절학회 정회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail01')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msKyd} alt="권용덕 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">권용덕 진료과장</strong>
-                    <span className="major">척추센터</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>한양대학교 의과대학 졸업</li>
-                        <li>한양대학교 마취통증의학과 전공의</li>
-                        <li>고려대학교 마취통증의학과 전임의</li>
-                        <li>세연마취통증의학과의원 부원장</li>
-                        <li>서울고든병원 마취통증의학과 원장</li>
-                        <li>대한통증학회 통증분과 인증의</li>
-                        <li>대한통증학회 정회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail02')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
           </div>
         </div>
       )}
@@ -514,6 +652,24 @@ export default function SpecialCenterDetailPage() {
       {/* ===== 관절센터 ===== */}
       {code === 'joint' && (
         <div className="con_area">
+          <div className="tab_area">
+            <button
+              type="button"
+              className={`btn_tab${activeTab === 'tab01' ? ' active_tab' : ''}`}
+              onClick={() => setActiveTab('tab01')}
+            >
+              <span>진료과 소개</span>
+            </button>
+            <button
+              type="button"
+              className={`btn_tab${activeTab === 'tab02' ? ' active_tab' : ''}`}
+              onClick={() => setActiveTab('tab02')}
+            >
+              <span>의료진 소개</span>
+            </button>
+          </div>
+          {/* 탭01: 진료과 소개 */}
+          <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
           <div className="emergency_sec first_sec">
             <p className="info_tit">관절센터</p>
             <p className="info_disc">
@@ -564,6 +720,11 @@ export default function SpecialCenterDetailPage() {
                 </li>
               </ol>
             </div>
+          </div>
+          </div>
+          {/* 탭02: 의료진 소개 */}
+          <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
           </div>
         </div>
       )}
@@ -652,105 +813,7 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <div className="medical_staff_list">
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msKth} alt="권태형 원장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">권태형 원장</strong>
-                    <span className="major">정형외과</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>한양대학교 대학원 석/박사</li>
-                        <li>대한인공관절센터 학회 평생회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail01')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msSwy} alt="서우영 외과계 진료부원장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">서우영 외과계 진료부원장</strong>
-                    <span className="major">정형외과</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>한양대학교병원 인공관절센터 임상교수</li>
-                        <li>원주 성지병원 관절센터 과장</li>
-                        <li>대한족부관절학회 기획위원</li>
-                        <li>대한관절경학회 정회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail03')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msJih} alt="주일한 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">주일한 진료과장</strong>
-                    <span className="major">정형외과</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>한양대학교병원 견주관절 / 수부 전임의</li>
-                        <li>한양대학교병원 인공관절센터 외래교수</li>
-                        <li>대한견주관절의학회 정회원</li>
-                        <li>대한수부외과학회 정회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail04')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msLjh} alt="이재호 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">이재호 진료과장</strong>
-                    <span className="major">정형외과</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>한양대학교병원 외상 및 하지외과 전임의 수료</li>
-                        <li>한양대학교병원 인공관절센터 외래교수</li>
-                        <li>대한슬관절학회 정회원</li>
-                        <li>대한골절학회 정회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail05')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
           </div>
         </div>
       )}
@@ -795,132 +858,15 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <div className="medical_staff_list">
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={noImg} alt="김민주 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">김민주</strong>
-                    <span className="major">진료과장</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>부산대학교 의학전문대학원 졸업</li>
-                        <li>부산대학교 병원 인턴</li>
-                        <li>인천비아뜨의원 검진의</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail01')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={noImg} alt="김선미 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">김선미</strong>
-                    <span className="major">진료과장</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>한양대학교 의과대학 졸업</li>
-                        <li>한일병원 영상의학과 과장</li>
-                        <li>대한초음파 학회 정회원</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail02')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msKjh} alt="권재현 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">권재현</strong>
-                    <span className="major">진료과장</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>경북대학교 졸업</li>
-                        <li>경북대학교 전공의</li>
-                        <li>서울아산병원 전임의</li>
-                        <li>동국대 일산병원 영상의학과 교수</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail03')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msLhw} alt="이은우 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">이은우</strong>
-                    <span className="major">진료과장</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>인제대의대졸업</li>
-                        <li>인제대학교일산백병원 외과전문의</li>
-                        <li>국립암센터 대장암센터 내시경아카데미 전임의</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail05')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="medical_staff">
-                <div className="ms_thumb"><img src={msLhc} alt="이창훈 진료과장" /></div>
-                <div className="ms_cont">
-                  <div className="ms_tit">
-                    <strong className="name">이창훈</strong>
-                    <span className="major">진료과장</span>
-                  </div>
-                  <dl>
-                    <dt>약력</dt>
-                    <dd>
-                      <ul>
-                        <li>가톨릭관동대학교 의학과 졸업</li>
-                        <li>보라매 서울대병원 소화기내과 전임의</li>
-                        <li>vic365의원, 한강연세병원, 박원종내과의원 검진내과</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                  <button type="button" onClick={() => (window as any).popView('medical_staff_detail06')}>
-                    <i className="ico_calendar"></i>
-                    <span>진료시간표</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
           </div>
         </div>
       )}
 
     </SubPageLayout>
+    {scheduleDoctor && (
+      <ScheduleModal doctor={scheduleDoctor} onClose={() => setScheduleDoctor(null)} />
+    )}
+    </>
   )
 }

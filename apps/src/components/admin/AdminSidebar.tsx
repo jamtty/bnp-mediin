@@ -12,21 +12,22 @@ export const sideMenuSections: MenuSection[] = [
     ],
   },
   {
-    sectionLabel: '게시판',
-    items: [
-      { label: '공지사항 관리', to: '/admin/notice', icon: 'campaign' },
-      { label: '보도자료 관리', to: '/admin/press', icon: 'newspaper' },
-      { label: '채용정보 관리', to: '/admin/recruit', icon: 'work' },
-      { label: '건강정보 관리', to: '/admin/health-info', icon: 'health_and_safety' },
-    ],
-  },
-  {
     sectionLabel: '운영관리',
     items: [
       { label: '건강상담 관리', to: '/admin/consultation', icon: 'forum' },
       { label: '고객의소리 관리', to: '/admin/voice', icon: 'record_voice_over' },
       { label: '빠른예약 관리', to: '/admin/fast-reserve', icon: 'event_available' },
       { label: '팝업 관리', to: '/admin/popup-banner', icon: 'web_asset' },
+      { label: '의료진 관리', to: '/admin/doctor', icon: 'medical_services' },
+    ],
+  },
+  {
+    sectionLabel: '게시판',
+    items: [
+      { label: '공지사항 관리', to: '/admin/notice', icon: 'campaign' },
+      { label: '보도자료 관리', to: '/admin/press', icon: 'newspaper' },
+      { label: '채용정보 관리', to: '/admin/recruit', icon: 'work' },
+      { label: '건강정보 관리', to: '/admin/health-info', icon: 'health_and_safety' },
     ],
   },
 ]
@@ -54,8 +55,8 @@ export default function AdminSidebar() {
               <ul>
                 {section.items.map((item) => (
                   <li key={item.to}>
-                    <Link
-                      to={item.to}
+                    <a
+                      href={item.to}
                       className={
                         item.to === '/admin'
                           ? location.pathname === '/admin'
@@ -68,7 +69,7 @@ export default function AdminSidebar() {
                     >
                       <span className="material-icons">{item.icon}</span>
                       {item.label}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

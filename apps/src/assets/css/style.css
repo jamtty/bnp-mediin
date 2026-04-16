@@ -14977,3 +14977,11 @@ body.h100 {
 .site_popup_btn:hover {
   background: #f3f4f6;
 }
+
+/* ===== 의료진 없음 메시지 ===== */
+.no_doctor_msg {
+  padding: 20px 0;
+  color: #888;
+  text-align: center;
+  font-size: 1.6rem;
+}

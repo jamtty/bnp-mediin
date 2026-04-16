@@ -69,6 +69,9 @@ require_once __DIR__ . '/controllers/FastReserveController.php';
 require_once __DIR__ . '/repositories/PopupBannerRepository.php';
 require_once __DIR__ . '/services/PopupBannerService.php';
 require_once __DIR__ . '/controllers/PopupBannerController.php';
+require_once __DIR__ . '/repositories/DoctorRepository.php';
+require_once __DIR__ . '/services/DoctorService.php';
+require_once __DIR__ . '/controllers/DoctorController.php';
 
 // ── 라우터 초기화 및 디스패치 ─────────────────────────────────
 $router = new Router();

@@ -224,8 +224,9 @@ class BoardRepository extends BaseRepository
                 $where .= ' AND n.BD_CONTENT LIKE :keyword';
                 $params[':keyword'] = $like;
             } else {
-                $where .= ' AND (n.BD_TITLE LIKE :keyword OR n.BD_CONTENT LIKE :keyword)';
+                $where .= ' AND (n.BD_TITLE LIKE :keyword OR n.BD_CONTENT LIKE :keyword_content)';
                 $params[':keyword'] = $like;
+                $params[':keyword_content'] = $like;
             }
         }
 
