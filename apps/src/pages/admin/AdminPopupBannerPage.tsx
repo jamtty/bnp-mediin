@@ -118,6 +118,7 @@ export default function AdminPopupBannerPage() {
                   onChange={(e) => setInputKeyword(e.target.value)}
                 />
                 <button type="submit" className="adm_btn_secondary">검색</button>
+                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>초기화</button>
               </form>
               <button className="adm_btn_primary" onClick={() => navigate('/admin/popup-banner/write')}>
                 + 등록

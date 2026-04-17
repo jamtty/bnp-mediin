@@ -90,6 +90,9 @@ export default function AdminReportPage() {
                 <button type="submit" className="adm_btn_secondary">
                   검색
                 </button>
+                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>
+                  초기화
+                </button>
               </form>
               <button className="adm_btn_primary" onClick={() => navigate('/admin/report/write')}>
                 + 글쓰기

@@ -119,6 +119,15 @@ export const deleteDoctor = async (id: number): Promise<void> => {
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
 }
 
+// 공개 의료진 전체 목록 (일반 사용자용, 활성 상태만)
+export const fetchPublicDoctors = async (deptCode?: string): Promise<DoctorItem[]> => {
+  const params: Record<string, string | number> = { use_yn: 'Y', size: 500 }
+  if (deptCode) params.dept_code = deptCode
+  const { data } = await apiClient.get('/api/doctor', { params })
+  if (!data.success) throw new Error(data.message || '의료진 정보를 불러오지 못했습니다.')
+  return (data.data as DoctorListResponse).items
+}
+
 // schedule_json 파싱 헬퍼
 export const parseSchedule = (json: string | null | undefined): ScheduleJson | null => {
   if (!json) return null

@@ -32,10 +32,6 @@ export default function AdminPopupBannerFormPage() {
   const [imgFile,     setImgFile]     = useState<File | null>(null)
   const [imgPreview,  setImgPreview]  = useState('')
   const [imgOriName,  setImgOriName]  = useState('')
-  const [createdBy,   setCreatedBy]   = useState('')
-  const [createdAt,   setCreatedAt]   = useState('')
-  const [updatedBy,   setUpdatedBy]   = useState('')
-  const [updatedAt,   setUpdatedAt]   = useState('')
   const [loading,     setLoading]     = useState(false)
   const [fetching,    setFetching]    = useState(isEdit)
 
@@ -58,10 +54,6 @@ export default function AdminPopupBannerFormPage() {
         setSortOrder(item.sort_order || 1)
         setImgPreview(item.img_url)
         setImgOriName(item.img_ori_name)
-        setCreatedBy(item.created_by)
-        setCreatedAt(item.created_at)
-        setUpdatedBy(item.updated_by ?? '')
-        setUpdatedAt(item.updated_at ?? '')
       })
       .catch(() => {
         alert('데이터를 불러오지 못했습니다.')
@@ -365,24 +357,6 @@ export default function AdminPopupBannerFormPage() {
                   </p>
                 </div>
               </div>
-
-              {/* 등록자/등록일 */}
-              {isEdit && (
-                <>
-                  <div className="adm_form_row">
-                    <label className="adm_form_label">등록자 / 등록일</label>
-                    <span style={{ fontSize: '1.4rem', color: '#6b7280' }}>
-                      {createdBy || '-'} / {createdAt || '-'}
-                    </span>
-                  </div>
-                  <div className="adm_form_row">
-                    <label className="adm_form_label">수정자 / 최종수정일</label>
-                    <span style={{ fontSize: '1.4rem', color: '#6b7280' }}>
-                      {updatedBy || '-'} / {updatedAt || '-'}
-                    </span>
-                  </div>
-                </>
-              )}
 
               <div className="adm_form_btns">
                 <button

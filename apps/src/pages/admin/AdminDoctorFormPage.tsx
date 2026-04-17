@@ -369,26 +369,26 @@ export default function AdminDoctorFormPage() {
                 <p style={{ fontSize: '1.2rem', color: '#999', marginTop: 8 }}>
                   * 진료: 진료, 전화문의: 전화로 예약/확인 필요, OFF: 휴진, -: 해당없음
                 </p>
+
+                {/* 버튼 */}
+                <div className="adm_form_btns">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/admin/doctor')}
+                    className="adm_btn_secondary"
+                  >
+                    취소
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="adm_btn_primary"
+                  >
+                    {loading ? '저장중...' : isEdit ? '수정 완료' : '등록'}
+                  </button>
+                </div>
               </div>
             </section>
-
-            {/* 버튼 */}
-            <div className="adm_form_actions">
-              <button
-                type="button"
-                onClick={() => navigate('/admin/doctor')}
-                className="adm_btn_secondary"
-              >
-                취소
-              </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="adm_btn_primary"
-              >
-                {loading ? '저장중...' : isEdit ? '수정' : '등록'}
-              </button>
-            </div>
           </form>
         </main>
       </div>

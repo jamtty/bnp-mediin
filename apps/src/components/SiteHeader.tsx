@@ -62,6 +62,9 @@ export default function SiteHeader() {
                 <li>
                   <Link to="/department/special">특수센터소개</Link>
                 </li>
+                <li>
+                  <Link to="/department/doctors">의료진소개</Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -5,11 +5,8 @@ import SiteBannerPopup from '../components/SiteBannerPopup'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import Swiper from 'swiper'
-import { Navigation } from 'swiper/modules'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
-import vsTitLogo from '../assets/images/vs_tit_logo2025.png'
-import vsTit from '../assets/images/vs_tit.png'
-import mainVideo from '../assets/images/mediyin.mp4'
 import slide1 from '../assets/images/m_special_slide1.png'
 import slide2 from '../assets/images/m_special_slide2.png'
 import slide3 from '../assets/images/m_special_slide3.png'
@@ -20,10 +17,13 @@ import slide7 from '../assets/images/m_special_slide7.png'
 import slide8 from '../assets/images/m_special_slide8.png'
 import slide9 from '../assets/images/m_special_slide9.png'
 import slide10 from '../assets/images/m_special_slide10.png'
+import { fetchActiveBanners, type MainBannerItem } from '../api/mainBanner'
 
 export default function HomePage() {
-  const swiperRef = useRef<HTMLDivElement>(null)
+  const swiperRef    = useRef<HTMLDivElement>(null)
+  const bannerRef    = useRef<HTMLDivElement>(null)
   const [activeTab, setActiveTab] = useState(0)
+  const [banners, setBanners] = useState<MainBannerItem[]>([])
   const [newsList, setNewsList] = useState<
     Array<{
       bmt_idx: number
@@ -38,6 +38,32 @@ export default function HomePage() {
   >([])
   const [moreHref, setMoreHref] = useState('/main/board/1/board_list.do')
   const [activePopup, setActivePopup] = useState<string | null>(null)
+
+  // 메인 배너 로드
+  useEffect(() => {
+    fetchActiveBanners()
+      .then(setBanners)
+      .catch(() => {})
+  }, [])
+
+  // 메인 배너 스와이퍼 (배너 로드 후 초기화)
+  useEffect(() => {
+    if (!bannerRef.current || banners.length === 0) return
+    const sw = new Swiper(bannerRef.current, {
+      modules: [Navigation, Pagination, Autoplay],
+      loop: banners.length > 1,
+      autoplay: banners.length > 1 ? { delay: 5000, disableOnInteraction: false } : false,
+      navigation: {
+        nextEl: '.main_banner_next',
+        prevEl: '.main_banner_prev',
+      },
+      pagination: {
+        el: '.main_banner_pagination',
+        type: 'fraction',
+      },
+    })
+    return () => { sw.destroy() }
+  }, [banners])
 
   useEffect(() => {
     const swiper = new Swiper(swiperRef.current!, {
@@ -95,6 +121,43 @@ export default function HomePage() {
     <div className="wrap">
       <SiteHeader />
       <div id="container">
+        {/* 메인 배너 슬라이더 */}
+        {banners.length > 0 ? (
+          <div className="main_banner_slider">
+            <div className="swiper main_banner_swiper" ref={bannerRef}>
+              <div className="swiper-wrapper">
+                {banners.map((banner) => {
+                  const img = (
+                    <img
+                      src={banner.img_url ?? ''}
+                      alt={banner.img_ori_name ?? '메인 배너'}
+                      className="main_banner_img"
+                    />
+                  )
+                  return (
+                    <div className="swiper-slide main_banner_slide" key={banner.id}>
+                      {banner.url ? (
+                        <a href={banner.url} target={banner.link_target} rel="noopener noreferrer">
+                          {img}
+                        </a>
+                      ) : img}
+                    </div>
+                  )
+                })}
+              </div>
+              {banners.length > 1 && (
+                <>
+                  <button className="main_banner_prev" aria-label="이전" />
+                  <button className="main_banner_next" aria-label="다음" />
+                </>
+              )}
+            </div>
+            <div className="main_banner_pagination" />
+          </div>
+        ) : (
+          <div className="main_banner_placeholder" />
+        )}
+        {/* 기존 비디오 섹션 (백업)
         <div className="main_visual_wrap">
           <video className="bg-video__content" autoPlay muted loop>
             <source src={mainVideo} type="video/mp4" />
@@ -116,6 +179,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        */}
         <div className="main_quick_area">
           <div className="main_quick_menu">
             <div className="quick_item cs_type">

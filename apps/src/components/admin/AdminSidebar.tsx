@@ -18,6 +18,7 @@ export const sideMenuSections: MenuSection[] = [
       { label: '고객의소리 관리', to: '/admin/voice', icon: 'record_voice_over' },
       { label: '빠른예약 관리', to: '/admin/fast-reserve', icon: 'event_available' },
       { label: '팝업 관리', to: '/admin/popup-banner', icon: 'web_asset' },
+      { label: '메인 배너 관리', to: '/admin/main-banner', icon: 'view_carousel' },
       { label: '의료진 관리', to: '/admin/doctor', icon: 'medical_services' },
     ],
   },
@@ -55,8 +56,8 @@ export default function AdminSidebar() {
               <ul>
                 {section.items.map((item) => (
                   <li key={item.to}>
-                    <a
-                      href={item.to}
+                    <Link
+                      to={item.to}
                       className={
                         item.to === '/admin'
                           ? location.pathname === '/admin'
@@ -69,7 +70,7 @@ export default function AdminSidebar() {
                     >
                       <span className="material-icons">{item.icon}</span>
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

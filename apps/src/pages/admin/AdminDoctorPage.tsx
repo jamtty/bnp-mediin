@@ -115,6 +115,7 @@ export default function AdminDoctorPage() {
                   placeholder="이름 / 진료과목 검색"
                 />
                 <button type="submit" className="adm_btn_secondary">검색</button>
+                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>초기화</button>
               </form>
               <button
                 type="button"

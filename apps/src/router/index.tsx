@@ -27,6 +27,8 @@ import AdminPopupBannerPage from '@/pages/admin/AdminPopupBannerPage'
 import AdminPopupBannerFormPage from '@/pages/admin/AdminPopupBannerFormPage'
 import AdminDoctorPage from '@/pages/admin/AdminDoctorPage'
 import AdminDoctorFormPage from '@/pages/admin/AdminDoctorFormPage'
+import AdminMainBannerPage from '@/pages/admin/AdminMainBannerPage'
+import AdminMainBannerFormPage from '@/pages/admin/AdminMainBannerFormPage'
 // 진료안내
 import OutpatientPage from '@/pages/care/OutpatientPage'
 import EmergencyPage from '@/pages/care/EmergencyPage'
@@ -40,6 +42,7 @@ import ClinicDetailPage from '@/pages/department/ClinicDetailPage'
 import SpecialCenterPage from '@/pages/department/SpecialCenterPage'
 import SpecialCenterDetailPage from '@/pages/department/SpecialCenterDetailPage'
 import IntroDeptDetailPage from '@/pages/department/IntroDeptDetailPage'
+import DoctorIntroPage from '@/pages/department/DoctorIntroPage'
 // 병원소개
 import GreetingPage from '@/pages/about/GreetingPage'
 import MissionPage from '@/pages/about/MissionPage'
@@ -98,6 +101,7 @@ export const router = createBrowserRouter(
         { path: '/department/clinic/:code', element: <ClinicDetailPage /> },
         { path: '/department/special', element: <SpecialCenterPage /> },
         { path: '/department/special/:code', element: <SpecialCenterDetailPage /> },
+        { path: '/department/doctors', element: <DoctorIntroPage /> },
         // 병원소개
         { path: '/about/greeting', element: <GreetingPage /> },
         { path: '/about/mission', element: <MissionPage /> },
@@ -146,7 +150,7 @@ export const router = createBrowserRouter(
       element: <AdminLayout />,
       children: [
         { index: true, element: <AdminMainPage /> },
-        { path: 'my', element: <AdminMyPage /> },
+        { path: 'mypage', element: <AdminMyPage /> },
         { path: 'notice', element: <AdminNoticePage /> },
         { path: 'notice/write', element: <AdminNoticeFormPage /> },
         { path: 'notice/edit/:id', element: <AdminNoticeFormPage /> },
@@ -176,6 +180,9 @@ export const router = createBrowserRouter(
         { path: 'doctor', element: <AdminDoctorPage /> },
         { path: 'doctor/write', element: <AdminDoctorFormPage /> },
         { path: 'doctor/edit/:id', element: <AdminDoctorFormPage /> },
+        { path: 'main-banner', element: <AdminMainBannerPage /> },
+        { path: 'main-banner/write', element: <AdminMainBannerFormPage /> },
+        { path: 'main-banner/edit/:id', element: <AdminMainBannerFormPage /> },
       ],
     },
   ],
