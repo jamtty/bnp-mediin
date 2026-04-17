@@ -267,6 +267,7 @@ export default function HomePage() {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault()
+                  setActivePopup('fast_reserv')
                 }}
               >
                 <dl>
