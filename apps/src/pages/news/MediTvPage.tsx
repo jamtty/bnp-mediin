@@ -123,7 +123,6 @@ export default function MediTvPage() {
               <div className="bbs_list2">
                 {items.map((item) => {
                   const thumbnail = getYouTubeThumbnailUrl(item.youtube_url) ?? item.thumbnail
-                  const summary = (item.content ?? '').replace(/<[^>]*>/g, '').trim()
                   return (
                     <div className="bbs_item" key={item.id}>
                       <a
