@@ -75,7 +75,9 @@ class NewsController
         if ($title === '') { Response::error('제목을 입력해주세요.'); }
 
         try {
-            $id = $this->service->create($title, $content, (string)$payload['name'], (string)$payload['name']);
+            $loginId  = Token::getLoginIdFromPayload($payload);
+            $userName = Token::getNameFromPayload($payload);
+            $id = $this->service->create($title, $content, $loginId, $userName);
 
             // 첨부파일 저장
             foreach (FileUploader::process('files', 'news') as $f) {

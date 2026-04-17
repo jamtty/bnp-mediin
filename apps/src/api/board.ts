@@ -96,6 +96,19 @@ export const deletePress = async (id: number): Promise<void> => {
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
 }
 
+/**
+ * 외부 URL의 og:image를 백엔드 프록시를 통해 가져옵니다.
+ * 이미지가 없으면 null을 반환합니다.
+ */
+export const fetchOgImage = async (url: string): Promise<string | null> => {
+  try {
+    const { data } = await apiClient.get('/api/og-image', { params: { url } })
+    return data?.data?.image_url ?? null
+  } catch {
+    return null
+  }
+}
+
 // ─────────────────────────────────────────────────────────────
 // 채용정보 (BMT_IDX = 5)
 // ─────────────────────────────────────────────────────────────
@@ -244,5 +257,81 @@ export const updateHealthInfo = async (
 
 export const deleteHealthInfo = async (id: number): Promise<void> => {
   const { data } = await apiClient.delete(`/api/health-info/${id}`)
+  if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
+}
+
+// ─────────────────────────────────────────────────────────────
+// 메디TV (BMT_IDX = 8)
+// ─────────────────────────────────────────────────────────────
+
+export interface MediTvItem {
+  id: number
+  title: string
+  author_name: string
+  created_at: string
+  view_count: number
+  is_pinned: number
+  content: string | null
+  youtube_url: string | null
+  thumbnail: string | null
+}
+
+export interface MediTvDetail extends MediTvItem {
+  author_id: string
+  updated_at: string | null
+  prev: { id: number; title: string } | null
+  next: { id: number; title: string } | null
+}
+
+export interface MediTvListResponse extends BoardListMeta {
+  items: MediTvItem[]
+}
+
+export const fetchMediTvList = async (
+  params: BoardListParams = {},
+): Promise<MediTvListResponse> => {
+  const { data } = await apiClient.get('/api/medi-tv', { params })
+  if (!data.success) throw new Error(data.message || '목록을 불러오지 못했습니다.')
+  return data.data
+}
+
+export const fetchMediTvDetail = async (id: number): Promise<MediTvDetail> => {
+  const { data } = await apiClient.get(`/api/medi-tv/${id}`)
+  if (!data.success) throw new Error(data.message || '데이터를 불러오지 못했습니다.')
+  return data.data
+}
+
+export const createMediTv = async (payload: {
+  title: string
+  content?: string
+  is_pinned?: boolean
+  youtube_url: string
+}): Promise<{ id: number }> => {
+  const { data } = await apiClient.post('/api/medi-tv', {
+    ...payload,
+    is_pinned: payload.is_pinned ? '1' : '0',
+  })
+  if (!data.success) throw new Error(data.message || '저장에 실패했습니다.')
+  return data.data
+}
+
+export const updateMediTv = async (
+  id: number,
+  payload: {
+    title: string
+    content?: string
+    is_pinned?: boolean
+    youtube_url: string
+  },
+): Promise<void> => {
+  const { data } = await apiClient.put(`/api/medi-tv/${id}`, {
+    ...payload,
+    is_pinned: payload.is_pinned ? '1' : '0',
+  })
+  if (!data.success) throw new Error(data.message || '수정에 실패했습니다.')
+}
+
+export const deleteMediTv = async (id: number): Promise<void> => {
+  const { data } = await apiClient.delete(`/api/medi-tv/${id}`)
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
 }

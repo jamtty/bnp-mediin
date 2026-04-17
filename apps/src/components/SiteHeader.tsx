@@ -113,6 +113,9 @@ export default function SiteHeader() {
                 <li>
                   <Link to="/news/recruit">채용정보</Link>
                 </li>
+                <li>
+                  <Link to="/news/medi-tv">메디TV</Link>
+                </li>
               </ul>
             </div>
           </div>

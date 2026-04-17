@@ -18,25 +18,52 @@ import slide8 from '../assets/images/m_special_slide8.png'
 import slide9 from '../assets/images/m_special_slide9.png'
 import slide10 from '../assets/images/m_special_slide10.png'
 import { fetchActiveBanners, type MainBannerItem } from '../api/mainBanner'
+import { fetchNoticeList } from '../api/notice'
+import { fetchHealthInfoList, fetchMediTvList, fetchPressList, fetchOgImage } from '../api/board'
+import { toAbsUrl } from '../utils/uploadUrl'
+import { getYouTubeThumbnailUrl } from '../utils/youtube'
+
+type HomeNewsItem = {
+  id: number
+  category: 'notice' | 'health-info' | 'press' | 'medi-tv'
+  categoryLabel: string
+  title: string
+  summary: string
+  createdAt: string
+  imageUrl: string | null
+  href: string
+  isExternal?: boolean
+}
+
+const HOME_NEWS_TABS = [
+  { key: 'all', label: '전체', moreHref: '/news/notice' },
+  { key: 'notice', label: '공지사항', moreHref: '/news/notice' },
+  { key: 'health-info', label: '건강정보', moreHref: '/community/health-info' },
+  { key: 'press', label: '보도자료', moreHref: '/news/press' },
+  { key: 'medi-tv', label: '메디TV', moreHref: '/news/medi-tv' },
+] as const
+
+const stripHtml = (value: string | null | undefined): string =>
+  (value ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+
+const extractFirstImageUrl = (value: string | null | undefined): string | null => {
+  const match = (value ?? '').match(/<img[^>]+src=["']([^"']+)["']/i)
+  return match ? toAbsUrl(match[1]) : null
+}
 
 export default function HomePage() {
   const swiperRef    = useRef<HTMLDivElement>(null)
   const bannerRef    = useRef<HTMLDivElement>(null)
   const [activeTab, setActiveTab] = useState(0)
   const [banners, setBanners] = useState<MainBannerItem[]>([])
-  const [newsList, setNewsList] = useState<
-    Array<{
-      bmt_idx: number
-      bmt_name: string
-      bd_idx: number
-      bd_field_2: string
-      bd_title: string
-      bd_content: string
-      inputdate: string
-      tFileVo: { file_src: string; file_cn: string } | null
-    }>
-  >([])
-  const [moreHref, setMoreHref] = useState('/main/board/1/board_list.do')
+  const [homeNews, setHomeNews] = useState<Record<string, HomeNewsItem[]>>({
+    all: [],
+    notice: [],
+    'health-info': [],
+    press: [],
+    'medi-tv': [],
+  })
+  const [newsLoading, setNewsLoading] = useState(false)
   const [activePopup, setActivePopup] = useState<string | null>(null)
 
   // 메인 배너 로드
@@ -88,35 +115,88 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
-    const params = new URLSearchParams()
-    const BMT_IDX_MAP: Record<number, number[]> = {
-      0: [1, 2, 3, 4],
-      1: [1],
-      2: [2],
-      3: [3],
-      4: [4],
-    }
-    const MORE_HREF_MAP: Record<number, string> = {
-      0: '/main/board/1/board_list.do',
-      1: '/main/board/1/board_list.do',
-      2: '/main/board/2/board_list.do',
-      3: '/main/board/3/board_list.do',
-      4: '/main/board/4/board_list.do',
-    }
-    const bmtIdxArr = BMT_IDX_MAP[activeTab] ?? [activeTab]
-    bmtIdxArr.forEach((idx) => params.append('bmtIdxArr', String(idx)))
-    params.append('pageSize', '4')
+    setNewsLoading(true)
+    Promise.all([
+      fetchNoticeList({ page: 1, size: 4 }),
+      fetchHealthInfoList({ page: 1, size: 4 }),
+      fetchPressList({ page: 1, size: 4 }),
+      fetchMediTvList({ page: 1, size: 4 }),
+    ])
+      .then(async ([noticeRes, healthRes, pressRes, mediTvRes]) => {
+        const noticeItems: HomeNewsItem[] = noticeRes.items.slice(0, 4).map((item) => ({
+          id: item.id,
+          category: 'notice',
+          categoryLabel: '공지사항',
+          title: item.title,
+          summary: stripHtml(item.content),
+          createdAt: item.created_at,
+          imageUrl: extractFirstImageUrl(item.content),
+          href: `/news/notice/${item.id}`,
+        }))
 
-    fetch(`/board/board_main_list.json?${params}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.result === 'success' && data.paging.result.length > 0) {
-          setNewsList(data.paging.result)
-          setMoreHref(MORE_HREF_MAP[activeTab] ?? '/main/board/1/board_list.do')
-        }
+        const healthItems: HomeNewsItem[] = healthRes.items.slice(0, 4).map((item) => ({
+          id: item.id,
+          category: 'health-info',
+          categoryLabel: '건강정보',
+          title: item.title,
+          summary: stripHtml(item.content),
+          createdAt: item.created_at,
+          imageUrl: toAbsUrl(item.thumbnail) || extractFirstImageUrl(item.content),
+          href: `/community/health-info/${item.id}`,
+        }))
+
+        // 보도자료: external_url이 있는 아이템의 og:image를 병렬 패치
+        const pressRawItems = pressRes.items.slice(0, 4)
+        const pressOgImages = await Promise.all(
+          pressRawItems.map((item) =>
+            item.external_url ? fetchOgImage(item.external_url) : Promise.resolve(null)
+          )
+        )
+        const pressItems: HomeNewsItem[] = pressRawItems.map((item, i) => ({
+          id: item.id,
+          category: 'press',
+          categoryLabel: '보도자료',
+          title: item.title,
+          summary: stripHtml(item.press_name ? `${item.press_name} ${item.external_url ?? ''}` : item.external_url),
+          createdAt: item.created_at,
+          imageUrl: pressOgImages[i] ?? null,
+          href: item.external_url || '/news/press',
+          isExternal: Boolean(item.external_url),
+        }))
+
+        const mediTvItems: HomeNewsItem[] = mediTvRes.items.slice(0, 4).map((item) => ({
+          id: item.id,
+          category: 'medi-tv',
+          categoryLabel: '메디TV',
+          title: item.title,
+          summary: stripHtml(item.content),
+          createdAt: item.created_at,
+          imageUrl: getYouTubeThumbnailUrl(item.youtube_url) ?? toAbsUrl(item.thumbnail),
+          href: item.youtube_url || '/news/medi-tv',
+          isExternal: true,
+        }))
+
+        const allItems = [...noticeItems, ...healthItems, ...pressItems, ...mediTvItems]
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .slice(0, 4)
+
+        setHomeNews({
+          all: allItems,
+          notice: noticeItems,
+          'health-info': healthItems,
+          press: pressItems,
+          'medi-tv': mediTvItems,
+        })
       })
-      .catch(() => {})
-  }, [activeTab])
+      .catch(() => {
+        setHomeNews({ all: [], notice: [], 'health-info': [], press: [], 'medi-tv': [] })
+      })
+      .finally(() => setNewsLoading(false))
+  }, [])
+
+  const currentNewsKey = HOME_NEWS_TABS[activeTab]?.key ?? 'all'
+  const newsList = homeNews[currentNewsKey] ?? []
+  const moreHref = HOME_NEWS_TABS[activeTab]?.moreHref ?? '/news/notice'
   return (
     <div className="wrap">
       <SiteHeader />
@@ -396,43 +476,29 @@ export default function HomePage() {
               더보기<i className="ico_plus"></i>
             </a>
             <div className="news_cont">
-              {newsList.map((item, i) => (
-                <div key={i} className="news_item">
-                  {item.bmt_idx === 3 ? (
-                    <a href={item.bd_field_2} target="_blank" rel="noreferrer">
-                      <span className="state_news">{item.bmt_name}</span>
-                      {item.tFileVo && (
-                        <div className="bbs_thumb">
-                          <img
-                            src={`https://medi-in.co.kr${item.tFileVo.file_src}`}
-                            alt={item.tFileVo.file_cn}
-                          />
-                        </div>
-                      )}
-                      <p className="news_tit">{item.bd_title}</p>
-                      <p className="news_txt">{item.bd_content}</p>
-                      <p className="news_date">{item.inputdate.substring(0, 10)}</p>
-                    </a>
-                  ) : (
-                    <a href={`/main/board/${item.bmt_idx}/${item.bd_idx}/board_view.do`}>
-                      <span className={item.bmt_idx === 1 ? 'state_notice' : 'state_news'}>
-                        {item.bmt_name}
+              {newsLoading ? (
+                <div className="news_empty">불러오는 중...</div>
+              ) : newsList.length === 0 ? (
+                <div className="news_empty">표시할 게시물이 없습니다.</div>
+              ) : (
+                newsList.map((item) => (
+                  <div key={`${item.category}-${item.id}`} className="news_item">
+                    <a href={item.href} target={item.isExternal ? '_blank' : undefined} rel={item.isExternal ? 'noreferrer noopener' : undefined}>
+                      <span className={item.category === 'notice' ? 'state_notice' : 'state_news'}>
+                        {item.categoryLabel}
                       </span>
-                      {item.tFileVo && (
-                        <div className="bbs_thumb">
-                          <img
-                            src={`https://medi-in.co.kr${item.tFileVo.file_src}`}
-                            alt={item.tFileVo.file_cn}
-                          />
+                      {item.imageUrl && (
+                        <div className="bbs_thumb main_news_thumb">
+                          <img src={item.imageUrl} alt={item.title} />
                         </div>
                       )}
-                      <p className="news_tit">{item.bd_title}</p>
-                      <p className="news_txt">{item.bd_content}</p>
-                      <p className="news_date">{item.inputdate.substring(0, 10)}</p>
+                      <p className="news_tit">{item.title}</p>
+                      {/* <p className="news_txt">{item.summary || ' '}</p> */}
+                      <p className="news_date">{item.createdAt}</p>
                     </a>
-                  )}
-                </div>
-              ))}
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

@@ -75,7 +75,9 @@ class NoticeController
         if ($title === '') { Response::error('제목을 입력해주세요.'); }
 
         try {
-            $id = $this->service->create($title, $content, (string)$payload['name'], (string)$payload['name'], $isPinned);
+            $loginId  = Token::getLoginIdFromPayload($payload);
+            $userName = Token::getNameFromPayload($payload);
+            $id = $this->service->create($title, $content, $loginId, $userName, $isPinned);
 
             foreach (FileUploader::process('files', 'notice') as $f) {
                 $this->repo->saveFile($id, $f['ori_name'], $f['save_name'], $f['file_path'], $f['file_size'], $f['file_ext']);

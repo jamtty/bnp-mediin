@@ -65,6 +65,39 @@ class Token
         return self::verify(substr($auth, 7));
     }
 
+    /**
+     * 토큰 payload 의 sub(ID) 로 DB 에서 실제 멤버 이름을 조회
+     * - 토큰 발급 이후 이름이 변경되어도 항상 최신 이름 반환
+     * - DB 조회 실패 시 토큰의 name 값으로 폴백
+     */
+    public static function getNameFromPayload(array $payload): string
+    {
+        $id = (int)($payload['sub'] ?? 0);
+        if ($id > 0) {
+            $member = (new MemberRepository())->findById($id);
+            if ($member && !empty($member['name'])) {
+                return $member['name'];
+            }
+        }
+        return (string)($payload['name'] ?? '');
+    }
+
+    /**
+     * 토큰 payload 의 sub(ID) 로 DB 에서 실제 로그인 ID 를 조회
+     * - IN_MEM_ID / UP_MEM_ID 등 아이디 컬럼 저장 용도
+     */
+    public static function getLoginIdFromPayload(array $payload): string
+    {
+        $id = (int)($payload['sub'] ?? 0);
+        if ($id > 0) {
+            $member = (new MemberRepository())->findById($id);
+            if ($member && !empty($member['login_id'])) {
+                return $member['login_id'];
+            }
+        }
+        return (string)($payload['name'] ?? '');
+    }
+
     private static function base64url(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');

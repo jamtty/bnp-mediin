@@ -119,7 +119,7 @@ export default function HealthInfoPage() {
             {loading ? (
               <p style={{ textAlign: 'center', padding: '40px 0' }}>불러오는 중...</p>
             ) : items.length === 0 ? (
-              <p style={{ textAlign: 'center', padding: '40px 0' }}>등록된 건강정보가 없습니다.</p>
+              <p className="bbs_empty">등록된 건강정보가 없습니다.</p>
             ) : (
               <div className="bbs_list2">
                 {items.map((item) => (

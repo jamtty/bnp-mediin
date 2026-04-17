@@ -11,6 +11,7 @@
  *  5 = 채용정보  → BoardRepository(5)
  *  6 = (미사용)
  *  7 = 건강정보  → BoardRepository(7)
+ *  8 = 메디TV     → BoardRepository(8)
  */
 class BoardRepository extends BaseRepository
 {

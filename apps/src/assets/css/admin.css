@@ -813,6 +813,26 @@ select.adm_btn_secondary {
   color: #dc2626;
 }
 
+/* ── 메디TV 폼 ── */
+.medi_tv_form_column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  flex: 1;
+}
+.medi_tv_form_column .adm_form_input {
+  flex: unset;
+  width: 100%;
+}
+.medi_tv_preview {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 0.6rem;
+  border: 1px solid #e5e7eb;
+  display: block;
+}
+
 /* ── 상태 배지 ── */
 .adm_status_badge {
   display: inline-block;

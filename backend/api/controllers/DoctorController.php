@@ -46,7 +46,7 @@ class DoctorController
         $payload = Token::fromRequest();
         if (!$payload) { Response::error('인증이 필요합니다.', 401); return; }
 
-        $data = $this->extractData($request, (string)($payload['sub'] ?? ''));
+        $data = $this->extractData($request, Token::getLoginIdFromPayload($payload));
         if ($data === null) return;
 
         $id = $this->service->create($data);
@@ -69,7 +69,7 @@ class DoctorController
         $item = $this->service->getOne($id);
         if (!$item) { Response::error('데이터를 찾을 수 없습니다.', 404); return; }
 
-        $data = $this->extractData($request, (string)($payload['sub'] ?? ''), isUpdate: true);
+        $data = $this->extractData($request, Token::getLoginIdFromPayload($payload), isUpdate: true);
         if ($data === null) return;
 
         $this->service->update($id, $data);

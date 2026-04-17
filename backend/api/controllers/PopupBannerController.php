@@ -38,7 +38,7 @@ class PopupBannerController
         $payload = Token::fromRequest();
         if (!$payload) { Response::error('?몄쬆???꾩슂?⑸땲??', 401); return; }
 
-        $data = $this->extractData($request, (string)($payload['sub'] ?? ''));
+        $data = $this->extractData($request, Token::getLoginIdFromPayload($payload));
         if ($data === null) return;
 
         $id = $this->service->create($data);
@@ -62,7 +62,7 @@ class PopupBannerController
         $item = $this->service->getOne($id);
         if (!$item) { Response::error('?곗씠?곕? 李얠쓣 ???놁뒿?덈떎.', 404); return; }
 
-        $data = $this->extractData($request, (string)($payload['sub'] ?? ''), isUpdate: true);
+        $data = $this->extractData($request, Token::getLoginIdFromPayload($payload), isUpdate: true);
         if ($data === null) return;
 
         $this->service->update($id, $data);

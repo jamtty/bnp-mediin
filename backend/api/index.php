@@ -57,6 +57,7 @@ require_once __DIR__ . '/controllers/UploadController.php';
 require_once __DIR__ . '/controllers/PressController.php';
 require_once __DIR__ . '/controllers/RecruitController.php';
 require_once __DIR__ . '/controllers/HealthInfoController.php';
+require_once __DIR__ . '/controllers/MediTvController.php';
 require_once __DIR__ . '/repositories/ConsultationRepository.php';
 require_once __DIR__ . '/services/ConsultationService.php';
 require_once __DIR__ . '/controllers/ConsultationController.php';
@@ -72,6 +73,10 @@ require_once __DIR__ . '/controllers/PopupBannerController.php';
 require_once __DIR__ . '/repositories/DoctorRepository.php';
 require_once __DIR__ . '/services/DoctorService.php';
 require_once __DIR__ . '/controllers/DoctorController.php';
+require_once __DIR__ . '/repositories/MainBannerRepository.php';
+require_once __DIR__ . '/services/MainBannerService.php';
+require_once __DIR__ . '/controllers/MainBannerController.php';
+require_once __DIR__ . '/controllers/OgImageController.php';
 
 // ── 라우터 초기화 및 디스패치 ─────────────────────────────────
 $router = new Router();

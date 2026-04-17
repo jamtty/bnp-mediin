@@ -28,6 +28,7 @@ export const sideMenuSections: MenuSection[] = [
       { label: '공지사항 관리', to: '/admin/notice', icon: 'campaign' },
       { label: '보도자료 관리', to: '/admin/press', icon: 'newspaper' },
       { label: '채용정보 관리', to: '/admin/recruit', icon: 'work' },
+      { label: '메디TV 관리', to: '/admin/medi-tv', icon: 'smart_display' },
       { label: '건강정보 관리', to: '/admin/health-info', icon: 'health_and_safety' },
     ],
   },

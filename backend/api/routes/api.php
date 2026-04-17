@@ -38,6 +38,9 @@ $router->post('/notice/{id}',                   [NoticeController::class, 'updat
 $router->post('/notice/{id}/delete',            [NoticeController::class, 'destroy']);
 $router->post('/notice/file/{fileId}/delete',   [NoticeController::class, 'destroyFile']);
 
+// OG 이미지 프록시
+$router->get('/og-image',           [OgImageController::class, 'fetch']);
+
 // 보도자료 (BMT_IDX = 2)
 $router->get('/press',              [PressController::class, 'index']);
 $router->post('/press',             [PressController::class, 'store']);
@@ -58,6 +61,13 @@ $router->post('/health-info',       [HealthInfoController::class, 'store']);
 $router->get('/health-info/{id}',   [HealthInfoController::class, 'show']);
 $router->put('/health-info/{id}',   [HealthInfoController::class, 'update']);
 $router->delete('/health-info/{id}',[HealthInfoController::class, 'destroy']);
+
+// 메디TV (BMT_IDX = 8)
+$router->get('/medi-tv',            [MediTvController::class, 'index']);
+$router->post('/medi-tv',           [MediTvController::class, 'store']);
+$router->get('/medi-tv/{id}',       [MediTvController::class, 'show']);
+$router->put('/medi-tv/{id}',       [MediTvController::class, 'update']);
+$router->delete('/medi-tv/{id}',    [MediTvController::class, 'destroy']);
 
 // 건강상담
 $router->get('/consultation',                             [ConsultationController::class, 'index']);
@@ -104,3 +114,13 @@ $router->post('/doctor/{id}',                        [DoctorController::class, '
 $router->post('/doctor/{id}/use',                    [DoctorController::class, 'updateUseYn']);
 $router->post('/doctor/{id}/sort',                   [DoctorController::class, 'updateSortOrder']);
 $router->post('/doctor/{id}/delete',                 [DoctorController::class, 'destroy']);
+
+// 메인 배너
+$router->get('/main-banner',                         [MainBannerController::class, 'index']);
+$router->get('/main-banner/active',                  [MainBannerController::class, 'active']);
+$router->post('/main-banner',                        [MainBannerController::class, 'store']);
+$router->get('/main-banner/{id}',                    [MainBannerController::class, 'show']);
+$router->post('/main-banner/{id}',                   [MainBannerController::class, 'update']);
+$router->post('/main-banner/{id}/use',               [MainBannerController::class, 'updateUseYn']);
+$router->post('/main-banner/{id}/sort',              [MainBannerController::class, 'updateSortOrder']);
+$router->post('/main-banner/{id}/delete',            [MainBannerController::class, 'destroy']);

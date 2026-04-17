@@ -202,7 +202,7 @@ class VoiceController
         if ($content === '') { Response::error('답변 내용을 입력해주세요.'); return; }
 
         try {
-            $replyId = (string)($payload['name'] ?? 'admin');
+            $replyId = Token::getNameFromPayload($payload) ?: 'admin';
             $this->service->reply($id, $content, $replyId);
             Response::ok(null, '답변이 등록되었습니다.');
         } catch (RuntimeException $e) {

@@ -18,6 +18,8 @@ import AdminRecruitPage from '@/pages/admin/AdminRecruitPage'
 import AdminRecruitFormPage from '@/pages/admin/AdminRecruitFormPage'
 import AdminHealthInfoPage from '@/pages/admin/AdminHealthInfoPage'
 import AdminHealthInfoFormPage from '@/pages/admin/AdminHealthInfoFormPage'
+import AdminMediTvPage from '@/pages/admin/AdminMediTvPage'
+import AdminMediTvFormPage from '@/pages/admin/AdminMediTvFormPage'
 import AdminConsultationPage from '@/pages/admin/AdminConsultationPage'
 import AdminConsultationDetailPage from '@/pages/admin/AdminConsultationDetailPage'
 import AdminVoicePage from '@/pages/admin/AdminVoicePage'
@@ -55,6 +57,7 @@ import LocationPage from '@/pages/about/LocationPage'
 import NoticePage from '@/pages/news/NoticePage'
 import NoticeDetailPage from '@/pages/news/NoticeDetailPage'
 import PressPage from '@/pages/news/PressPage'
+import MediTvPage from '@/pages/news/MediTvPage'
 import RecruitPage from '@/pages/news/RecruitPage'
 import RecruitDetailPage from '@/pages/news/RecruitDetailPage'
 // 건강증진센터
@@ -114,6 +117,7 @@ export const router = createBrowserRouter(
         { path: '/news/notice', element: <NoticePage /> },
         { path: '/news/notice/:id', element: <NoticeDetailPage /> },
         { path: '/news/press', element: <PressPage /> },
+        { path: '/news/medi-tv', element: <MediTvPage /> },
         { path: '/news/recruit', element: <RecruitPage /> },
         { path: '/news/recruit/:id', element: <RecruitDetailPage /> },
         // 건강증진센터
@@ -169,6 +173,9 @@ export const router = createBrowserRouter(
         { path: 'health-info', element: <AdminHealthInfoPage /> },
         { path: 'health-info/write', element: <AdminHealthInfoFormPage /> },
         { path: 'health-info/edit/:id', element: <AdminHealthInfoFormPage /> },
+        { path: 'medi-tv', element: <AdminMediTvPage /> },
+        { path: 'medi-tv/write', element: <AdminMediTvFormPage /> },
+        { path: 'medi-tv/edit/:id', element: <AdminMediTvFormPage /> },
         { path: 'consultation', element: <AdminConsultationPage /> },
         { path: 'consultation/:id', element: <AdminConsultationDetailPage /> },
         { path: 'voice', element: <AdminVoicePage /> },

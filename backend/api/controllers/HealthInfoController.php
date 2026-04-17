@@ -68,8 +68,8 @@ class HealthInfoController
             $id = $this->service->create(
                 title:      $title,
                 content:    $content,
-                authorId:   (string)$payload['id'],
-                authorName: (string)$payload['name'],
+                authorId:   Token::getLoginIdFromPayload($payload),
+                authorName: Token::getNameFromPayload($payload),
                 isPinned:   $isPinned
             );
             Response::ok(['id' => $id], '등록되었습니다.');

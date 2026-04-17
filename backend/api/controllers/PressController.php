@@ -79,8 +79,8 @@ class PressController
             $id = $this->service->create(
                 title:      $title,
                 content:    $content,
-                authorId:   (string)$payload['id'],
-                authorName: (string)$payload['name'],
+                authorId:   Token::getLoginIdFromPayload($payload),
+                authorName: Token::getNameFromPayload($payload),
                 isPinned:   $isPinned,
                 field1:     $pressName,
                 field2:     $externalUrl
