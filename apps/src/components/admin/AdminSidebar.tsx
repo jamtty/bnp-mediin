@@ -32,6 +32,12 @@ export const sideMenuSections: MenuSection[] = [
       { label: '건강정보 관리', to: '/admin/health-info', icon: 'health_and_safety' },
     ],
   },
+  {
+    sectionLabel: '계정',
+    items: [
+      { label: '마이페이지', to: '/admin/mypage', icon: 'manage_accounts' },
+    ],
+  },
 ]
 
 // 기존 코드와의 하위호환을 위해 sideMenuItems 도 export

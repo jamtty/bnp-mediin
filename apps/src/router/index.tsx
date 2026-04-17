@@ -8,10 +8,6 @@ import AdminMainPage from '@/pages/admin/AdminMainPage'
 import AdminMyPage from '@/pages/admin/AdminMyPage'
 import AdminNoticePage from '@/pages/admin/AdminNoticePage'
 import AdminNoticeFormPage from '@/pages/admin/AdminNoticeFormPage'
-import AdminReportPage from '@/pages/admin/AdminReportPage'
-import AdminReportFormPage from '@/pages/admin/AdminReportFormPage'
-import AdminNewsPage from '@/pages/admin/AdminNewsPage'
-import AdminNewsFormPage from '@/pages/admin/AdminNewsFormPage'
 import AdminPressPage from '@/pages/admin/AdminPressPage'
 import AdminPressFormPage from '@/pages/admin/AdminPressFormPage'
 import AdminRecruitPage from '@/pages/admin/AdminRecruitPage'
@@ -158,12 +154,6 @@ export const router = createBrowserRouter(
         { path: 'notice', element: <AdminNoticePage /> },
         { path: 'notice/write', element: <AdminNoticeFormPage /> },
         { path: 'notice/edit/:id', element: <AdminNoticeFormPage /> },
-        { path: 'news', element: <AdminNewsPage /> },
-        { path: 'news/write', element: <AdminNewsFormPage /> },
-        { path: 'news/edit/:id', element: <AdminNewsFormPage /> },
-        { path: 'report', element: <AdminReportPage /> },
-        { path: 'report/write', element: <AdminReportFormPage /> },
-        { path: 'report/edit/:id', element: <AdminReportFormPage /> },
         { path: 'press', element: <AdminPressPage /> },
         { path: 'press/write', element: <AdminPressFormPage /> },
         { path: 'press/edit/:id', element: <AdminPressFormPage /> },
