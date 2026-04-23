@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+﻿import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -12,7 +12,6 @@ import {
   type ScheduleJson,
   type ScheduleRow,
 } from '@/api/doctor'
-import '@/assets/css/style.css'
 
 const DAY_LABELS: { key: keyof ScheduleRow; label: string }[] = [
   { key: 'mon',   label: '월' },

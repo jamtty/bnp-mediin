@@ -1,5 +1,14 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import MainLayout from '@/layouts/MainLayout'
+const WellLayout = lazy(() => import('@/layouts/WellLayout'))
+function WellLayoutWithSuspense() {
+  return (
+    <Suspense fallback={null}>
+      <WellLayout />
+    </Suspense>
+  )
+}
 import HomePage from '@/pages/HomePage'
 // 관리자
 import AdminLayout from '@/layouts/AdminLayout'
@@ -61,6 +70,15 @@ import ProgramPage from '@/pages/health/ProgramPage'
 import PreparationPage from '@/pages/health/PreparationPage'
 import ExamsPage from '@/pages/health/ExamsPage'
 import HealthAboutPage from '@/pages/health/HealthAboutPage'
+// 건강증진센터 (well 독립 섹션)
+import WellHomePage from '@/pages/well/WellHomePage'
+import WellProgramNhisPage from '@/pages/well/WellProgramNhisPage'
+import WellProgramBasicPage from '@/pages/well/WellProgramBasicPage'
+import WellProgramPrecisionPage from '@/pages/well/WellProgramPrecisionPage'
+import WellPreparationPage from '@/pages/well/WellPreparationPage'
+import WellExamsPage from '@/pages/well/WellExamsPage'
+import WellAboutPage from '@/pages/well/WellAboutPage'
+import WellAboutDoctorsPage from '@/pages/well/WellAboutDoctorsPage'
 // 진료협력센터
 import CooperationPage from '@/pages/cooperation/CooperationPage'
 // 장례식장
@@ -141,6 +159,33 @@ export const router = createBrowserRouter(
         { path: '/community/voice/my-list', element: <VoiceMyListPage /> },
         { path: '/community/voice/:id/edit', element: <VoiceFormPage /> },
         { path: '/community/voice/:id', element: <VoiceDetailPage /> },
+      ],
+    },
+    // 건강증진센터 (well 독립 섹션)
+    {
+      path: '/well',
+      element: <WellLayoutWithSuspense />,  
+      children: [
+        { index: true, element: <WellHomePage /> },
+        {
+          path: 'program',
+          children: [
+            { index: true, element: <Navigate to="/well/program/nhis" replace /> },
+            { path: 'nhis', element: <WellProgramNhisPage /> },
+            { path: 'basic', element: <WellProgramBasicPage /> },
+            { path: 'precision', element: <WellProgramPrecisionPage /> },
+          ],
+        },
+        { path: 'preparation', element: <WellPreparationPage /> },
+        { path: 'exams', element: <WellExamsPage /> },
+        {
+          path: 'about',
+          children: [
+            { index: true, element: <Navigate to="/well/about/intro" replace /> },
+            { path: 'intro', element: <WellAboutPage /> },
+            { path: 'doctors', element: <WellAboutDoctorsPage /> },
+          ],
+        },
       ],
     },
     // 관리자

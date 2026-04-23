@@ -7,7 +7,6 @@ import {
   deleteFastReserve,
   type FastReserveItem,
 } from '@/api/fastReserve'
-import '@/assets/css/style.css'
 
 const PAGE_SIZE = 15
 

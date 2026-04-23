@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -11,7 +11,6 @@ import {
 } from '@/api/consultation'
 import { JB_CD_MAP } from '../community/_jbCdMap'
 import { toAbsUrl } from '@/utils/uploadUrl'
-import '@/assets/css/style.css'
 
 export default function AdminConsultationDetailPage() {
   const navigate = useNavigate()

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -9,7 +9,6 @@ import {
   DEPT_CODE_MAP,
   type DoctorItem,
 } from '@/api/doctor'
-import '@/assets/css/style.css'
 
 const PAGE_SIZE = 50
 

@@ -1,6 +1,7 @@
 import apiClient from './axios'
 
 export const DEPT_CODE_MAP: Record<string, string> = {
+  hpcenter:        '건강증진센터',
   internal:        '내과',
   cardiology:      '심장내과',
   respiratory:     '호흡기내과',

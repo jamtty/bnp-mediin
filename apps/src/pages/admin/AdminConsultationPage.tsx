@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -8,7 +8,6 @@ import {
   type ConsultationItem,
 } from '@/api/consultation'
 import { JB_CD_MAP } from '../community/_jbCdMap'
-import '@/assets/css/style.css'
 
 const PAGE_SIZE = 15
 

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="120" viewBox="0 0 320 120">
+  <defs>
+    <filter id="사각형_330" x="0" y="0" width="320" height="120" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.2" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g data-type="innerShadowGroup">
+    <rect id="사각형_330-2" data-name="사각형 330" width="320" height="120" fill="#10a0b4"/>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#사각형_330)">
+      <rect id="사각형_330-3" data-name="사각형 330" width="320" height="120" fill="#fff"/>
+    </g>
+  </g>
+</svg>

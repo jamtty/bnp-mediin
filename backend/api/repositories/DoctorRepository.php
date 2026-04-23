@@ -49,7 +49,7 @@ class DoctorRepository extends BaseRepository
                     UP_MEM_ID AS updated_by,
                     DATE_FORMAT(UPDATEDATE, '%Y-%m-%d %H:%i') AS updated_at
              FROM doctor_tbl
-             WHERE DOC_IDX = :id AND DOC_DEL_YN = 'N'",
+             WHERE DOC_IDX = :id",
             [':id' => $id]
         );
     }
@@ -65,7 +65,7 @@ class DoctorRepository extends BaseRepository
                     DOC_USE_YN AS use_yn,
                     CAST(DOC_SORT_ORDER AS UNSIGNED) AS sort_order
              FROM doctor_tbl
-             WHERE DEPT_CODE = :dept_code AND DOC_DEL_YN = 'N' AND DOC_USE_YN = 'Y'
+             WHERE DEPT_CODE = :dept_code AND DOC_USE_YN = 'Y'
              ORDER BY DOC_SORT_ORDER ASC, DOC_IDX ASC",
             [':dept_code' => $deptCode]
         );
@@ -139,8 +139,12 @@ class DoctorRepository extends BaseRepository
 
     public function delete(int $id): bool
     {
+        $this->execute(
+            'DELETE FROM doctor_file_tbl WHERE DOC_IDX = :id',
+            [':id' => $id]
+        );
         return $this->execute(
-            "UPDATE doctor_tbl SET DOC_DEL_YN = 'Y', DELDATE = NOW() WHERE DOC_IDX = :id",
+            'DELETE FROM doctor_tbl WHERE DOC_IDX = :id',
             [':id' => $id]
         ) > 0;
     }
@@ -213,10 +217,11 @@ class DoctorRepository extends BaseRepository
 
     private function buildWhere(string $deptCode, string $keyword, string $useYn): array
     {
-        $where  = "WHERE DOC_DEL_YN = 'N'";
+        $where  = 'WHERE 1=1';
         $params = [];
 
         $deptNameCase = "CASE DEPT_CODE
+            WHEN 'hpcenter' THEN '건강증진센터'
             WHEN 'internal' THEN '내과'
             WHEN 'cardiology' THEN '심장내과'
             WHEN 'respiratory' THEN '호흡기내과'

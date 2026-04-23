@@ -120,30 +120,22 @@ export default function SiteHeader() {
             </div>
           </div>
           <div className="gnb_item">
-            <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer" className="gnb_link">
+            <a href="/well/" target="_blank" rel="noreferrer" className="gnb_link">
               건강증진센터
             </a>
             <div className="gnb_sub">
               <ul>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
-                    건강검진프로그램
-                  </a>
+                  <a href="/well/program" target="_blank" rel="noreferrer">건강검진프로그램</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
-                    검진준비 및 유의사항
-                  </a>
+                  <a href="/well/preparation" target="_blank" rel="noreferrer">검진준비 및 유의사항</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
-                    검사종류
-                  </a>
+                  <a href="/well/exams" target="_blank" rel="noreferrer">검사종류</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/well/" target="_blank" rel="noreferrer">
-                    센터소개
-                  </a>
+                  <a href="/well/about" target="_blank" rel="noreferrer">센터소개</a>
                 </li>
               </ul>
             </div>

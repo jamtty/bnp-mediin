@@ -1,8 +1,8 @@
-import { useState } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
 import { loginAdmin } from '@/api/auth'
-import '@/assets/css/style.css'
+import adminCssUrl from '@/assets/css/admin.css?url'
 
 export default function AdminLoginPage() {
   const navigate = useNavigate()
@@ -12,6 +12,14 @@ export default function AdminLoginPage() {
   const [pw, setPw] = useState('')
   const [showPw, setShowPw] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = adminCssUrl
+    document.head.appendChild(link)
+    return () => { document.head.removeChild(link) }
+  }, [])
 
   if (isAuthenticated) {
     return <Navigate to="/admin" replace />

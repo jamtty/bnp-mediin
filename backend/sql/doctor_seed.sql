@@ -276,3 +276,33 @@ INSERT INTO doctor_tbl (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR, DOC_
 남양주 현대병원 과장
 중앙대학교 병원 외래교수', NULL, '약력', 'Y', 1, 'N', 'seed:hardcoded', NOW());
 INSERT INTO doctor_file_tbl (FILE_IDX, DOC_IDX, ORI_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE, FILE_EXT, INPUTDATE) VALUES (37, 37, 'ms_aym.jpg', 'ms_aym.jpg', '/uploads/doctor/', 0, 'jpg', NOW());
+
+-- ============================================================
+-- 건강증진센터(hpcenter) 의료진 시드 데이터
+-- ============================================================
+
+INSERT INTO doctor_tbl (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR, DOC_SPECIALTY, DOC_CAREER, SCHEDULE_JSON, CAREER_LABEL, DOC_USE_YN, DOC_SORT_ORDER, DOC_DEL_YN, IN_MEM_ID, INPUTDATE) VALUES (38, 'hpcenter', '김민주', '진료과장', '검진의학과', NULL, '부산대학교 의학전문대학원 졸업
+부산대학교 병원 인턴
+인천비아뜨의원 검진의', NULL, '약력', 'Y', 1, 'N', 'seed:hardcoded', NOW());
+INSERT INTO doctor_file_tbl (FILE_IDX, DOC_IDX, ORI_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE, FILE_EXT, INPUTDATE) VALUES (38, 38, 'ms_1.jpg', 'ms_1.jpg', '/uploads/doctor/', 0, 'jpg', NOW());
+
+INSERT INTO doctor_tbl (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR, DOC_SPECIALTY, DOC_CAREER, SCHEDULE_JSON, CAREER_LABEL, DOC_USE_YN, DOC_SORT_ORDER, DOC_DEL_YN, IN_MEM_ID, INPUTDATE) VALUES (39, 'hpcenter', '김선미', '진료과장', '영상의학과', NULL, '한양대학교 의과대학 졸업
+한일병원 영상의학과 과장
+대한초음파 학회 정회원', NULL, '약력', 'Y', 2, 'N', 'seed:hardcoded', NOW());
+INSERT INTO doctor_file_tbl (FILE_IDX, DOC_IDX, ORI_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE, FILE_EXT, INPUTDATE) VALUES (39, 39, 'ms_2.png', 'ms_2.png', '/uploads/doctor/', 0, 'png', NOW());
+
+INSERT INTO doctor_tbl (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR, DOC_SPECIALTY, DOC_CAREER, SCHEDULE_JSON, CAREER_LABEL, DOC_USE_YN, DOC_SORT_ORDER, DOC_DEL_YN, IN_MEM_ID, INPUTDATE) VALUES (40, 'hpcenter', '권재현', '진료과장', '영상의학과', NULL, '경북대학교 졸업
+경북대학교 전공의
+서울아산병원 전임의
+동국대 일산병원 영상의학과 교수', NULL, '약력', 'Y', 3, 'N', 'seed:hardcoded', NOW());
+INSERT INTO doctor_file_tbl (FILE_IDX, DOC_IDX, ORI_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE, FILE_EXT, INPUTDATE) VALUES (40, 40, 'ms_kjh.jpg', 'ms_kjh.jpg', '/uploads/doctor/', 0, 'jpg', NOW());
+
+INSERT INTO doctor_tbl (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR, DOC_SPECIALTY, DOC_CAREER, SCHEDULE_JSON, CAREER_LABEL, DOC_USE_YN, DOC_SORT_ORDER, DOC_DEL_YN, IN_MEM_ID, INPUTDATE) VALUES (41, 'hpcenter', '이은우', '진료과장', '외과', NULL, '인제대의대졸업
+인제대학교일산백병원 외과전문의
+국립암센터 대장암센터 내시경아카데미 전임의', NULL, '약력', 'Y', 4, 'N', 'seed:hardcoded', NOW());
+INSERT INTO doctor_file_tbl (FILE_IDX, DOC_IDX, ORI_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE, FILE_EXT, INPUTDATE) VALUES (41, 41, 'ms_lew.jpg', 'ms_lew.jpg', '/uploads/doctor/', 0, 'jpg', NOW());
+
+INSERT INTO doctor_tbl (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR, DOC_SPECIALTY, DOC_CAREER, SCHEDULE_JSON, CAREER_LABEL, DOC_USE_YN, DOC_SORT_ORDER, DOC_DEL_YN, IN_MEM_ID, INPUTDATE) VALUES (42, 'hpcenter', '이창훈', '진료과장', '소화기내과', NULL, '가톨릭관동대학교 의학과 졸업
+보라매 서울대병원 소화기내과 전임의
+vic365의원,한강연세병원,박원종내과의원 검진내과', NULL, '약력', 'Y', 5, 'N', 'seed:hardcoded', NOW());
+INSERT INTO doctor_file_tbl (FILE_IDX, DOC_IDX, ORI_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE, FILE_EXT, INPUTDATE) VALUES (42, 42, 'ms_lch.jpg', 'ms_lch.jpg', '/uploads/doctor/', 0, 'jpg', NOW());

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="94" height="94" viewBox="0 0 94 94">
+  <g id="icon2" transform="translate(-1238.612 -775.653)">
+    <path id="패스_994" data-name="패스 994" d="M42.372,40.941V7.784H3.035V40.941A15.69,15.69,0,0,0,15.554,56.612v3.951H31.213V56.223C43,52.437,42.372,40.941,42.372,40.941" transform="translate(1262.716 793.362)" fill="#fdb93d"/>
+    <path id="패스_995" data-name="패스 995" d="M42.372,40.941V7.784H3.035V40.941A15.69,15.69,0,0,0,15.554,56.612v3.951H31.213V56.223C43,52.437,42.372,40.941,42.372,40.941Z" transform="translate(1262.716 793.362)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <rect id="사각형_379" data-name="사각형 379" width="24.467" height="21.856" transform="translate(1273.282 811.753)" fill="#fff"/>
+    <rect id="사각형_380" data-name="사각형 380" width="24.467" height="21.856" transform="translate(1272.888 811.753)" fill="none" stroke="#202020" stroke-linecap="round" stroke-width="3"/>
+    <line id="선_4" data-name="선 4" y2="4.73" transform="translate(1285.593 853.923)" fill="none" stroke="#202020" stroke-linecap="round" stroke-width="3"/>
+    <line id="선_5" data-name="선 5" y1="15.972" transform="translate(1285.593 785.653)" fill="none" stroke="#202020" stroke-width="3"/>
+    <path id="패스_996" data-name="패스 996" d="M0,1H59V74" transform="translate(1258.612 784.654)" fill="none" stroke="#202020" stroke-linecap="round" stroke-width="3"/>
+    <line id="선_6" data-name="선 6" x2="13.133" transform="translate(1278.734 822.621)" fill="none" stroke="#202020" stroke-linecap="round" stroke-width="3"/>
+    <rect id="사각형_1086" data-name="사각형 1086" width="94" height="94" transform="translate(1238.612 775.653)" fill="none"/>
+  </g>
+</svg>

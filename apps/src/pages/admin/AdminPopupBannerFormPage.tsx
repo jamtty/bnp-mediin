@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+﻿import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -8,7 +8,6 @@ import {
   updatePopupBanner,
   POPUP_SITE_MAP,
 } from '@/api/popupBanner'
-import '@/assets/css/style.css'
 
 export default function AdminPopupBannerFormPage() {
   const navigate  = useNavigate()

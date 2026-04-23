@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="94" height="94" viewBox="0 0 94 94">
+  <g id="ico_prec4" transform="translate(-1254.332 -1309.548)">
+    <path id="패스_1010" data-name="패스 1010" d="M53.431,8.31l-10.5-6.925-5.6,8.492L33.729,7.5,15.386,35.321,11.2,32.558,5.45,41.272l3.77,2.488,17.43,11.49,4.609,3.04L37,49.574l-4.19-2.763,6.992-10.605,5.249-7.96,6.1-9.252L47.834,16.8Z" transform="translate(1277.574 1310.422)" fill="#10a0b4"/>
+    <path id="패스_1011" data-name="패스 1011" d="M53.431,8.31l-10.5-6.925-5.6,8.492L33.729,7.5,15.386,35.321,11.2,32.558,5.45,41.272l3.77,2.488,17.43,11.49,4.609,3.04L37,49.574l-4.19-2.763,6.992-10.605,5.249-7.96,6.1-9.252L47.834,16.8Z" transform="translate(1277.574 1310.422)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <path id="패스_1012" data-name="패스 1012" d="M23.106,56.524A32.483,32.483,0,0,0,31.774,34.47a32.39,32.39,0,0,0-7.537-20.757" transform="translate(1298.391 1324.806)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <rect id="사각형_385" data-name="사각형 385" width="8.966" height="6.156" transform="translate(1293.436 1370.561) rotate(-56.588)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <rect id="사각형_386" data-name="사각형 386" width="8.966" height="6.156" transform="translate(1281.249 1362.484) rotate(-56.596)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <path id="패스_1013" data-name="패스 1013" d="M48.776,33.36H1V43H54.622V33.36Z" transform="translate(1272.77 1347.857)" fill="#10a0b4"/>
+    <path id="패스_1014" data-name="패스 1014" d="M48.776,33.36H1V43H54.622V33.36Z" transform="translate(1272.77 1347.857)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <path id="패스_1015" data-name="패스 1015" d="M40.674,37.782H11.013A19.478,19.478,0,0,0,2.857,48.219H48.83A19.478,19.478,0,0,0,40.674,37.782Z" transform="translate(1274.959 1353.07)" fill="none" stroke="#202020" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <line id="선_7" data-name="선 7" x2="17.428" y2="11.492" transform="translate(1293.19 1345.625)" fill="#fff"/>
+    <line id="선_8" data-name="선 8" x2="17.293" y2="11.492" transform="translate(1293.19 1345.625)" fill="none" stroke="#202020" stroke-linecap="round" stroke-width="3"/>
+    <line id="선_9" data-name="선 9" x2="10.503" y2="6.925" transform="translate(1314.904 1320.299)" fill="#fff"/>
+    <line id="선_10" data-name="선 10" x2="10.503" y2="6.925" transform="translate(1314.904 1320.299)" fill="none" stroke="#202020" stroke-width="3"/>
+    <path id="패스_1016" data-name="패스 1016" d="M24.681,12.9a3.57,3.57,0,1,1-3.571-3.571A3.569,3.569,0,0,1,24.681,12.9" transform="translate(1291.967 1319.723)" fill="#fff"/>
+    <path id="패스_1017" data-name="패스 1017" d="M24.681,12.9a3.57,3.57,0,1,1-3.571-3.571A3.569,3.569,0,0,1,24.681,12.9Z" transform="translate(1291.967 1319.723)" fill="none" stroke="#202020" stroke-linecap="round" stroke-width="3"/>
+    <rect id="사각형_387" data-name="사각형 387" width="94" height="94" transform="translate(1254.332 1309.548)" fill="none"/>
+  </g>
+</svg>

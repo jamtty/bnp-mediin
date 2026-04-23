@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -7,7 +7,6 @@ import { fetchPressList, fetchRecruitList, fetchHealthInfoList, fetchMediTvList 
 import { fetchConsultationList } from '@/api/consultation'
 import { fetchVoiceList } from '@/api/voice'
 import { fetchFastReserveList } from '@/api/fastReserve'
-import '@/assets/css/style.css'
 
 interface Stats {
   consultation: number

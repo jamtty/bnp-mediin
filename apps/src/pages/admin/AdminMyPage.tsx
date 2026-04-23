@@ -1,9 +1,8 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import { useAuthStore } from '@/store/useAuthStore'
 import { changePassword } from '@/api/auth'
-import '@/assets/css/style.css'
 
 export default function AdminMyPage() {
   const { user } = useAuthStore()
