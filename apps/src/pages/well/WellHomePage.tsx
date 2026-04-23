@@ -5,7 +5,6 @@ import { Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 import WellHeader from '../../components/WellHeader'
 import SiteFooter from '../../components/SiteFooter'
-import bnrImg1 from '../../assets/images/hpcenter/cooperation_guide.jpg'
 import main1Pc from '../../assets/images/hpcenter/main1_pc.png'
 import main1Mo from '../../assets/images/hpcenter/main1_mo.png'
 import main2Pc from '../../assets/images/hpcenter/main2_pc.png'
@@ -52,21 +51,21 @@ export default function WellHomePage() {
   const programs = [
     {
       ico: 'ico_pro1',
-      title: '기본 건강검진',
-      desc: '국가 기본 건강검진 항목을 포함한\n기본 건강상태 확인 검진 프로그램입니다.',
-      to: '/well/program',
+      title: '국민건강보험공단 건강검진',
+      desc: '국민건강보험공단에서 실시하는 일반검진,\n6대 암검진을 실시함으로써 질병의 조기발견\n및 예방, 국민건강수준의 향상을 위하여\n건강검진 서비스를 제공하고 있습니다.',
+      href: '/well/program/nhis',
     },
     {
       ico: 'ico_pro2',
-      title: '종합 건강검진',
-      desc: '심층적인 검사 항목을 통해\n건강 상태를 보다 정밀하게 확인합니다.',
-      to: '/well/program',
+      title: '기본검진프로그램',
+      desc: '특별한 증상이나 가족력, 과거력 등이 없는\n성인을 대상으로 질병을 조기에\n발견하는 것을 목적으로 하는\n필수적인 검진 프로그램',
+      href: '/well/program/basic',
     },
     {
       ico: 'ico_pro3',
-      title: '특화 건강검진',
-      desc: '개인 맞춤형 특화 검진으로\n특정 질환에 대한 예방·조기발견이 가능합니다.',
-      to: '/well/program',
+      title: '정밀검진프로그램',
+      desc: '각 질환 암, 뇌, 심장, 호흡기 중\n선택 할 수 있는 맞춤형 정밀검진',
+      href: '/well/program/precision',
     },
   ]
 
@@ -76,7 +75,7 @@ export default function WellHomePage() {
       desc: '메디인병원 건강증진센터의\n의료진을 소개합니다.',
       imgPc: doctorIntroducePc,
       imgMo: doctorIntroduceMo,
-      to: '/well/doctor',
+      to: '/well/about/doctors',
     },
     {
       title: '검진준비 및 유의사항',
@@ -149,7 +148,7 @@ export default function WellHomePage() {
                     </dd>
                   </dl>
                 </div>
-                <Link to={prog.to} className="btn_more"><span>MORE</span></Link>
+                <a href={prog.href} className="btn_more"><span>MORE</span></a>
               </div>
             ))}
           </div>

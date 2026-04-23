@@ -36,6 +36,7 @@ import AdminDoctorPage from '@/pages/admin/AdminDoctorPage'
 import AdminDoctorFormPage from '@/pages/admin/AdminDoctorFormPage'
 import AdminMainBannerPage from '@/pages/admin/AdminMainBannerPage'
 import AdminMainBannerFormPage from '@/pages/admin/AdminMainBannerFormPage'
+import AdminWellFilePage from '@/pages/admin/AdminWellFilePage'
 // 진료안내
 import OutpatientPage from '@/pages/care/OutpatientPage'
 import EmergencyPage from '@/pages/care/EmergencyPage'
@@ -225,6 +226,7 @@ export const router = createBrowserRouter(
         { path: 'main-banner', element: <AdminMainBannerPage /> },
         { path: 'main-banner/write', element: <AdminMainBannerFormPage /> },
         { path: 'main-banner/edit/:id', element: <AdminMainBannerFormPage /> },
+        { path: 'well-file', element: <AdminWellFilePage /> },
       ],
     },
   ],

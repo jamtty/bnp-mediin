@@ -160,8 +160,8 @@
 
 /* 사이드바 */
 .adm_sidebar {
-  width: 18rem;
-  min-width: 18rem;
+  width: 22rem;
+  min-width: 22rem;
   background: #fff;
   border-right: 1px solid #e5e7eb;
   display: flex;
@@ -246,7 +246,7 @@
 /* 콘텐츠 영역 */
 .adm_content {
   flex: 1;
-  margin-left: 18rem;
+  margin-left: 22rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -592,6 +592,7 @@ select.adm_btn_secondary {
 }
 .adm_action_btns {
   display: flex;
+  align-items: center;
   gap: 0.6rem;
   justify-content: center;
 }

@@ -20,6 +20,7 @@ export const sideMenuSections: MenuSection[] = [
       { label: '팝업 관리', to: '/admin/popup-banner', icon: 'web_asset' },
       { label: '메인 배너 관리', to: '/admin/main-banner', icon: 'view_carousel' },
       { label: '의료진 관리', to: '/admin/doctor', icon: 'medical_services' },
+      { label: '건강증진센터 파일 관리', to: '/admin/well-file', icon: 'folder' },
     ],
   },
   {

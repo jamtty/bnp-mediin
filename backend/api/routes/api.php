@@ -115,6 +115,13 @@ $router->post('/doctor/{id}/use',                    [DoctorController::class, '
 $router->post('/doctor/{id}/sort',                   [DoctorController::class, 'updateSortOrder']);
 $router->post('/doctor/{id}/delete',                 [DoctorController::class, 'destroy']);
 
+// 건강증진센터 파일 관리
+$router->get('/well-file',                    [WellFileController::class, 'index']);
+$router->get('/well-file/by-key/{key}',       [WellFileController::class, 'byKey']);
+$router->get('/well-file/{id}',               [WellFileController::class, 'show']);
+$router->post('/well-file/{id}',              [WellFileController::class, 'update']);
+$router->post('/well-file/{id}/clear',        [WellFileController::class, 'clearFile']);
+
 // 메인 배너
 $router->get('/main-banner',                         [MainBannerController::class, 'index']);
 $router->get('/main-banner/active',                  [MainBannerController::class, 'active']);

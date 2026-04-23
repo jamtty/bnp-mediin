@@ -1,6 +1,19 @@
-﻿import WellSubPageLayout from '../../components/WellSubPageLayout'
+﻿import { useEffect, useState } from 'react'
+import WellSubPageLayout from '../../components/WellSubPageLayout'
+import { fetchWellFileByKey } from '../../api/wellFile'
 
 export default function WellProgramNhisPage() {
+  const [formFileUrl, setFormFileUrl] = useState<string | null>(null)
+  const [formFileLabel, setFormFileLabel] = useState('암 문진표/일반검진 문진표 다운로드')
+
+  useEffect(() => {
+    fetchWellFileByKey('nhis_form').then((item) => {
+      if (item) {
+        setFormFileUrl(item.file_url)
+        setFormFileLabel(item.label)
+      }
+    })
+  }, [])
   return (
     <WellSubPageLayout>
       <h3 className="cont_tit">국민건강보험공단 건강검진</h3>
@@ -18,10 +31,12 @@ export default function WellProgramNhisPage() {
                 <span>국민건강보험공단홈페이지 바로가기</span>
               </a>
               <br />
-              <a href="/upfilePath/bd/암문진표_일반검진문진표파일(2025).pdf" target="_blank" rel="noreferrer" className="btn_go">
-                <i className="ico_7_1"></i>
-                <span>암 문진표/일반검진 문진표 다운로드</span>
-              </a>
+              {formFileUrl && (
+                <a href={formFileUrl} target="_blank" rel="noreferrer" className="btn_go">
+                  <i className="ico_7_1"></i>
+                  <span>{formFileLabel}</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

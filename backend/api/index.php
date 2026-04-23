@@ -77,6 +77,9 @@ require_once __DIR__ . '/repositories/MainBannerRepository.php';
 require_once __DIR__ . '/services/MainBannerService.php';
 require_once __DIR__ . '/controllers/MainBannerController.php';
 require_once __DIR__ . '/controllers/OgImageController.php';
+require_once __DIR__ . '/repositories/WellFileRepository.php';
+require_once __DIR__ . '/services/WellFileService.php';
+require_once __DIR__ . '/controllers/WellFileController.php';
 
 // ── 라우터 초기화 및 디스패치 ─────────────────────────────────
 $router = new Router();
