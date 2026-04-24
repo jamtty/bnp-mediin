@@ -1,9 +1,9 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
-/*반응형 화면 크기*/
-/*반응형, 브라우저 크기가 767px 이하일때*/
-/*반응형, 브라우저 크기가 768이상, 1210px 이하일때*/
-/*반응형, 브라우저 크기가 1210px 이상일때*/
+/*諛섏쓳???붾㈃ ?ш린*/
+/*諛섏쓳?? 釉뚮씪?곗? ?ш린媛 767px ?댄븯?쇰븣*/
+/*諛섏쓳?? 釉뚮씪?곗? ?ш린媛 768?댁긽, 1210px ?댄븯?쇰븣*/
+/*諛섏쓳?? 釉뚮씪?곗? ?ш린媛 1210px ?댁긽?쇰븣*/
 .h_table.mt30 {
   margin-top: 30px;
 }
@@ -1481,12 +1481,12 @@
   }
 }
 
-/*반응형 화면 크기*/
-/*반응형, 브라우저 크기가 767px 이하일때*/
-/*반응형, 브라우저 크기가 768이상, 1210px 이하일때*/
-/*반응형, 브라우저 크기가 1210px 이상일때*/
+/*諛섏쓳???붾㈃ ?ш린*/
+/*諛섏쓳?? 釉뚮씪?곗? ?ш린媛 767px ?댄븯?쇰븣*/
+/*諛섏쓳?? 釉뚮씪?곗? ?ш린媛 768?댁긽, 1210px ?댄븯?쇰븣*/
+/*諛섏쓳?? 釉뚮씪?곗? ?ш린媛 1210px ?댁긽?쇰븣*/
 
-/* 전역 기본값 - 미디어쿼리 독립 */
+/* ?꾩뿭 湲곕낯媛?- 誘몃뵒?댁옘由??낅┰ */
 #header .logo a {
   display: flex;
   align-items: center;
@@ -6373,7 +6373,7 @@ body.h100 {
     font-weight: 600;
   }
   #header .gnb_wrap .gnb_item .gnb_sub ul li a:before {
-    content: "· ";
+    content: "쨌 ";
   }
   #header .gnb_wrap .gnb_item .gnb_sub ul li a:hover {
     color: #10a0b4;
@@ -8607,4 +8607,68 @@ body.h100 {
     color: #fff;
     font-weight: 600;
   }
+}
+
+/* ===== 사이트 배너 팝업 ===== */
+.site_popup_card {
+  position: fixed;
+  z-index: 9000;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+  max-width: 400px;
+}
+.site_popup_img {
+  display: block;
+  line-height: 0;
+}
+.site_popup_img img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+.site_popup_brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a4a3a;
+  padding: 10px 14px;
+}
+.site_popup_brand_logo {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+.site_popup_brand_text {
+  font-size: 11px;
+  color: #fff;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+.site_popup_footer {
+  display: flex;
+  border-top: 1px solid #e5e7eb;
+}
+.site_popup_btn {
+  flex: 1;
+  background: #fff;
+  border: none;
+  padding: 13px 0;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: -0.02em;
+}
+.site_popup_btn:first-child {
+  border-right: 1px solid #e5e7eb;
+}
+.site_popup_btn:hover {
+  background: #f3f4f6;
 }

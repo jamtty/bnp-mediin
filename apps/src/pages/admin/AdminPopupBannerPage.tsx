@@ -19,7 +19,7 @@ export default function AdminPopupBannerPage() {
   const [totalCount, setTotalCount]     = useState(0)
   const [totalPages, setTotalPages]     = useState(1)
   const [page, setPage]                 = useState(1)
-  const [site, setSite]                 = useState('MAIN')
+  const [site, setSite]                 = useState('')
   const [keyword, setKeyword]           = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
   const [loading, setLoading]           = useState(false)
