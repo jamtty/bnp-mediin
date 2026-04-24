@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="324.5" height="70" viewBox="0 0 324.5 70">
+  <defs>
+    <filter id="패스_169" x="-12" y="-18" width="354.5" height="100" filterUnits="userSpaceOnUse">
+      <feOffset dx="3" dy="-3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#패스_169)">
+        <path id="패스_169-2" data-name="패스 169" d="M15,0H309.5a15,15,0,0,1,15,15V70H0V15A15,15,0,0,1,15,0Z" transform="translate(311 792)" fill="#175068"/>
+      </g>
+    </clipPath>
+    <filter id="사각형_94" x="260.529" y="-10.13" width="49.587" height="96.26" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.451"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="사각형_95" x="237.145" y="12.972" width="96.356" height="50.055" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-opacity="0.451"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="마스크_그룹_5" data-name="마스크 그룹 5" transform="translate(-311 -792)" clip-path="url(#clip-path)">
+    <g id="tab_bg" transform="translate(-936.653 -37.63)">
+      <g transform="matrix(1, 0, 0, 1, 1247.65, 829.63)" filter="url(#사각형_94)">
+        <path id="사각형_94-2" data-name="사각형 94" d="M20,0H31.587a0,0,0,0,1,0,0V58.26a20,20,0,0,1-20,20H0a0,0,0,0,1,0,0V20A20,20,0,0,1,20,0Z" transform="translate(269.53 -4.13)" fill="#afafaf" opacity="0.05"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 1247.65, 829.63)" filter="url(#사각형_95)">
+        <path id="사각형_95-2" data-name="사각형 95" d="M20,0H32.055a0,0,0,0,1,0,0V58.356a20,20,0,0,1-20,20H0a0,0,0,0,1,0,0V20A20,20,0,0,1,20,0Z" transform="translate(246.14 51.03) rotate(-90)" fill="#afafaf" opacity="0.05"/>
+      </g>
+    </g>
+  </g>
+</svg>

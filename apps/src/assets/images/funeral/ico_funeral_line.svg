@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="42.154" height="50" viewBox="0 0 42.154 50">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="사각형_188" data-name="사각형 188" width="42.154" height="50" fill="none" stroke="#e5e5e5" stroke-width="2"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="사각형_189" data-name="사각형 189" width="42.154" height="50" fill="none" stroke="rgba(0,0,0,0)" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <rect id="사각형_190" data-name="사각형 190" width="42.154" height="50" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="ico_funeral_line" transform="translate(0 0)">
+    <path id="패스_162" data-name="패스 162" d="M38.579,42.163,31.4,48.844,1.5,8.181,8.681,1.5Z" transform="translate(-0.172 -0.172)" fill="#333"/>
+    <g id="그룹_244" data-name="그룹 244" transform="translate(0 0)">
+      <g id="그룹_243" data-name="그룹 243" clip-path="url(#clip-path)">
+        <path id="패스_163" data-name="패스 163" d="M38.579,42.163,31.4,48.844,1.5,8.181,8.681,1.5Z" transform="translate(-0.172 -0.172)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+    <path id="패스_164" data-name="패스 164" d="M4.234,42.163l7.183,6.682,29.9-40.663L34.132,1.5Z" transform="translate(-0.486 -0.172)" fill="#333"/>
+    <g id="그룹_246" data-name="그룹 246" transform="translate(0 0)">
+      <g id="그룹_245" data-name="그룹 245" clip-path="url(#clip-path-2)">
+        <path id="패스_165" data-name="패스 165" d="M4.234,42.163l7.183,6.682,29.9-40.663L34.132,1.5Z" transform="translate(-0.486 -0.172)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+    <path id="패스_166" data-name="패스 166" d="M9.613,1.5H34.75L28.826,9.556H15.537Z" transform="translate(-1.104 -0.172)" fill="#333"/>
+    <g id="그룹_248" data-name="그룹 248" transform="translate(0 0)">
+      <g id="그룹_247" data-name="그룹 247" clip-path="url(#clip-path-3)">
+        <path id="패스_167" data-name="패스 167" d="M9.613,1.5H34.75L28.826,9.556H15.537Z" transform="translate(-1.104 -0.172)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,14 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import MainLayout from '@/layouts/MainLayout'
-const WellLayout = lazy(() => import('@/layouts/WellLayout'))
-function WellLayoutWithSuspense() {
-  return (
-    <Suspense fallback={null}>
-      <WellLayout />
-    </Suspense>
-  )
-}
 import HomePage from '@/pages/HomePage'
 // 관리자
 import AdminLayout from '@/layouts/AdminLayout'
@@ -82,6 +74,7 @@ import WellAboutPage from '@/pages/well/WellAboutPage'
 import WellAboutDoctorsPage from '@/pages/well/WellAboutDoctorsPage'
 // 진료협력센터
 import CooperationPage from '@/pages/cooperation/CooperationPage'
+import FuneralHomePage from '@/pages/funeral/FuneralHomePage'
 // 장례식장
 import FuneralStatusPage from '@/pages/funeral/FuneralStatusPage'
 import FuneralGuidePage from '@/pages/funeral/FuneralGuidePage'
@@ -99,6 +92,23 @@ import VoiceFormPage from '@/pages/community/VoiceFormPage'
 import VoiceCheckPage from '@/pages/community/VoiceCheckPage'
 import VoiceMyListPage from '@/pages/community/VoiceMyListPage'
 import VoiceDetailPage from '@/pages/community/VoiceDetailPage'
+
+const WellLayout = lazy(() => import('@/layouts/WellLayout'))
+function WellLayoutWithSuspense() {
+  return (
+    <Suspense fallback={null}>
+      <WellLayout />
+    </Suspense>
+  )
+}
+const FuneralLayout = lazy(() => import('@/layouts/FuneralLayout'))
+function FuneralLayoutWithSuspense() {
+  return (
+    <Suspense fallback={null}>
+      <FuneralLayout />
+    </Suspense>
+  )
+}
 
 export const router = createBrowserRouter(
   [
@@ -142,12 +152,6 @@ export const router = createBrowserRouter(
         { path: '/health/about', element: <HealthAboutPage /> },
         // 진료협력센터
         { path: '/cooperation', element: <CooperationPage /> },
-        // 장례식장
-        { path: '/funeral/status', element: <FuneralStatusPage /> },
-        { path: '/funeral/guide', element: <FuneralGuidePage /> },
-        { path: '/funeral/facilities', element: <FuneralFacilitiesPage /> },
-        { path: '/funeral/other', element: <FuneralOtherPage /> },
-        { path: '/funeral/location', element: <FuneralLocationPage /> },
         // 고객마당
         { path: '/community/health-info', element: <HealthInfoPage /> },
         { path: '/community/health-info/:id', element: <HealthInfoDetailPage /> },
@@ -187,6 +191,19 @@ export const router = createBrowserRouter(
             { path: 'doctors', element: <WellAboutDoctorsPage /> },
           ],
         },
+      ],
+    },
+    // 장례식장 (독립 섹션)
+    {
+      path: '/funeral',
+      element: <FuneralLayoutWithSuspense />,
+      children: [
+        { index: true, element: <FuneralHomePage /> },
+        { path: 'status', element: <FuneralStatusPage /> },
+        { path: 'guide', element: <FuneralGuidePage /> },
+        { path: 'facilities', element: <FuneralFacilitiesPage /> },
+        { path: 'other', element: <FuneralOtherPage /> },
+        { path: 'location', element: <FuneralLocationPage /> },
       ],
     },
     // 관리자

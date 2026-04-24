@@ -153,35 +153,25 @@ export default function SiteHeader() {
             </div>
           </div>
           <div className="gnb_item">
-            <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer" className="gnb_link">
+            <a href="/funeral" target="_blank" rel="noreferrer" className="gnb_link">
               장례식장
             </a>
             <div className="gnb_sub">
               <ul>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
-                    현재빈소분향현황
-                  </a>
+                  <a href="/funeral/status" target="_blank" rel="noreferrer">현재빈소분향현황</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
-                    이용방법안내
-                  </a>
+                  <a href="/funeral/guide" target="_blank" rel="noreferrer">이용방법안내</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
-                    빈소시설 이용 안내
-                  </a>
+                  <a href="/funeral/facilities" target="_blank" rel="noreferrer">빈소시설 이용 안내</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
-                    기타시설 안내
-                  </a>
+                  <a href="/funeral/other" target="_blank" rel="noreferrer">기타시설 안내</a>
                 </li>
                 <li>
-                  <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
-                    오시는길
-                  </a>
+                  <a href="/funeral/location" target="_blank" rel="noreferrer">오시는길</a>
                 </li>
               </ul>
             </div>
