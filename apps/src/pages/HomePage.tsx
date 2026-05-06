@@ -488,11 +488,9 @@ export default function HomePage() {
                       <span className={item.category === 'notice' ? 'state_notice' : 'state_news'}>
                         {item.categoryLabel}
                       </span>
-                      {item.imageUrl && (
-                        <div className="bbs_thumb main_news_thumb">
-                          <img src={item.imageUrl} alt={item.title} />
-                        </div>
-                      )}
+                      <div className={`bbs_thumb main_news_thumb${item.imageUrl ? '' : ' no_img'}`}>
+                        {item.imageUrl && <img src={item.imageUrl} alt={item.title} />}
+                      </div>
                       <p className="news_tit">{item.title}</p>
                       {/* <p className="news_txt">{item.summary || ' '}</p> */}
                       <p className="news_date">{item.createdAt}</p>

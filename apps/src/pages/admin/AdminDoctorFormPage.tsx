@@ -14,14 +14,16 @@ import {
 } from '@/api/doctor'
 
 const DAY_LABELS: { key: keyof ScheduleRow; label: string }[] = [
-  { key: 'mon',   label: '월' },
-  { key: 'tue',   label: '화' },
-  { key: 'wed',   label: '수' },
-  { key: 'thu',   label: '목' },
-  { key: 'fri',   label: '금' },
-  { key: 'sat13', label: '토(1,3주)' },
-  { key: 'sat24', label: '토(2,4주)' },
-  { key: 'sat5',  label: '토(5주)' },
+  { key: 'mon',  label: '월' },
+  { key: 'tue',  label: '화' },
+  { key: 'wed',  label: '수' },
+  { key: 'thu',  label: '목' },
+  { key: 'fri',  label: '금' },
+  { key: 'sat1', label: '토(1주)' },
+  { key: 'sat2', label: '토(2주)' },
+  { key: 'sat3', label: '토(3주)' },
+  { key: 'sat4', label: '토(4주)' },
+  { key: 'sat5', label: '토(5주)' },
 ]
 
 const QUICK_VALUES = ['진료', '전화문의', 'OFF', '-']
@@ -40,6 +42,7 @@ export default function AdminDoctorFormPage() {
   const [docCareer,    setDocCareer]    = useState('')
   const [careerLabel,  setCareerLabel]  = useState('약력')
   const [schedule,     setSchedule]     = useState<ScheduleJson>(emptySchedule())
+  const [sortOrder,    setSortOrder]    = useState(1)
   const [useYn,        setUseYn]        = useState<'Y' | 'N'>('Y')
   const [imgFile,      setImgFile]      = useState<File | null>(null)
   const [imgPreview,   setImgPreview]   = useState('')
@@ -59,6 +62,7 @@ export default function AdminDoctorFormPage() {
         setDocCareer(item.doc_career ?? '')
         setCareerLabel(item.career_label ?? '약력')
         setSchedule(parseSchedule(item.schedule_json) ?? emptySchedule())
+        setSortOrder(item.sort_order ?? 1)
         setUseYn(item.use_yn === 'Y' ? 'Y' : 'N')
         setImgPreview(item.img_url ?? '')
         setImgOriName(item.img_ori_name ?? '')
@@ -105,6 +109,7 @@ export default function AdminDoctorFormPage() {
       formData.append('doc_career',    docCareer.trim())
       formData.append('career_label',  careerLabel.trim())
       formData.append('use_yn',        useYn)
+      formData.append('sort_order',    String(sortOrder))
 
       // 진료일정 — 빈 값이면 null
       const hasSchedule = Object.values(schedule.am).some((v) => v.trim() !== '') ||
@@ -222,6 +227,21 @@ export default function AdminDoctorFormPage() {
                   </div>
                 </div>
 
+                <div className="adm_form_row">
+                  <label className="adm_form_label">출력 순서</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <input
+                      type="number"
+                      min={1}
+                      value={sortOrder}
+                      onChange={(e) => setSortOrder(Math.max(1, parseInt(e.target.value) || 1))}
+                      className="adm_form_input"
+                      style={{ maxWidth: 100 }}
+                    />
+                    <span style={{ fontSize: '1.2rem', color: '#888' }}>숫자가 작을수록 먼저 표시됩니다.</span>
+                  </div>
+                </div>
+
               </div>
             </section>
 
@@ -259,7 +279,7 @@ export default function AdminDoctorFormPage() {
                       {imgPreview ? '이미지 변경' : '이미지 선택'}
                     </button>
                     <span style={{ marginLeft: 8, fontSize: '1.2rem', color: '#888' }}>
-                      JPG, PNG, GIF (최대 10MB)
+                      JPG, PNG, GIF (최대 10MB) &nbsp;·&nbsp; 권장 사이즈: 800 × 1,000 px
                     </span>
                   </div>
                 </div>

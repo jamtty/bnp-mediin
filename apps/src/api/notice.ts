@@ -137,3 +137,11 @@ export const deleteNotice = async (id: number): Promise<void> => {
   const { data } = await apiClient.post(`/api/notice/${id}/delete`)
   if (!data.success) throw new Error(data.message)
 }
+
+/**
+ * 공지 고정 / 해제 토글
+ */
+export const toggleNoticePin = async (id: number): Promise<void> => {
+  const { data } = await apiClient.post(`/api/notice/${id}/pin`)
+  if (!data.success) throw new Error(data.message)
+}

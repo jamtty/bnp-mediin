@@ -122,6 +122,11 @@ class BoardService
         return $this->repo->softDelete($id);
     }
 
+    public function togglePin(int $id): bool
+    {
+        return $this->repo->togglePin($id);
+    }
+
     // ─────────────────────────────────────────────────────────────
     // Private helpers
     // ─────────────────────────────────────────────────────────────

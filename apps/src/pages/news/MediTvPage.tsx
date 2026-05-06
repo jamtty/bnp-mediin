@@ -124,13 +124,18 @@ export default function MediTvPage() {
                 {items.map((item) => {
                   const thumbnail = getYouTubeThumbnailUrl(item.youtube_url) ?? item.thumbnail
                   return (
-                    <div className="bbs_item" key={item.id}>
+                    <div
+                      className="bbs_item"
+                      key={item.id}
+                      style={item.is_pinned ? { background: '#f8f8f8' } : undefined}
+                    >
                       <a
                         href={item.youtube_url ?? '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         <div className="bbs_thumb">
+                          {item.is_pinned ? <span className="bbs_pin_badge">공지</span> : null}
                           {thumbnail ? (
                             <img src={thumbnail} alt={item.title} />
                           ) : (
@@ -138,7 +143,9 @@ export default function MediTvPage() {
                           )}
                         </div>
                         <div className="bbs_item_cont">
-                          <p className="bbs_name">{item.title}</p>
+                          <p className="bbs_name">
+                            {item.title}
+                          </p>
                           <p className="bbs_date">{item.created_at}</p>
                         </div>
                       </a>

@@ -157,7 +157,7 @@ export default function NoticePage() {
                           ? null
                           : totalCount - (page - 1) * PAGE_SIZE - regularIdx++
                         return (
-                          <tr key={item.id}>
+                          <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
                             <td>
                               {item.is_pinned
                                 ? <span className="t_notice">공지</span>

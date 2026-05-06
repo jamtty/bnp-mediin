@@ -37,6 +37,7 @@ $router->get('/notice/{id}',                    [NoticeController::class, 'show'
 $router->post('/notice/{id}',                   [NoticeController::class, 'update']);
 $router->post('/notice/{id}/delete',            [NoticeController::class, 'destroy']);
 $router->post('/notice/file/{fileId}/delete',   [NoticeController::class, 'destroyFile']);
+$router->post('/notice/{id}/pin',               [NoticeController::class, 'togglePin']);
 
 // OG 이미지 프록시
 $router->get('/og-image',           [OgImageController::class, 'fetch']);
@@ -47,6 +48,7 @@ $router->post('/press',             [PressController::class, 'store']);
 $router->get('/press/{id}',         [PressController::class, 'show']);
 $router->put('/press/{id}',         [PressController::class, 'update']);
 $router->delete('/press/{id}',      [PressController::class, 'destroy']);
+$router->post('/press/{id}/pin',    [PressController::class, 'togglePin']);
 
 // 채용정보 (BMT_IDX = 5)
 $router->get('/recruit',            [RecruitController::class, 'index']);
@@ -54,13 +56,15 @@ $router->post('/recruit',           [RecruitController::class, 'store']);
 $router->get('/recruit/{id}',       [RecruitController::class, 'show']);
 $router->put('/recruit/{id}',       [RecruitController::class, 'update']);
 $router->delete('/recruit/{id}',    [RecruitController::class, 'destroy']);
+$router->post('/recruit/{id}/pin',  [RecruitController::class, 'togglePin']);
 
 // 건강정보 (BMT_IDX = 6)
-$router->get('/health-info',        [HealthInfoController::class, 'index']);
-$router->post('/health-info',       [HealthInfoController::class, 'store']);
-$router->get('/health-info/{id}',   [HealthInfoController::class, 'show']);
-$router->put('/health-info/{id}',   [HealthInfoController::class, 'update']);
-$router->delete('/health-info/{id}',[HealthInfoController::class, 'destroy']);
+$router->get('/health-info',           [HealthInfoController::class, 'index']);
+$router->post('/health-info',          [HealthInfoController::class, 'store']);
+$router->get('/health-info/{id}',      [HealthInfoController::class, 'show']);
+$router->put('/health-info/{id}',      [HealthInfoController::class, 'update']);
+$router->delete('/health-info/{id}',   [HealthInfoController::class, 'destroy']);
+$router->post('/health-info/{id}/pin', [HealthInfoController::class, 'togglePin']);
 
 // 메디TV (BMT_IDX = 8)
 $router->get('/medi-tv',            [MediTvController::class, 'index']);
@@ -68,6 +72,7 @@ $router->post('/medi-tv',           [MediTvController::class, 'store']);
 $router->get('/medi-tv/{id}',       [MediTvController::class, 'show']);
 $router->put('/medi-tv/{id}',       [MediTvController::class, 'update']);
 $router->delete('/medi-tv/{id}',    [MediTvController::class, 'destroy']);
+$router->post('/medi-tv/{id}/pin',  [MediTvController::class, 'togglePin']);
 
 // 건강상담
 $router->get('/consultation',                             [ConsultationController::class, 'index']);

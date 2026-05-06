@@ -2,7 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
-import { fetchNoticeList, deleteNotice, type NoticeItem } from '@/api/notice'
+import { fetchNoticeList, deleteNotice, toggleNoticePin, type NoticeItem } from '@/api/notice'
 
 const PAGE_SIZE = 15
 
@@ -75,6 +75,17 @@ export default function AdminNoticePage() {
     }
   }
 
+  const handleTogglePin = async (item: NoticeItem) => {
+    const action = item.is_pinned ? '공지 해제' : '공지 고정'
+    if (!confirm(`"${item.title}" 을(를) ${action}하시겠습니까?`)) return
+    try {
+      await toggleNoticePin(item.id)
+      load(page, keyword)
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '변경에 실패했습니다.')
+    }
+  }
+
   return (
     <div className="adm_wrap">
       <AdminSidebar />
@@ -114,7 +125,7 @@ export default function AdminNoticePage() {
                     <th style={{ width: '10%' }}>작성자</th>
                     <th style={{ width: '10%' }}>작성일</th>
                     <th style={{ width: '7%' }}>조회수</th>
-                    <th style={{ width: '12%' }}>관리</th>
+                    <th style={{ width: '16%' }}>관리</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -138,7 +149,7 @@ export default function AdminNoticePage() {
                     </tr>
                   ) : (
                     items.map((item, idx) => (
-                      <tr key={item.id}>
+                      <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
                         <td className="adm_td_center">
                           <input
                             type="checkbox"
@@ -151,6 +162,7 @@ export default function AdminNoticePage() {
                         </td>
                         <td>
                           <Link to={`/admin/notice/edit/${item.id}`} className="adm_table_link">
+                            {item.is_pinned ? <span className="adm_pin_badge">공지</span> : null}
                             {item.title}
                           </Link>
                         </td>
@@ -159,6 +171,12 @@ export default function AdminNoticePage() {
                         <td className="adm_td_center">{item.view_count.toLocaleString()}</td>
                         <td className="adm_td_center">
                           <div className="adm_action_btns">
+                            <button
+                              className={item.is_pinned ? 'adm_btn_secondary' : 'adm_btn_edit'}
+                              onClick={() => handleTogglePin(item)}
+                            >
+                              {item.is_pinned ? '해제' : '공지'}
+                            </button>
                             <button
                               className="adm_btn_edit"
                               onClick={() => navigate(`/admin/notice/edit/${item.id}`)}

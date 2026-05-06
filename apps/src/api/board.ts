@@ -96,6 +96,11 @@ export const deletePress = async (id: number): Promise<void> => {
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
 }
 
+export const togglePressPin = async (id: number): Promise<void> => {
+  const { data } = await apiClient.post(`/api/press/${id}/pin`)
+  if (!data.success) throw new Error(data.message)
+}
+
 /**
  * 외부 URL의 og:image를 백엔드 프록시를 통해 가져옵니다.
  * 이미지가 없으면 null을 반환합니다.
@@ -187,6 +192,11 @@ export const deleteRecruit = async (id: number): Promise<void> => {
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
 }
 
+export const toggleRecruitPin = async (id: number): Promise<void> => {
+  const { data } = await apiClient.post(`/api/recruit/${id}/pin`)
+  if (!data.success) throw new Error(data.message)
+}
+
 // ─────────────────────────────────────────────────────────────
 // 건강정보 (BMT_IDX = 6)
 // ─────────────────────────────────────────────────────────────
@@ -258,6 +268,11 @@ export const updateHealthInfo = async (
 export const deleteHealthInfo = async (id: number): Promise<void> => {
   const { data } = await apiClient.delete(`/api/health-info/${id}`)
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
+}
+
+export const toggleHealthInfoPin = async (id: number): Promise<void> => {
+  const { data } = await apiClient.post(`/api/health-info/${id}/pin`)
+  if (!data.success) throw new Error(data.message)
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -334,4 +349,9 @@ export const updateMediTv = async (
 export const deleteMediTv = async (id: number): Promise<void> => {
   const { data } = await apiClient.delete(`/api/medi-tv/${id}`)
   if (!data.success) throw new Error(data.message || '삭제에 실패했습니다.')
+}
+
+export const toggleMediTvPin = async (id: number): Promise<void> => {
+  const { data } = await apiClient.post(`/api/medi-tv/${id}/pin`)
+  if (!data.success) throw new Error(data.message)
 }

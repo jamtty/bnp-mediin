@@ -37,13 +37,15 @@ const deptThirdItems = Object.entries(deptNames).map(([code, name]) => ({
 // ── 진료일정 요일 레이블 ────────────────────────────────────
 const SCHEDULE_DAY_LABELS = [
   { key: 'mon',   label: '월' },
-  { key: 'tue',   label: '화' },
-  { key: 'wed',   label: '수' },
-  { key: 'thu',   label: '목' },
-  { key: 'fri',   label: '금' },
-  { key: 'sat13', label: '토(1,3주)' },
-  { key: 'sat24', label: '토(2,4주)' },
-  { key: 'sat5',  label: '토(5주)' },
+  { key: 'tue',  label: '화' },
+  { key: 'wed',  label: '수' },
+  { key: 'thu',  label: '목' },
+  { key: 'fri',  label: '금' },
+  { key: 'sat1', label: '토(1주)' },
+  { key: 'sat2', label: '토(2주)' },
+  { key: 'sat3', label: '토(3주)' },
+  { key: 'sat4', label: '토(4주)' },
+  { key: 'sat5', label: '토(5주)' },
 ]
 
 // ── 진료시간표 모달 ──────────────────────────────────────────
@@ -96,8 +98,7 @@ function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () =>
                       </dd>
                     </>
                   )}
-                  {schedule && (
-                    <>
+                  <>
                       <dt>진료일정</dt>
                       <dd>
                         <div className="medical_schedule">
@@ -109,7 +110,7 @@ function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () =>
                                 {SCHEDULE_DAY_LABELS.slice(0, 5).map((d) => (
                                   <th key={d.key} rowSpan={2}>{d.label}</th>
                                 ))}
-                                <th colSpan={3}>토</th>
+                                <th colSpan={5}>토</th>
                               </tr>
                               <tr>
                                 {SCHEDULE_DAY_LABELS.slice(5).map((d) => (
@@ -123,7 +124,10 @@ function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () =>
                                   <td>{period === 'am' ? '오전' : '오후'}</td>
                                   {SCHEDULE_DAY_LABELS.map((d) => (
                                     <td key={d.key}>
-                                      {(schedule[period] as Record<string, string>)[d.key] || '-'}
+                                      {schedule
+                                        ? ((schedule[period] as Record<string, string>)[d.key] || '-')
+                                        : '-'
+                                      }
                                     </td>
                                   ))}
                                 </tr>
@@ -137,7 +141,6 @@ function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () =>
                         </p>
                       </dd>
                     </>
-                  )}
                 </dl>
               </div>
             </div>
@@ -197,12 +200,10 @@ function DoctorListSection({
                   </dd>
                 </dl>
               )}
-              {doctor.schedule_json && (
-                <button type="button" onClick={() => onShowSchedule(doctor)}>
-                  <i className="ico_calendar"></i>
-                  <span>진료시간표</span>
-                </button>
-              )}
+              <button type="button" onClick={() => onShowSchedule(doctor)}>
+                <i className="ico_calendar"></i>
+                <span>진료시간표</span>
+              </button>
             </div>
           </div>
         )

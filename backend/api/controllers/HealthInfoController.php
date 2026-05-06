@@ -123,4 +123,18 @@ class HealthInfoController
             Response::error($e->getMessage(), $e->getCode() ?: 400);
         }
     }
+
+    public function togglePin(Request $request, array $params): void
+    {
+        $payload = Token::fromRequest();
+        if (!$payload) { Response::error('인증이 필요합니다.', 401); return; }
+
+        $id = (int)($params['id'] ?? 0);
+        if ($id <= 0) { Response::error('잘못된 요청입니다.'); return; }
+
+        $ok = $this->service->togglePin($id);
+        if (!$ok) { Response::error('게시물을 찾을 수 없습니다.', 404); return; }
+
+        Response::ok(null, '변경되었습니다.');
+    }
 }

@@ -216,6 +216,21 @@ class NoticeRepository extends BaseRepository
     }
 
     /**
+     * 공지 고정 / 해제 토글
+     */
+    public function togglePin(int $id): bool
+    {
+        return $this->execute(
+            "UPDATE board_tbl
+             SET BD_NOTICE_YN = CASE WHEN BD_NOTICE_YN = 'Y' THEN 'N' ELSE 'Y' END,
+                 UPDATEDATE = NOW()
+             WHERE BD_IDX = :id
+               AND BMT_IDX = :bmt_idx",
+            [':id' => $id, ':bmt_idx' => self::BMT_IDX]
+        ) > 0;
+    }
+
+    /**
      * 첨부파일 저장
      */
     public function saveFile(int $noticeId, string $oriName, string $saveName, string $filePath, int $fileSize, string $fileExt): void

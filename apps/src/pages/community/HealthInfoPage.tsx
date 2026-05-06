@@ -123,13 +123,20 @@ export default function HealthInfoPage() {
             ) : (
               <div className="bbs_list2">
                 {items.map((item) => (
-                  <div className="bbs_item" key={item.id}>
+                  <div
+                    className="bbs_item"
+                    key={item.id}
+                    style={item.is_pinned ? { background: '#f8f8f8' } : undefined}
+                  >
                     <Link to={`/community/health-info/${item.id}`}>
-                      <div className="bbs_thumb">
-                        <img src={item.thumbnail ?? '/images/default_thumb.png'} alt="" />
+                      <div className={`bbs_thumb${item.thumbnail ? '' : ' no_img'}`}>
+                        {item.is_pinned ? <span className="bbs_pin_badge">공지</span> : null}
+                        {item.thumbnail && <img src={item.thumbnail} alt="" />}
                       </div>
                       <div className="bbs_item_cont">
-                        <p className="bbs_name">{item.title}</p>
+                        <p className="bbs_name">
+                          {item.title}
+                        </p>
                         <p className="bbs_disc">
                           {item.content ? item.content.replace(/<[^>]*>/g, '').slice(0, 60) : ''}
                         </p>

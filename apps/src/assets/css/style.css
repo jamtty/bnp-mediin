@@ -13860,6 +13860,43 @@ body.h100 {
 }
 .bbs_cont .bbs_list_area .bbs_list2 .bbs_item a .bbs_thumb {
   width: 250px;
+  position: relative;
+}
+.bbs_cont .bbs_list_area .bbs_list2 .bbs_item a .bbs_thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.bbs_cont .bbs_list_area .bbs_list2 .bbs_item a .bbs_thumb.no_img {
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+}
+.bbs_cont .bbs_list_area .bbs_list2 .bbs_item a .bbs_thumb.no_img::after {
+  content: '이미지 없음';
+  color: #aaa;
+  font-size: 13px;
+}
+.bbs_cont .bbs_list_area .bbs_list2 .bbs_item a .bbs_thumb .bbs_pin_badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e53e3e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  line-height: 1;
+  pointer-events: none;
 }
 .bbs_cont .bbs_list_area .bbs_list2 .bbs_item a .bbs_item_cont {
   flex: 1;
@@ -15085,6 +15122,25 @@ body.h100 {
   color: #666;
   line-height: 1.5;
 }
+.doctor_card_schedule_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  padding: 5px 12px;
+  border: 1px solid #129ba9;
+  border-radius: 4px;
+  background: #fff;
+  color: #129ba9;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.doctor_card_schedule_btn:hover {
+  background: #129ba9;
+  color: #fff;
+}
 
 .news_empty {
   width: 100%;
@@ -15093,18 +15149,35 @@ body.h100 {
   color: #666;
 }
 
+.bbs_not_found_msg {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+  font-size: 1.5rem;
+}
+
 .main_news_thumb {
   margin-bottom: 18px;
   overflow: hidden;
   border-radius: 18px;
-  aspect-ratio: 1 / 0.72;
+  width: 100%;
+  aspect-ratio: 350 / 438;
   background: #eef1f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main_news_thumb.no_img::after {
+  content: '이미지 없음';
+  color: #b0bac7;
+  font-size: 1.4rem;
 }
 
 .main_news_thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .medi_tv_grid {

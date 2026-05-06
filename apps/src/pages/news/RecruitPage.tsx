@@ -147,21 +147,34 @@ export default function RecruitPage() {
                     <tr><td colSpan={5} style={{ textAlign: 'center' }}>불러오는 중...</td></tr>
                   ) : items.length === 0 ? (
                     <tr><td colSpan={5} style={{ textAlign: 'center' }}>등록된 채용공고가 없습니다.</td></tr>
-                  ) : items.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{totalCount - ((page - 1) * PAGE_SIZE) - idx}</td>
-                      <td>
-                        <Link to={`/news/recruit/${item.id}`}>{item.title}</Link>
-                      </td>
-                      <td>
-                        {item.period_start ?? '-'}
-                        <br />~<br />
-                        {item.period_end ?? '-'}
-                      </td>
-                      <td className="m_hide">{item.created_at}</td>
-                      <td>{getStatus(item.period_end)}</td>
-                    </tr>
-                  ))}
+                  ) : (() => {
+                      let regularIdx = 0
+                      return items.map((item) => {
+                        const rowNum = item.is_pinned
+                          ? null
+                          : totalCount - (page - 1) * PAGE_SIZE - regularIdx++
+                        return (
+                          <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
+                            <td>
+                              {item.is_pinned
+                                ? <span className="t_notice">공지</span>
+                                : rowNum
+                              }
+                            </td>
+                            <td>
+                              <Link to={`/news/recruit/${item.id}`}>{item.title}</Link>
+                            </td>
+                            <td>
+                              {item.period_start ?? '-'}
+                              <br />~<br />
+                              {item.period_end ?? '-'}
+                            </td>
+                            <td className="m_hide">{item.created_at}</td>
+                            <td>{getStatus(item.period_end)}</td>
+                          </tr>
+                        )
+                      })
+                    })()}
                 </tbody>
               </table>
             </div>

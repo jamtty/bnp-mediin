@@ -54,7 +54,7 @@ class BoardRepository extends BaseRepository
                 n.BD_FIELD_3    AS field3
             FROM board_tbl n
             $where
-            ORDER BY n.BD_IDX DESC
+            ORDER BY n.BD_NOTICE_YN DESC, n.BD_IDX DESC
             LIMIT :limit OFFSET :offset
         ";
 
@@ -192,6 +192,17 @@ class BoardRepository extends BaseRepository
     {
         return $this->execute(
             'DELETE FROM board_tbl WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx',
+            [':id' => $id, ':bmt_idx' => $this->bmtIdx]
+        ) > 0;
+    }
+
+    public function togglePin(int $id): bool
+    {
+        return $this->execute(
+            "UPDATE board_tbl
+             SET BD_NOTICE_YN = CASE WHEN BD_NOTICE_YN = 'Y' THEN 'N' ELSE 'Y' END,
+                 UPDATEDATE = NOW()
+             WHERE BD_IDX = :id AND BMT_IDX = :bmt_idx",
             [':id' => $id, ':bmt_idx' => $this->bmtIdx]
         ) > 0;
     }

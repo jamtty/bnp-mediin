@@ -29,6 +29,7 @@ apiClient.interceptors.response.use(
       const url = error.config?.url ?? ''
       if (!url.includes('/auth/login')) {
         useAuthStore.getState().clearAuth()
+        error.message = '관리자 로그인이 필요합니다.'
         window.location.href = import.meta.env.BASE_URL + 'admin/login'
       }
     }

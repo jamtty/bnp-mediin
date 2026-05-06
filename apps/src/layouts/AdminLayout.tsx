@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
-import { Outlet, Navigate } from 'react-router-dom'
+import { Outlet, Navigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
 import adminCssUrl from '@/assets/css/admin.css?url'
 
 export default function AdminLayout() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const location = useLocation()
 
   useEffect(() => {
     const link = document.createElement('link')
@@ -18,5 +19,5 @@ export default function AdminLayout() {
     return <Navigate to="/admin/login" replace />
   }
 
-  return <Outlet />
+  return <Outlet key={location.key} />
 }

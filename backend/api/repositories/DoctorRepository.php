@@ -28,7 +28,7 @@ class DoctorRepository extends BaseRepository
                     DATE_FORMAT(INPUTDATE, '%Y-%m-%d') AS created_at
              FROM doctor_tbl
              $where
-             ORDER BY DOC_SORT_ORDER ASC, DOC_IDX ASC
+             ORDER BY DEPT_CODE ASC, DOC_SORT_ORDER ASC, DOC_IDX ASC
              LIMIT :limit OFFSET :offset",
             $params
         );

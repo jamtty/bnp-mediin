@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
-import { deleteMediTv, fetchMediTvList, type MediTvItem } from '@/api/board'
+import { deleteMediTv, fetchMediTvList, toggleMediTvPin, type MediTvItem } from '@/api/board'
 
 const PAGE_SIZE = 15
 
@@ -71,6 +71,15 @@ export default function AdminMediTvPage() {
     }
   }
 
+  const handleTogglePin = async (id: number) => {
+    try {
+      await toggleMediTvPin(id)
+      load(page, keyword)
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : '처리에 실패했습니다.')
+    }
+  }
+
   return (
     <div className="adm_wrap">
       <AdminSidebar />
@@ -97,7 +106,7 @@ export default function AdminMediTvPage() {
                     <th style={{ width: '24%' }}>유튜브 링크</th>
                     <th style={{ width: '10%' }}>작성일</th>
                     <th style={{ width: '7%' }}>조회수</th>
-                    <th style={{ width: '12%' }}>관리</th>
+                    <th style={{ width: '16%' }}>관리</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -107,11 +116,12 @@ export default function AdminMediTvPage() {
                     <tr><td colSpan={7} className="adm_table_empty">게시글이 없습니다.</td></tr>
                   ) : (
                     items.map((item, idx) => (
-                      <tr key={item.id}>
+                      <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
                         <td className="adm_td_center"><input type="checkbox" checked={checkedIds.includes(item.id)} onChange={() => handleCheckOne(item.id)} /></td>
                         <td className="adm_td_center">{totalCount - (page - 1) * PAGE_SIZE - idx}</td>
                         <td>
                           <button className="adm_table_link" onClick={() => navigate(`/admin/medi-tv/edit/${item.id}`)}>
+                            {item.is_pinned ? <span className="adm_pin_badge">공지</span> : null}
                             {item.title}
                           </button>
                         </td>
@@ -120,6 +130,7 @@ export default function AdminMediTvPage() {
                         <td className="adm_td_center">{item.view_count.toLocaleString()}</td>
                         <td className="adm_td_center">
                           <div className="adm_action_btns">
+                            <button className={item.is_pinned ? 'adm_btn_secondary' : 'adm_btn_edit'} onClick={() => handleTogglePin(item.id)}>{item.is_pinned ? '해제' : '공지'}</button>
                             <button className="adm_btn_edit" onClick={() => navigate(`/admin/medi-tv/edit/${item.id}`)}>수정</button>
                             <button className="adm_btn_delete" onClick={() => handleDelete(item.id, item.title)}>삭제</button>
                           </div>

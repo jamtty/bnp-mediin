@@ -544,6 +544,11 @@ select.adm_btn_secondary {
 .adm_table_wrap {
   overflow-x: auto;
 }
+.adm_table_notice {
+  padding:10px 20px;
+  font-size: 1.3rem;
+  color: #6b7280;
+}
 .adm_table {
   width: 100%;
   border-collapse: collapse;
@@ -589,6 +594,18 @@ select.adm_btn_secondary {
 .adm_table_link:hover {
   color: #2563eb;
   text-decoration: underline;
+}
+.adm_pin_badge {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #e53e3e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+  line-height: 1.6;
 }
 .adm_action_btns {
   display: flex;

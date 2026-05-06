@@ -40,12 +40,7 @@ export default function NoticeDetailPage() {
       <SubPageLayout visualClass="vs4" visualTitle="병원소식" contentsClass="sub04" lnbItems={lnbItems}>
         <h3 className="cont_tit">공지사항</h3>
         <div className="con_area">
-          <p style={{ padding: '2rem', textAlign: 'center' }}>{error || '게시글을 찾을 수 없습니다.'}</p>
-          <div style={{ textAlign: 'center' }}>
-            <button className="btn btn_bk" onClick={() => navigate('/news/notice')}>
-              <span>목록</span>
-            </button>
-          </div>
+          <p className="bbs_not_found_msg">{error || '게시글을 찾을 수 없습니다.'}</p>
         </div>
       </SubPageLayout>
     )

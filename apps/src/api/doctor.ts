@@ -23,7 +23,7 @@ export const DEPT_CODE_MAP: Record<string, string> = {
 
 export type ScheduleRow = {
   mon: string; tue: string; wed: string; thu: string; fri: string
-  sat13: string; sat24: string; sat5: string
+  sat1: string; sat2: string; sat3: string; sat4: string; sat5: string
 }
 
 export interface ScheduleJson {
@@ -132,11 +132,27 @@ export const fetchPublicDoctors = async (deptCode?: string): Promise<DoctorItem[
 // schedule_json 파싱 헬퍼
 export const parseSchedule = (json: string | null | undefined): ScheduleJson | null => {
   if (!json) return null
-  try { return JSON.parse(json) as ScheduleJson }
+  try {
+    const parsed = JSON.parse(json) as Record<string, Record<string, string>>
+    // 구버전(sat13, sat24) → 신버전(sat1~sat4) 마이그레이션
+    const migrate = (row: Record<string, string>): ScheduleRow => ({
+      mon:  row.mon  ?? '',
+      tue:  row.tue  ?? '',
+      wed:  row.wed  ?? '',
+      thu:  row.thu  ?? '',
+      fri:  row.fri  ?? '',
+      sat1: row.sat1 ?? row.sat13 ?? '',
+      sat2: row.sat2 ?? row.sat24 ?? '',
+      sat3: row.sat3 ?? row.sat13 ?? '',
+      sat4: row.sat4 ?? row.sat24 ?? '',
+      sat5: row.sat5 ?? '',
+    })
+    return { am: migrate(parsed.am ?? {}), pm: migrate(parsed.pm ?? {}) }
+  }
   catch { return null }
 }
 
 export const emptySchedule = (): ScheduleJson => ({
-  am: { mon: '', tue: '', wed: '', thu: '', fri: '', sat13: '', sat24: '', sat5: '' },
-  pm: { mon: '', tue: '', wed: '', thu: '', fri: '', sat13: '', sat24: '', sat5: '' },
+  am: { mon: '', tue: '', wed: '', thu: '', fri: '', sat1: '', sat2: '', sat3: '', sat4: '', sat5: '' },
+  pm: { mon: '', tue: '', wed: '', thu: '', fri: '', sat1: '', sat2: '', sat3: '', sat4: '', sat5: '' },
 })

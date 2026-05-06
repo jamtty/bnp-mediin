@@ -165,20 +165,27 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
     editor.commands.setContent(resolveContentUrls(value || ''), { emitUpdate: false })
   }, [editor, value])
 
-  // 이미지 업로드
+  // 이미지 업로드 (다중 선택 지원)
   const handleImageInsert = useCallback(() => {
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
+    input.multiple = true
     input.click()
     input.onchange = async () => {
-      const file = input.files?.[0]
-      if (!file || !editor) return
-      try {
-        const url = await uploadEditorImage(file)
-        editor.chain().focus().setImage({ src: url }).run()
-      } catch (err) {
-        alert(err instanceof Error ? err.message : '이미지 업로드에 실패했습니다.')
+      const files = input.files
+      if (!files || files.length === 0 || !editor) return
+      const errors: string[] = []
+      for (const file of Array.from(files)) {
+        try {
+          const url = await uploadEditorImage(file)
+          editor.chain().focus().setImage({ src: url }).run()
+        } catch (err) {
+          errors.push(`${file.name}: ${err instanceof Error ? err.message : '업로드 실패'}`)
+        }
+      }
+      if (errors.length > 0) {
+        alert('일부 이미지 업로드에 실패했습니다.\n' + errors.join('\n'))
       }
     }
   }, [editor])

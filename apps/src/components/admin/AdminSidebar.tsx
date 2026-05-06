@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 type MenuSection = {
   sectionLabel?: string
@@ -46,13 +46,14 @@ export const sideMenuItems = sideMenuSections.flatMap((s) => s.items)
 
 export default function AdminSidebar() {
   const location = useLocation()
+  const navigate = useNavigate()
 
   return (
     <aside className="adm_sidebar">
       <div className="adm_logo">
-        <Link to="/" target="_blank" rel="noopener noreferrer">
+        <a href="/" target="_blank" rel="noopener noreferrer">
           메디인병원
-        </Link>
+        </a>
       </div>
       <nav className="adm_nav">
         <ul>
@@ -64,8 +65,9 @@ export default function AdminSidebar() {
               <ul>
                 {section.items.map((item) => (
                   <li key={item.to}>
-                    <Link
-                      to={item.to}
+                    <a
+                      href={item.to}
+                      onClick={(e) => { e.preventDefault(); navigate(item.to) }}
                       className={
                         item.to === '/admin'
                           ? location.pathname === '/admin'
@@ -78,7 +80,7 @@ export default function AdminSidebar() {
                     >
                       <span className="material-icons">{item.icon}</span>
                       {item.label}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

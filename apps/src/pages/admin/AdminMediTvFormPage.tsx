@@ -108,6 +108,14 @@ export default function AdminMediTvFormPage() {
                 </div>
               </div>
 
+              <div className="adm_form_row">
+                <label className="adm_form_label">공지 고정</label>
+                <label className="adm_checkbox_label">
+                  <input type="checkbox" checked={isPinned} onChange={(e) => setIsPinned(e.target.checked)} />
+                  <span>공지로 고정</span>
+                </label>
+              </div>
+
               <div className="adm_form_btns">
                 <button type="button" className="adm_btn_secondary" onClick={() => navigate('/admin/medi-tv')}>취소</button>
                 <button type="submit" className="adm_btn_primary" disabled={loading}>{loading ? '저장 중...' : isEdit ? '수정 완료' : '등록'}</button>

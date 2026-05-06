@@ -5,6 +5,7 @@ import AdminSidebar from '@/components/admin/AdminSidebar'
 import {
   fetchDoctorList,
   updateDoctorUseYn,
+  updateDoctorSortOrder,
   deleteDoctor,
   DEPT_CODE_MAP,
   type DoctorItem,
@@ -61,6 +62,40 @@ export default function AdminDoctorPage() {
       load(page, deptCode, keyword)
     } catch (err) {
       alert(err instanceof Error ? err.message : '변경에 실패했습니다.')
+    }
+  }
+
+  const handleSortUp = async (idx: number) => {
+    const curr = items[idx]
+    // 같은 dept_code 중 현재 idx 바로 위 항목 찾기
+    const prevIdx = items.slice(0, idx).map((_, i) => i).reverse().find(
+      (i) => items[i].dept_code === curr.dept_code
+    )
+    if (prevIdx === undefined) return
+    const prev = items[prevIdx]
+    try {
+      await updateDoctorSortOrder(curr.id, prev.sort_order)
+      await updateDoctorSortOrder(prev.id, curr.sort_order)
+      load(page, deptCode, keyword)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '순서 변경에 실패했습니다.')
+    }
+  }
+
+  const handleSortDown = async (idx: number) => {
+    const curr = items[idx]
+    // 같은 dept_code 중 현재 idx 바로 아래 항목 찾기
+    const nextIdx = items.slice(idx + 1).findIndex(
+      (i) => i.dept_code === curr.dept_code
+    )
+    if (nextIdx === -1) return
+    const next = items[idx + 1 + nextIdx]
+    try {
+      await updateDoctorSortOrder(curr.id, next.sort_order)
+      await updateDoctorSortOrder(next.id, curr.sort_order)
+      load(page, deptCode, keyword)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '순서 변경에 실패했습니다.')
     }
   }
 
@@ -126,6 +161,9 @@ export default function AdminDoctorPage() {
             </div>
 
             {/* 목록 */}
+            <p className="adm_table_notice">
+              ※ 노출 순서(▲▼)는 <strong>각 진료과별로 독립</strong> 적용됩니다. 과를 필터링하면 해당 과 내 순서만 조정됩니다.
+            </p>
             <div className="adm_table_wrap">
               <table className="adm_table">
                 <thead>
@@ -134,21 +172,25 @@ export default function AdminDoctorPage() {
                       <input type="checkbox" checked={allChecked} onChange={handleCheckAll} />
                     </th>
                     <th style={{ width: '5%' }}>번호</th>
-                      <th style={{ width: '10%' }}>사진</th>
+                    <th style={{ width: '10%' }}>사진</th>
                     <th>이름</th>
                     <th style={{ width: '12%' }}>진료과</th>
                     <th style={{ width: '12%' }}>진료과목</th>
                     <th style={{ width: '7%' }}>표시</th>
+                    <th style={{ width: '8%' }}>순서</th>
                     <th style={{ width: '10%' }}>관리</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={8} className="adm_table_empty">로딩중...</td></tr>
+                    <tr><td colSpan={9} className="adm_table_empty">로딩중...</td></tr>
                   ) : items.length === 0 ? (
-                    <tr><td colSpan={8} className="adm_table_empty">등록된 의료진이 없습니다.</td></tr>
+                    <tr><td colSpan={9} className="adm_table_empty">등록된 의료진이 없습니다.</td></tr>
                   ) : (
-                    items.map((item, idx) => (
+                    items.map((item, idx) => {
+                      const isFirstInDept = items.slice(0, idx).every(i => i.dept_code !== item.dept_code)
+                      const isLastInDept  = items.slice(idx + 1).every(i => i.dept_code !== item.dept_code)
+                      return (
                       <tr key={item.id}>
                         <td className="adm_td_center">
                           <input
@@ -189,6 +231,25 @@ export default function AdminDoctorPage() {
                           </button>
                         </td>
                         <td className="adm_td_center">
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.2rem' }}>
+                            <button
+                              type="button"
+                              title="위로"
+                              disabled={isFirstInDept}
+                              style={{ background: 'none', border: 'none', cursor: isFirstInDept ? 'default' : 'pointer', color: isFirstInDept ? '#d1d5db' : '#6b7280', fontSize: '1.3rem', lineHeight: 1, padding: '0 2px' }}
+                              onClick={() => handleSortUp(idx)}
+                            >▲</button>
+                            <span style={{ fontSize: '1.2rem', minWidth: 24, textAlign: 'center' }}>{item.sort_order}</span>
+                            <button
+                              type="button"
+                              title="아래로"
+                              disabled={isLastInDept}
+                              style={{ background: 'none', border: 'none', cursor: isLastInDept ? 'default' : 'pointer', color: isLastInDept ? '#d1d5db' : '#6b7280', fontSize: '1.3rem', lineHeight: 1, padding: '0 2px' }}
+                              onClick={() => handleSortDown(idx)}
+                            >▼</button>
+                          </div>
+                        </td>
+                        <td className="adm_td_center">
                           <div className="adm_action_btns">
                             <button
                               type="button"
@@ -207,7 +268,8 @@ export default function AdminDoctorPage() {
                           </div>
                         </td>
                       </tr>
-                    ))
+                      )
+                    })
                   )}
                 </tbody>
               </table>

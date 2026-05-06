@@ -142,28 +142,36 @@ export default function PressPage() {
                     <tr><td colSpan={5} style={{ textAlign: 'center' }}>불러오는 중...</td></tr>
                   ) : items.length === 0 ? (
                     <tr><td colSpan={5} style={{ textAlign: 'center' }}>등록된 보도자료가 없습니다.</td></tr>
-                  ) : items.map((item, idx) => (
-                    <tr key={`${item.id}-${idx}`}>
-                      <td>
-                        {item.is_pinned
-                          ? <span className="t_notice">공지</span>
-                          : totalCount - ((page - 1) * PAGE_SIZE) - idx
-                        }
-                      </td>
-                      <td>{item.press_name ?? '-'}</td>
-                      <td>
-                        {item.external_url ? (
-                          <a href={item.external_url} target="_blank" rel="noopener noreferrer">
-                            {item.title}
-                          </a>
-                        ) : (
-                          item.title
-                        )}
-                      </td>
-                      <td className="m_hide">{item.created_at}</td>
-                      <td className="m_hide">{item.view_count}</td>
-                    </tr>
-                  ))}
+                  ) : (() => {
+                      let regularIdx = 0
+                      return items.map((item) => {
+                        const rowNum = item.is_pinned
+                          ? null
+                          : totalCount - (page - 1) * PAGE_SIZE - regularIdx++
+                        return (
+                          <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
+                            <td>
+                              {item.is_pinned
+                                ? <span className="t_notice">공지</span>
+                                : rowNum
+                              }
+                            </td>
+                            <td>{item.press_name ?? '-'}</td>
+                            <td>
+                              {item.external_url ? (
+                                <a href={item.external_url} target="_blank" rel="noopener noreferrer">
+                                  {item.title}
+                                </a>
+                              ) : (
+                                item.title
+                              )}
+                            </td>
+                            <td className="m_hide">{item.created_at}</td>
+                            <td className="m_hide">{item.view_count}</td>
+                          </tr>
+                        )
+                      })
+                    })()}
                 </tbody>
               </table>
             </div>
