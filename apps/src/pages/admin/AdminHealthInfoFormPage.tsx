@@ -100,11 +100,7 @@ export default function AdminHealthInfoFormPage() {
                 />
               </div>
 
-              <div className="adm_form_row">
-                <label className="adm_form_label">내용</label>
-                <RichEditor value={content} onChange={setContent} />
-              </div>
-
+              {/* 공지 고정 */}
               <div className="adm_form_row">
                 <label className="adm_form_label">공지 고정</label>
                 <label className="adm_checkbox_label">
@@ -113,11 +109,17 @@ export default function AdminHealthInfoFormPage() {
                     checked={isPinned}
                     onChange={(e) => setIsPinned(e.target.checked)}
                   />
-                  상단 고정
+                  게시글을 공지(고정글)로 등록합니다
                 </label>
               </div>
 
-              <div className="adm_form_actions">
+              {/* 내용 */}
+              <div className="adm_form_row adm_form_row_col">
+                <label className="adm_form_label">내용</label>
+                <RichEditor value={content} onChange={setContent} />
+              </div>
+
+              <div className="adm_form_btns">
                 <button
                   type="button"
                   className="adm_btn_secondary"
@@ -130,7 +132,7 @@ export default function AdminHealthInfoFormPage() {
                   className="adm_btn_primary"
                   disabled={loading}
                 >
-                  {loading ? '저장 중...' : isEdit ? '수정' : '등록'}
+                  {loading ? '저장 중...' : isEdit ? '수정 완료' : '등록'}
                 </button>
               </div>
             </form>

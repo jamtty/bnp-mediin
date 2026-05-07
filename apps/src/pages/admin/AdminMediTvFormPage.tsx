@@ -112,7 +112,7 @@ export default function AdminMediTvFormPage() {
                 <label className="adm_form_label">공지 고정</label>
                 <label className="adm_checkbox_label">
                   <input type="checkbox" checked={isPinned} onChange={(e) => setIsPinned(e.target.checked)} />
-                  <span>공지로 고정</span>
+                  게시글을 공지(고정글)로 등록합니다
                 </label>
               </div>
 

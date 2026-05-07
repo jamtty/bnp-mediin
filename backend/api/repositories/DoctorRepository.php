@@ -18,6 +18,7 @@ class DoctorRepository extends BaseRepository
         $params[':offset'] = $offset;
         return $this->select(
             "SELECT DOC_IDX AS id, DEPT_CODE AS dept_code,
+                    CAST(COALESCE(DEPT_CODES, JSON_ARRAY(DEPT_CODE)) AS CHAR) AS dept_codes,
                     DOC_NAME AS doc_name, DOC_TITLE AS doc_title,
                     DOC_MAJOR AS doc_major, DOC_SPECIALTY AS doc_specialty,
                     DOC_CAREER AS doc_career, CAREER_LABEL AS career_label,
@@ -38,6 +39,7 @@ class DoctorRepository extends BaseRepository
     {
         return $this->selectOne(
             "SELECT DOC_IDX AS id, DEPT_CODE AS dept_code,
+                    CAST(COALESCE(DEPT_CODES, JSON_ARRAY(DEPT_CODE)) AS CHAR) AS dept_codes,
                     DOC_NAME AS doc_name, DOC_TITLE AS doc_title,
                     DOC_MAJOR AS doc_major, DOC_SPECIALTY AS doc_specialty,
                     DOC_CAREER AS doc_career, CAREER_LABEL AS career_label,
@@ -58,6 +60,7 @@ class DoctorRepository extends BaseRepository
     {
         return $this->select(
             "SELECT DOC_IDX AS id, DEPT_CODE AS dept_code,
+                    CAST(COALESCE(DEPT_CODES, JSON_ARRAY(DEPT_CODE)) AS CHAR) AS dept_codes,
                     DOC_NAME AS doc_name, DOC_TITLE AS doc_title,
                     DOC_MAJOR AS doc_major, DOC_SPECIALTY AS doc_specialty,
                     DOC_CAREER AS doc_career, CAREER_LABEL AS career_label,
@@ -65,7 +68,11 @@ class DoctorRepository extends BaseRepository
                     DOC_USE_YN AS use_yn,
                     CAST(DOC_SORT_ORDER AS UNSIGNED) AS sort_order
              FROM doctor_tbl
-             WHERE DEPT_CODE = :dept_code AND DOC_USE_YN = 'Y'
+             WHERE JSON_CONTAINS(
+                       COALESCE(DEPT_CODES, JSON_ARRAY(DEPT_CODE)),
+                       JSON_QUOTE(:dept_code)
+                   )
+               AND DOC_USE_YN = 'Y'
              ORDER BY DOC_SORT_ORDER ASC, DOC_IDX ASC",
             [':dept_code' => $deptCode]
         );
@@ -78,16 +85,17 @@ class DoctorRepository extends BaseRepository
         );
         $this->execute(
             "INSERT INTO doctor_tbl
-             (DOC_IDX, DEPT_CODE, DOC_NAME, DOC_TITLE, DOC_MAJOR,
+             (DOC_IDX, DEPT_CODE, DEPT_CODES, DOC_NAME, DOC_TITLE, DOC_MAJOR,
               DOC_SPECIALTY, DOC_CAREER, CAREER_LABEL, SCHEDULE_JSON,
               DOC_USE_YN, DOC_SORT_ORDER, DOC_DEL_YN, IN_MEM_ID, INPUTDATE)
              VALUES
-             (:id, :dept_code, :doc_name, :doc_title, :doc_major,
+             (:id, :dept_code, :dept_codes, :doc_name, :doc_title, :doc_major,
               :doc_specialty, :doc_career, :career_label, :schedule_json,
               :use_yn, :sort_order, 'N', :created_by, NOW())",
             [
                 ':id'            => $nextId,
                 ':dept_code'     => $data['dept_code'],
+                ':dept_codes'    => $data['dept_codes'],
                 ':doc_name'      => $data['doc_name'],
                 ':doc_title'     => $data['doc_title'],
                 ':doc_major'     => $data['doc_major'],
@@ -108,6 +116,7 @@ class DoctorRepository extends BaseRepository
         return $this->execute(
             "UPDATE doctor_tbl SET
                 DEPT_CODE     = :dept_code,
+                DEPT_CODES    = :dept_codes,
                 DOC_NAME      = :doc_name,
                 DOC_TITLE     = :doc_title,
                 DOC_MAJOR     = :doc_major,
@@ -122,6 +131,7 @@ class DoctorRepository extends BaseRepository
              WHERE DOC_IDX = :id",
             [
                 ':dept_code'     => $data['dept_code'],
+                ':dept_codes'    => $data['dept_codes'],
                 ':doc_name'      => $data['doc_name'],
                 ':doc_title'     => $data['doc_title'],
                 ':doc_major'     => $data['doc_major'],
@@ -243,7 +253,7 @@ class DoctorRepository extends BaseRepository
         END";
 
         if ($deptCode !== '') {
-            $where .= ' AND DEPT_CODE = :dept_code';
+            $where .= ' AND JSON_CONTAINS(COALESCE(DEPT_CODES, JSON_ARRAY(DEPT_CODE)), JSON_QUOTE(:dept_code))';
             $params[':dept_code'] = $deptCode;
         }
         if ($useYn !== '') {

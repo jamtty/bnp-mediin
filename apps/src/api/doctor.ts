@@ -1,25 +1,55 @@
 import apiClient from './axios'
 
-export const DEPT_CODE_MAP: Record<string, string> = {
-  hpcenter:        '건강증진센터',
-  internal:        '내과',
-  cardiology:      '심장내과',
-  respiratory:     '호흡기내과',
-  gastroenterology:'소화기내과',
-  nephrology:      '신장내과',
-  rheumatology:    '류마티스내과',
-  neurology:       '신경과',
-  surgery:         '외과',
-  obstetrics:      '산부인과',
-  orthopedics:     '정형외과',
-  urology:         '비뇨의학과',
-  painclinic:      '신경통증클리닉',
-  anesthesiology:  '마취통증의학과',
-  labmedicine:     '진단검사의학과',
-  radiology:       '영상의학과',
-  emergency:       '응급의학과',
-  criticalcare:    '중환자의학과',
+// ── 진료과 그룹 구조 ────────────────────────────────────────────
+// 진료과소개 / 클리닉소개 / 특수센터소개 하위 과목 전체
+export const DEPT_GROUPS: Record<string, Array<{ code: string; name: string }>> = {
+  '진료과소개': [
+    { code: 'internal',         name: '내과' },
+    { code: 'cardiology',       name: '심장내과' },
+    { code: 'respiratory',      name: '호흡기내과' },
+    { code: 'gastroenterology', name: '소화기내과' },
+    { code: 'nephrology',       name: '신장내과' },
+    { code: 'rheumatology',     name: '류마티스내과' },
+    { code: 'neurology',        name: '신경과' },
+    { code: 'surgery',          name: '외과' },
+    { code: 'obstetrics',       name: '산부인과' },
+    { code: 'orthopedics',      name: '정형외과' },
+    { code: 'urology',          name: '비뇨의학과' },
+    { code: 'painclinic',       name: '신경통증클리닉' },
+    { code: 'anesthesiology',   name: '마취통증의학과' },
+    { code: 'labmedicine',      name: '진단검사의학과' },
+    { code: 'radiology',        name: '영상의학과' },
+    { code: 'emergency',        name: '응급의학과' },
+    { code: 'criticalcare',     name: '중환자의학과' },
+    { code: 'hpcenter',         name: '건강증진센터' },
+  ],
+  '클리닉소개': [
+    { code: 'endoscopy',     name: '내시경클리닉' },
+    { code: 'arthroplasty',  name: '인공관절클리닉' },
+    { code: 'spine',         name: '척추클리닉' },
+    { code: 'hand',          name: '수지접합클리닉' },
+    { code: 'anus',          name: '항문클리닉' },
+    { code: 'laparoscopy',   name: '복강경클리닉' },
+    { code: 'adult-disease', name: '성인병클리닉' },
+    { code: 'intervention',  name: '중재시술/유방클리닉' },
+    { code: 'neuro',         name: '뇌신경질환클리닉' },
+    { code: 'urolithiasis',  name: '요로결석클리닉' },
+    { code: 'painclinic',    name: '신경통증클리닉' },
+  ],
+  '특수센터소개': [
+    { code: 'cardiovascular',    name: '심혈관센터' },
+    { code: 'spine-nonsurgery',  name: '척추비수술센터' },
+    { code: 'spine-center',      name: '척추센터' },
+    { code: 'joint',             name: '관절센터' },
+    { code: 'arthroplasty-center', name: '인공관절센터' },
+    { code: 'checkup',           name: '검진센터' },
+  ],
 }
+
+// 코드 → 이름 플랫 맵
+export const DEPT_CODE_MAP: Record<string, string> = Object.fromEntries(
+  Object.values(DEPT_GROUPS).flatMap((depts) => depts.map(({ code, name }) => [code, name]))
+)
 
 export type ScheduleRow = {
   mon: string; tue: string; wed: string; thu: string; fri: string
@@ -34,6 +64,7 @@ export interface ScheduleJson {
 export interface DoctorItem {
   id: number
   dept_code: string
+  dept_codes: string[]
   doc_name: string
   doc_title: string | null
   doc_major: string | null

@@ -124,19 +124,37 @@ class DoctorController
 
     private function extractData(Request $request, string $userId, bool $isUpdate = false): ?array
     {
-        $deptCode    = trim((string)$request->input('dept_code',    ''));
-        $docName     = trim((string)$request->input('doc_name',     ''));
-        $docTitle    = trim((string)$request->input('doc_title',    ''));
-        $docMajor    = trim((string)$request->input('doc_major',    ''));
-        $docSpecialty= trim((string)$request->input('doc_specialty',''));
-        $docCareer   = trim((string)$request->input('doc_career',   ''));
-        $careerLabel = trim((string)$request->input('career_label', '약력'));
-        $scheduleJson= trim((string)$request->input('schedule_json',''));
-        $useYn       = trim((string)$request->input('use_yn',       'Y'));
-        $sortOrder   = (int)$request->input('sort_order', 1);
+        $deptCodesRaw = trim((string)$request->input('dept_codes', ''));
+        $deptCode     = trim((string)$request->input('dept_code',  ''));
+        $docName      = trim((string)$request->input('doc_name',     ''));
+        $docTitle     = trim((string)$request->input('doc_title',    ''));
+        $docMajor     = trim((string)$request->input('doc_major',    ''));
+        $docSpecialty = trim((string)$request->input('doc_specialty',''));
+        $docCareer    = trim((string)$request->input('doc_career',   ''));
+        $careerLabel  = trim((string)$request->input('career_label', '약력'));
+        $scheduleJson = trim((string)$request->input('schedule_json',''));
+        $useYn        = trim((string)$request->input('use_yn',       'Y'));
+        $sortOrder    = (int)$request->input('sort_order', 1);
 
-        if ($deptCode === '') { Response::error('진료과 코드를 입력해 주세요.'); return null; }
-        if ($docName  === '') { Response::error('의사 이름을 입력해 주세요.');   return null; }
+        // dept_codes (JSON array) 파싱
+        $deptCodes = [];
+        if ($deptCodesRaw !== '') {
+            $decoded = json_decode($deptCodesRaw, true);
+            if (is_array($decoded)) {
+                $deptCodes = array_values(array_filter($decoded, fn($c) => is_string($c) && $c !== ''));
+            }
+        }
+        // fallback: single dept_code
+        if (empty($deptCodes) && $deptCode !== '') {
+            $deptCodes = [$deptCode];
+        }
+        // 첫 번째 항목을 primary dept_code로 사용
+        if (!empty($deptCodes)) {
+            $deptCode = $deptCodes[0];
+        }
+
+        if (empty($deptCodes)) { Response::error('진료과를 하나 이상 선택해 주세요.'); return null; }
+        if ($docName === '')    { Response::error('의사 이름을 입력해 주세요.');        return null; }
 
         // schedule_json 유효성 검사
         if ($scheduleJson !== '') {
@@ -149,6 +167,7 @@ class DoctorController
 
         $data = [
             'dept_code'     => $deptCode,
+            'dept_codes'    => json_encode($deptCodes, JSON_UNESCAPED_UNICODE),
             'doc_name'      => $docName,
             'doc_title'     => $docTitle ?: null,
             'doc_major'     => $docMajor ?: null,

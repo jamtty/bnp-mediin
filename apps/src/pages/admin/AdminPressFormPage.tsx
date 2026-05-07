@@ -132,12 +132,6 @@ export default function AdminPressFormPage() {
                 />
               </div>
 
-              {/* 내용 */}
-              <div className="adm_form_row adm_form_row_col">
-                <label className="adm_form_label">내용</label>
-                <RichEditor value={content} onChange={setContent} />
-              </div>
-
               {/* 공지 고정 */}
               <div className="adm_form_row">
                 <label className="adm_form_label">공지 고정</label>
@@ -147,8 +141,14 @@ export default function AdminPressFormPage() {
                     checked={isPinned}
                     onChange={(e) => setIsPinned(e.target.checked)}
                   />
-                  공지로 표시
+                  게시글을 공지(고정글)로 등록합니다
                 </label>
+              </div>
+
+              {/* 내용 */}
+              <div className="adm_form_row adm_form_row_col">
+                <label className="adm_form_label">내용</label>
+                <RichEditor value={content} onChange={setContent} />
               </div>
 
               <div className="adm_form_btns">

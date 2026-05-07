@@ -7,6 +7,7 @@ import {
   updateDoctorUseYn,
   updateDoctorSortOrder,
   deleteDoctor,
+  DEPT_GROUPS,
   DEPT_CODE_MAP,
   type DoctorItem,
 } from '@/api/doctor'
@@ -138,8 +139,12 @@ export default function AdminDoctorPage() {
                   className="adm_btn_secondary"
                 >
                   <option value="">전체 진료과</option>
-                  {Object.entries(DEPT_CODE_MAP).map(([code, name]) => (
-                    <option key={code} value={code}>{name}</option>
+                  {Object.entries(DEPT_GROUPS).map(([groupName, depts]) => (
+                    <optgroup key={groupName} label={groupName}>
+                      {depts.map(({ code, name }) => (
+                        <option key={code} value={code}>{name}</option>
+                      ))}
+                    </optgroup>
                   ))}
                 </select>
                 <input
@@ -219,7 +224,12 @@ export default function AdminDoctorPage() {
                           <strong>{item.doc_name}</strong>
                           {item.doc_title && <span style={{ marginLeft: 4, color: '#666', fontSize: '1.2rem' }}>{item.doc_title}</span>}
                         </td>
-                        <td className="adm_td_center">{DEPT_CODE_MAP[item.dept_code] ?? item.dept_code}</td>
+                        <td className="adm_td_center">
+                          {(item.dept_codes?.length
+                            ? item.dept_codes.map((c) => DEPT_CODE_MAP[c] ?? c).join(', ')
+                            : DEPT_CODE_MAP[item.dept_code] ?? item.dept_code
+                          )}
+                        </td>
                         <td className="adm_td_center">{item.doc_major ?? '-'}</td>
                         <td className="adm_td_center">
                           <button

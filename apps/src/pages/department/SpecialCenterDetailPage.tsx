@@ -2,109 +2,10 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
-import { fetchDoctorsByDept, parseSchedule, type DoctorItem } from '../../api/doctor'
+import { fetchDoctorsByDept, type DoctorItem } from '../../api/doctor'
+import DoctorScheduleModal from '../../components/DoctorScheduleModal'
 
-
-
-const SCHEDULE_DAY_LABELS = [
-  { key: 'mon',   label: '월' },
-  { key: 'tue',   label: '화' },
-  { key: 'wed',   label: '수' },
-  { key: 'thu',   label: '목' },
-  { key: 'fri',   label: '금' },
-  { key: 'sat13', label: '토(1,3주)' },
-  { key: 'sat24', label: '토(2,4주)' },
-  { key: 'sat5',  label: '토(5주)' },
-]
-
-function ScheduleModal({ doctor, onClose }: { doctor: DoctorItem; onClose: () => void }) {
-  const schedule = parseSchedule(doctor.schedule_json)
-  const specialty = doctor.doc_specialty?.split('\n').filter(Boolean) ?? []
-  return (
-    <div className="pop show" style={{ zIndex: 100 }}>
-      <div className="pop-wrap">
-        <div className="pop-box" style={{ maxHeight: 'calc(100vh - 60px)', overflowY: 'auto' }}>
-          <div className="ms_detail_cont">
-            <div className="pop_tit">
-              <strong>진료시간표</strong>
-              <button type="button" className="btn-pop-close" onClick={onClose}>
-                <span className="blind">닫기</span>
-              </button>
-            </div>
-            <div className="pop_cont">
-              <div className="ms_thumb">
-                {doctor.img_url ? (
-                  <img src={doctor.img_url} alt={doctor.doc_name} />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', background: '#e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ color: '#999', fontSize: 13 }}>사진없음</span>
-                  </div>
-                )}
-              </div>
-              <div className="ms_cont">
-                <div className="ms_tit">
-                  <strong className="name">{doctor.doc_name}{doctor.doc_title ? ` ${doctor.doc_title}` : ''}</strong>
-                  {doctor.doc_major && <span className="major">{doctor.doc_major}</span>}
-                </div>
-                <dl>
-                  {specialty.length > 0 && (
-                    <>
-                      <dt>진료분야</dt>
-                      <dd><ul>{specialty.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
-                    </>
-                  )}
-                  {schedule && (
-                    <>
-                      <dt>진료일정</dt>
-                      <dd>
-                        <div className="medical_schedule">
-                          <table>
-                            <caption>진료일정표</caption>
-                            <thead>
-                              <tr>
-                                <th rowSpan={2}>구분</th>
-                                {SCHEDULE_DAY_LABELS.slice(0, 5).map((d) => (
-                                  <th key={d.key} rowSpan={2}>{d.label}</th>
-                                ))}
-                                <th colSpan={3}>토</th>
-                              </tr>
-                              <tr>
-                                {SCHEDULE_DAY_LABELS.slice(5).map((d) => (
-                                  <th key={d.key}>{d.label.replace('토(', '').replace(')', '')}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {(['am', 'pm'] as const).map((period) => (
-                                <tr key={period}>
-                                  <td>{period === 'am' ? '오전' : '오후'}</td>
-                                  {SCHEDULE_DAY_LABELS.map((d) => (
-                                    <td key={d.key}>{(schedule[period] as Record<string, string>)[d.key] || '-'}</td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                        <p style={{ marginTop: 12, fontSize: 14, color: '#888', lineHeight: '22px' }}>
-                          * 병원사정에 따라 진료시간이 변경될 수 있습니다.<br />
-                          * 정확한 진료 시간은 1566-1991로 문의 부탁 드립니다.
-                        </p>
-                      </dd>
-                    </>
-                  )}
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="pop_bg" onClick={onClose}></div>
-    </div>
-  )
-}
-
-function DoctorListSection({ doctors, loading, onShowSchedule }: { doctors: DoctorItem[]; loading: boolean; onShowSchedule: (d: DoctorItem) => void }) {
+function DoctorListSection({ doctors, loading, onShowSchedule, currentDeptName }: { doctors: DoctorItem[]; loading: boolean; onShowSchedule: (d: DoctorItem) => void; currentDeptName: string }) {
   if (loading) return <p style={{ padding: '20px 0', color: '#888' }}>의료진 정보를 불러오는 중입니다...</p>
   if (doctors.length === 0) return <p className="no_doctor_msg">등록된 의료진이 없습니다.</p>
   return (
@@ -125,7 +26,7 @@ function DoctorListSection({ doctors, loading, onShowSchedule }: { doctors: Doct
             <div className="ms_cont">
               <div className="ms_tit">
                 <strong className="name">{doctor.doc_name}{doctor.doc_title ? ` ${doctor.doc_title}` : ''}</strong>
-                {doctor.doc_major && <span className="major">{doctor.doc_major}</span>}
+                {currentDeptName && <span className="major">{currentDeptName}</span>}
               </div>
               {career.length > 0 && (
                 <dl>
@@ -133,12 +34,10 @@ function DoctorListSection({ doctors, loading, onShowSchedule }: { doctors: Doct
                   <dd><ul>{career.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
                 </dl>
               )}
-              {doctor.schedule_json && (
-                <button type="button" onClick={() => onShowSchedule(doctor)}>
-                  <i className="ico_calendar"></i>
-                  <span>진료시간표</span>
-                </button>
-              )}
+              <button type="button" onClick={() => onShowSchedule(doctor)}>
+                <i className="ico_calendar"></i>
+                <span>진료시간표</span>
+              </button>
             </div>
           </div>
         )
@@ -148,12 +47,12 @@ function DoctorListSection({ doctors, loading, onShowSchedule }: { doctors: Doct
 }
 
 const centerNames: Record<string, string> = {
-  cardiovascular:   '심혈관센터',
-  'spine-nonsurgery': '척추비수술센터',
-  spine:            '척추센터',
-  joint:            '관절센터',
-  arthroplasty:     '인공관절센터',
-  checkup:          '검진센터',
+  cardiovascular:      '심혈관센터',
+  'spine-nonsurgery':  '척추비수술센터',
+  'spine-center':      '척추센터',
+  joint:               '관절센터',
+  'arthroplasty-center': '인공관절센터',
+  checkup:             '검진센터',
 }
 
 const centerThirdItems = Object.entries(centerNames).map(([code, name]) => ({
@@ -331,7 +230,7 @@ export default function SpecialCenterDetailPage() {
           </div>
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}
@@ -439,13 +338,13 @@ export default function SpecialCenterDetailPage() {
           </div>
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}
 
       {/* ===== 척추센터 ===== */}
-      {code === 'spine' && (
+      {code === 'spine-center' && (
         <div className="con_area">
           <div className="tab_area">
             <button
@@ -644,7 +543,7 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}
@@ -724,13 +623,13 @@ export default function SpecialCenterDetailPage() {
           </div>
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}
 
       {/* ===== 인공관절센터 ===== */}
-      {code === 'arthroplasty' && (
+      {code === 'arthroplasty-center' && (
         <div className="con_area">
           <div className="tab_area">
             <button
@@ -813,7 +712,7 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}
@@ -858,14 +757,14 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭02: 의료진 소개 */}
           <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} />
+            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}
 
     </SubPageLayout>
     {scheduleDoctor && (
-      <ScheduleModal doctor={scheduleDoctor} onClose={() => setScheduleDoctor(null)} />
+      <DoctorScheduleModal doctor={scheduleDoctor} onClose={() => setScheduleDoctor(null)} currentDeptName={centerName ?? ""} />
     )}
     </>
   )

@@ -6,6 +6,7 @@ import {
   fetchDoctorDetail,
   createDoctor,
   updateDoctor,
+  DEPT_GROUPS,
   DEPT_CODE_MAP,
   emptySchedule,
   parseSchedule,
@@ -34,10 +35,9 @@ export default function AdminDoctorFormPage() {
   const isEdit   = Boolean(id)
   const fileRef  = useRef<HTMLInputElement>(null)
 
-  const [deptCode,     setDeptCode]     = useState('')
+  const [deptCodes,    setDeptCodes]    = useState<string[]>([])
   const [docName,      setDocName]      = useState('')
   const [docTitle,     setDocTitle]     = useState('')
-  const [docMajor,     setDocMajor]     = useState('')
   const [docSpecialty, setDocSpecialty] = useState('')
   const [docCareer,    setDocCareer]    = useState('')
   const [careerLabel,  setCareerLabel]  = useState('약력')
@@ -54,10 +54,9 @@ export default function AdminDoctorFormPage() {
     if (!isEdit) return
     fetchDoctorDetail(Number(id))
       .then((item) => {
-        setDeptCode(item.dept_code)
+        setDeptCodes(item.dept_codes?.length ? item.dept_codes : [item.dept_code].filter(Boolean))
         setDocName(item.doc_name)
         setDocTitle(item.doc_title ?? '')
-        setDocMajor(item.doc_major ?? '')
         setDocSpecialty(item.doc_specialty ?? '')
         setDocCareer(item.doc_career ?? '')
         setCareerLabel(item.career_label ?? '약력')
@@ -84,6 +83,12 @@ export default function AdminDoctorFormPage() {
     reader.readAsDataURL(file)
   }
 
+  const toggleDept = (code: string) => {
+    setDeptCodes((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]
+    )
+  }
+
   const handleScheduleChange = (period: 'am' | 'pm', day: keyof ScheduleRow, value: string) => {
     setSchedule((prev) => ({
       ...prev,
@@ -95,16 +100,16 @@ export default function AdminDoctorFormPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!deptCode) { alert('진료과를 선택해 주세요.'); return }
+    if (deptCodes.length === 0) { alert('진료과를 하나 이상 선택해 주세요.'); return }
     if (!docName.trim()) { alert('의사 이름을 입력해 주세요.'); return }
 
     setLoading(true)
     try {
       const formData = new FormData()
-      formData.append('dept_code',     deptCode)
+      formData.append('dept_codes',    JSON.stringify(deptCodes))
+      formData.append('dept_code',     deptCodes[0] ?? '')
       formData.append('doc_name',      docName.trim())
       formData.append('doc_title',     docTitle.trim())
-      formData.append('doc_major',     docMajor.trim())
       formData.append('doc_specialty', docSpecialty.trim())
       formData.append('doc_career',    docCareer.trim())
       formData.append('career_label',  careerLabel.trim())
@@ -164,19 +169,35 @@ export default function AdminDoctorFormPage() {
               <h3 className="adm_section_title">기본 정보</h3>
               <div className="adm_form" style={{ paddingTop: 0 }}>
 
-                <div className="adm_form_row">
+                <div className="adm_form_row adm_form_row_col">
                   <label className="adm_form_label">진료과 <span className="required">*</span></label>
-                  <select
-                    value={deptCode}
-                    onChange={(e) => setDeptCode(e.target.value)}
-                    className="adm_form_input"
-                    required
-                  >
-                    <option value="">진료과 선택</option>
-                    {Object.entries(DEPT_CODE_MAP).map(([code, name]) => (
-                      <option key={code} value={code}>{name}</option>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                    {Object.entries(DEPT_GROUPS).map(([groupName, depts]) => (
+                      <div key={groupName}>
+                        <p style={{ fontSize: '1.2rem', fontWeight: 600, color: '#374151', marginBottom: '0.6rem' }}>{groupName}</p>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem 1.6rem' }}>
+                          {depts.map(({ code, name }) => (
+                            <label key={code} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '1.3rem', cursor: 'pointer' }}>
+                              <input
+                                type="checkbox"
+                                checked={deptCodes.includes(code)}
+                                onChange={() => toggleDept(code)}
+                              />
+                              {name}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
                     ))}
-                  </select>
+                    {deptCodes.length === 0 && (
+                      <p style={{ fontSize: '1.2rem', color: '#ef4444' }}>진료과를 하나 이상 선택해 주세요.</p>
+                    )}
+                    {deptCodes.length > 0 && (
+                      <p style={{ fontSize: '1.2rem', color: '#6b7280' }}>
+                        선택됨: {deptCodes.map((c) => DEPT_CODE_MAP[c] ?? c).join(', ')}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="adm_form_row">
@@ -198,17 +219,6 @@ export default function AdminDoctorFormPage() {
                     value={docTitle}
                     onChange={(e) => setDocTitle(e.target.value)}
                     placeholder="예: 원장, 진료과장, 진료부원장"
-                    className="adm_form_input"
-                  />
-                </div>
-
-                <div className="adm_form_row">
-                  <label className="adm_form_label">진료과목</label>
-                  <input
-                    type="text"
-                    value={docMajor}
-                    onChange={(e) => setDocMajor(e.target.value)}
-                    placeholder="예: 내과"
                     className="adm_form_input"
                   />
                 </div>

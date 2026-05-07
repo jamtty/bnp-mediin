@@ -24,6 +24,7 @@ class DoctorService
         $items = $this->repo->findList($deptCode, $keyword, $useYn, $size, $offset);
 
         foreach ($items as &$item) {
+            $item['dept_codes'] = json_decode($item['dept_codes'] ?? '[]', true) ?: [$item['dept_code']];
             $file = $this->repo->findFile((int)$item['id']);
             $item['img_ori_name']  = $file ? $file['ori_name']  : '';
             $item['img_save_name'] = $file ? $file['save_name'] : '';
@@ -44,6 +45,7 @@ class DoctorService
     {
         $items = $this->repo->findByDept($deptCode);
         foreach ($items as &$item) {
+            $item['dept_codes'] = json_decode($item['dept_codes'] ?? '[]', true) ?: [$item['dept_code']];
             $file = $this->repo->findFile((int)$item['id']);
             $item['img_url'] = $file ? $file['file_url'] : '';
             // schedule_json 이미 JSON 문자열 → 클라이언트에 그대로 전달
@@ -57,6 +59,7 @@ class DoctorService
         $item = $this->repo->findOne($id);
         if (!$item) return false;
 
+        $item['dept_codes'] = json_decode($item['dept_codes'] ?? '[]', true) ?: [$item['dept_code']];
         $file = $this->repo->findFile($id);
         $item['img_ori_name']  = $file ? $file['ori_name']  : '';
         $item['img_save_name'] = $file ? $file['save_name'] : '';
