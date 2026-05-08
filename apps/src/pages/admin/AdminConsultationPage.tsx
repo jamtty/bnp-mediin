@@ -150,7 +150,7 @@ export default function AdminConsultationPage() {
                             {item.title}
                           </Link>
                         </td>
-                        <td className="adm_td_center">
+                        <td className="adm_td_center" style={{ whiteSpace: 'nowrap' }}>
                           {item.jb_cd && JB_CD_MAP[item.jb_cd]
                             ? `${JB_CD_MAP[item.jb_cd].group} > ${JB_CD_MAP[item.jb_cd].label}`
                             : item.jb_cd || '-'}

@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import {
@@ -16,13 +16,15 @@ const PAGE_SIZE = 50
 
 export default function AdminDoctorPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const locState = (location.state ?? {}) as { deptCode?: string; keyword?: string; page?: number }
   const [items, setItems]               = useState<DoctorItem[]>([])
   const [totalCount, setTotalCount]     = useState(0)
   const [totalPages, setTotalPages]     = useState(1)
-  const [page, setPage]                 = useState(1)
-  const [deptCode, setDeptCode]         = useState('')
-  const [keyword, setKeyword]           = useState('')
-  const [inputKeyword, setInputKeyword] = useState('')
+  const [page, setPage]                 = useState(locState.page ?? 1)
+  const [deptCode, setDeptCode]         = useState(locState.deptCode ?? '')
+  const [keyword, setKeyword]           = useState(locState.keyword ?? '')
+  const [inputKeyword, setInputKeyword] = useState(locState.keyword ?? '')
   const [loading, setLoading]           = useState(false)
   const [checkedIds, setCheckedIds]     = useState<number[]>([])
   const [searchTrigger, setSearchTrigger] = useState(0)
@@ -264,7 +266,7 @@ export default function AdminDoctorPage() {
                             <button
                               type="button"
                               className="adm_btn_edit"
-                              onClick={() => navigate(`/admin/doctor/edit/${item.id}`)}
+                              onClick={() => navigate(`/admin/doctor/edit/${item.id}`, { state: { deptCode, keyword, page } })}
                             >
                               수정
                             </button>

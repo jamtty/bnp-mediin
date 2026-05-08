@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import {
@@ -31,6 +31,8 @@ const QUICK_VALUES = ['진료', '전화문의', 'OFF', '-']
 
 export default function AdminDoctorFormPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const backState = (location.state ?? null) as { deptCode?: string; keyword?: string; page?: number } | null
   const { id }   = useParams<{ id: string }>()
   const isEdit   = Boolean(id)
   const fileRef  = useRef<HTMLInputElement>(null)
@@ -68,7 +70,7 @@ export default function AdminDoctorFormPage() {
       })
       .catch(() => {
         alert('데이터를 불러오지 못했습니다.')
-        navigate('/admin/doctor')
+        navigate('/admin/doctor', backState ? { state: backState } : undefined)
       })
       .finally(() => setFetching(false))
   }, [id, isEdit, navigate])
@@ -134,7 +136,7 @@ export default function AdminDoctorFormPage() {
         await createDoctor(formData)
         alert('등록되었습니다.')
       }
-      navigate('/admin/doctor')
+      navigate('/admin/doctor', backState ? { state: backState } : undefined)
     } catch (err) {
       alert(err instanceof Error ? err.message : '저장에 실패했습니다.')
     } finally {
@@ -403,7 +405,7 @@ export default function AdminDoctorFormPage() {
                 <div className="adm_form_btns">
                   <button
                     type="button"
-                    onClick={() => navigate('/admin/doctor')}
+                    onClick={() => navigate('/admin/doctor', backState ? { state: backState } : undefined)}
                     className="adm_btn_secondary"
                   >
                     취소
