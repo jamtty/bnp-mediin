@@ -15117,6 +15117,13 @@ body.h100 {
   margin-bottom: 5px;
   line-height: 1.4;
 }
+.doctor_card_dept {
+  font-size: 13px;
+  font-weight: 600;
+  color: #129ba9;
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
 .doctor_card_major {
   font-size: 14px;
   color: #666;

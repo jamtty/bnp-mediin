@@ -114,24 +114,8 @@ export default function SpecialCenterDetailPage() {
       {/* ===== 심혈관센터 ===== */}
       {code === 'cardiovascular' && (
         <div className="con_area">
-          <div className="tab_area">
-            <button
-              type="button"
-              className={`btn_tab${activeTab === 'tab01' ? ' active_tab' : ''}`}
-              onClick={() => setActiveTab('tab01')}
-            >
-              <span>진료과 소개</span>
-            </button>
-            <button
-              type="button"
-              className={`btn_tab${activeTab === 'tab02' ? ' active_tab' : ''}`}
-              onClick={() => setActiveTab('tab02')}
-            >
-              <span>의료진 소개</span>
-            </button>
-          </div>
-          {/* 탭01: 진료과 소개 */}
-          <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
+          {/* 진료과 소개 */}
+          <div className="cont_area active_cont" id="tab01">
           <div className="emergency_sec first_sec">
             <p className="info_tit">심혈관센터</p>
             <p className="info_disc">
@@ -228,34 +212,14 @@ export default function SpecialCenterDetailPage() {
             </div>
           </div>
           </div>
-          {/* 탭02: 의료진 소개 */}
-          <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
-          </div>
         </div>
       )}
 
       {/* ===== 척추비수술센터 ===== */}
       {code === 'spine-nonsurgery' && (
         <div className="con_area">
-          <div className="tab_area">
-            <button
-              type="button"
-              className={`btn_tab${activeTab === 'tab01' ? ' active_tab' : ''}`}
-              onClick={() => setActiveTab('tab01')}
-            >
-              <span>진료과 소개</span>
-            </button>
-            <button
-              type="button"
-              className={`btn_tab${activeTab === 'tab02' ? ' active_tab' : ''}`}
-              onClick={() => setActiveTab('tab02')}
-            >
-              <span>의료진 소개</span>
-            </button>
-          </div>
-          {/* 탭01: 진료과 소개 */}
-          <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
+          {/* 진료과 소개 */}
+          <div className="cont_area active_cont" id="tab01">
           <div className="emergency_sec first_sec">
             <p className="info_tit">척추비수술센터</p>
             <p className="info_disc">
@@ -336,10 +300,6 @@ export default function SpecialCenterDetailPage() {
             </div>
           </div>
           </div>
-          {/* 탭02: 의료진 소개 */}
-          <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
-          </div>
         </div>
       )}
 
@@ -365,8 +325,7 @@ export default function SpecialCenterDetailPage() {
 
           {/* 탭01: 진료과 소개 */}
           <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
-            <div className="emergency_sec">
-              <p className="info_tit">척추센터</p>
+
               <p className="info_disc">
                 척추 질환은 매우 흔하며 지속적인 관리가 필요한 질환입니다. 메디인병원에서는 척추비수술센터도 운영하며 환자 케이스에 따라 다양한 치료법을 제시하여 최적의 치료를
                 시행합니다.
@@ -538,7 +497,6 @@ export default function SpecialCenterDetailPage() {
                   </li>
                 </ol>
               </div>
-            </div>
           </div>
 
           {/* 탭02: 의료진 소개 */}
@@ -551,24 +509,8 @@ export default function SpecialCenterDetailPage() {
       {/* ===== 관절센터 ===== */}
       {code === 'joint' && (
         <div className="con_area">
-          <div className="tab_area">
-            <button
-              type="button"
-              className={`btn_tab${activeTab === 'tab01' ? ' active_tab' : ''}`}
-              onClick={() => setActiveTab('tab01')}
-            >
-              <span>진료과 소개</span>
-            </button>
-            <button
-              type="button"
-              className={`btn_tab${activeTab === 'tab02' ? ' active_tab' : ''}`}
-              onClick={() => setActiveTab('tab02')}
-            >
-              <span>의료진 소개</span>
-            </button>
-          </div>
-          {/* 탭01: 진료과 소개 */}
-          <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
+          {/* 진료과 소개 */}
+          <div className="cont_area active_cont" id="tab01">
           <div className="emergency_sec first_sec">
             <p className="info_tit">관절센터</p>
             <p className="info_disc">
@@ -620,10 +562,6 @@ export default function SpecialCenterDetailPage() {
               </ol>
             </div>
           </div>
-          </div>
-          {/* 탭02: 의료진 소개 */}
-          <div className={`cont_area${activeTab === 'tab02' ? ' active_cont' : ''}`} id="tab02">
-            <DoctorListSection doctors={doctors} loading={loadingDocs} onShowSchedule={setScheduleDoctor} currentDeptName={centerName ?? ""} />
           </div>
         </div>
       )}

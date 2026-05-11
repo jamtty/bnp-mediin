@@ -102,7 +102,7 @@ export default function AdminDoctorFormPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (deptCodes.length === 0) { alert('진료과를 하나 이상 선택해 주세요.'); return }
+
     if (!docName.trim()) { alert('의사 이름을 입력해 주세요.'); return }
 
     setLoading(true)
@@ -172,7 +172,7 @@ export default function AdminDoctorFormPage() {
               <div className="adm_form" style={{ paddingTop: 0 }}>
 
                 <div className="adm_form_row adm_form_row_col">
-                  <label className="adm_form_label">진료과 <span className="required">*</span></label>
+                  <label className="adm_form_label">진료과</label>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                     {Object.entries(DEPT_GROUPS).map(([groupName, depts]) => (
                       <div key={groupName}>
@@ -191,9 +191,6 @@ export default function AdminDoctorFormPage() {
                         </div>
                       </div>
                     ))}
-                    {deptCodes.length === 0 && (
-                      <p style={{ fontSize: '1.2rem', color: '#ef4444' }}>진료과를 하나 이상 선택해 주세요.</p>
-                    )}
                     {deptCodes.length > 0 && (
                       <p style={{ fontSize: '1.2rem', color: '#6b7280' }}>
                         선택됨: {deptCodes.map((c) => DEPT_CODE_MAP[c] ?? c).join(', ')}

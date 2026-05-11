@@ -24,25 +24,12 @@ export const DEPT_GROUPS: Record<string, Array<{ code: string; name: string }>> 
     { code: 'hpcenter',         name: '건강증진센터' },
   ],
   '클리닉소개': [
-    { code: 'endoscopy',     name: '내시경클리닉' },
-    { code: 'arthroplasty',  name: '인공관절클리닉' },
-    { code: 'spine',         name: '척추클리닉' },
-    { code: 'hand',          name: '수지접합클리닉' },
-    { code: 'anus',          name: '항문클리닉' },
-    { code: 'laparoscopy',   name: '복강경클리닉' },
-    { code: 'adult-disease', name: '성인병클리닉' },
-    { code: 'intervention',  name: '중재시술/유방클리닉' },
-    { code: 'neuro',         name: '뇌신경질환클리닉' },
-    { code: 'urolithiasis',  name: '요로결석클리닉' },
     { code: 'painclinic',    name: '신경통증클리닉' },
   ],
   '특수센터소개': [
-    { code: 'cardiovascular',    name: '심혈관센터' },
-    { code: 'spine-nonsurgery',  name: '척추비수술센터' },
-    { code: 'spine-center',      name: '척추센터' },
-    { code: 'joint',             name: '관절센터' },
+    { code: 'spine-center',        name: '척추센터' },
     { code: 'arthroplasty-center', name: '인공관절센터' },
-    { code: 'checkup',           name: '검진센터' },
+    { code: 'checkup',             name: '검진센터' },
   ],
 }
 

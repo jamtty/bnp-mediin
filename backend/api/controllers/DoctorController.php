@@ -153,7 +153,6 @@ class DoctorController
             $deptCode = $deptCodes[0];
         }
 
-        if (empty($deptCodes)) { Response::error('진료과를 하나 이상 선택해 주세요.'); return null; }
         if ($docName === '')    { Response::error('의사 이름을 입력해 주세요.');        return null; }
 
         // schedule_json 유효성 검사

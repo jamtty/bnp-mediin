@@ -29,9 +29,13 @@ function DoctorCard({ doctor, onShowSchedule }: { doctor: DoctorItem; onShowSche
           {doctor.doc_name}
           {doctor.doc_title ? ` ${doctor.doc_title}` : ''}
         </p>
-        {doctor.doc_major && (
-          <p className="doctor_card_major">{doctor.doc_major}</p>
-        )}
+        {(() => {
+          const deptCodes = doctor.dept_codes?.length ? doctor.dept_codes : [doctor.dept_code].filter(Boolean)
+          const deptNames = deptCodes.map((c) => DEPT_CODE_MAP[c] ?? c).filter(Boolean)
+          return deptNames.length > 0 ? (
+            <p className="doctor_card_dept">{deptNames.join(' · ')}</p>
+          ) : null
+        })()}
         <button
           type="button"
           className="doctor_card_schedule_btn"
