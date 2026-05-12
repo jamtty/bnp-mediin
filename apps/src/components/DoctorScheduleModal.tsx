@@ -94,9 +94,10 @@ export default function DoctorScheduleModal({
                                 <td>{period === 'am' ? '오전' : '오후'}</td>
                                 {scheduleDayLabels.map((d) => (
                                   <td key={d.key}>
-                                    {schedule
-                                      ? ((schedule[period] as Record<string, string>)[d.key] || '-')
-                                      : '-'}
+                                    {(() => {
+                                      const val = schedule ? ((schedule[period] as Record<string, string>)[d.key] || '-') : '-'
+                                      return (val === '전화문의' || val === '교대근무' || val === '격주휴무') ? <>{val.slice(0, 2)}<br />{val.slice(2)}</> : val
+                                    })()}
                                   </td>
                                 ))}
                               </tr>
