@@ -47,7 +47,7 @@ export default function SiteBannerPopup({ site = 'MAIN' }: Props) {
   if (visible.length === 0) return null
 
   return (
-    <>
+    <div className="site_popup_overlay">
       {visible.map((popup) => {
         const width = popup.img_width > 0 ? popup.img_width : 320
         const left  = popup.img_pos_left > 0 ? popup.img_pos_left : 50
@@ -84,6 +84,6 @@ export default function SiteBannerPopup({ site = 'MAIN' }: Props) {
           </div>
         )
       })}
-    </>
+    </div>
   )
 }

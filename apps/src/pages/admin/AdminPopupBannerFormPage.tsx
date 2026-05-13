@@ -288,7 +288,6 @@ export default function AdminPopupBannerFormPage() {
                     onChange={(e) => setImgPosLeft(e.target.value === '' ? '' : Number(e.target.value))}
                     placeholder="0"
                     min={0}
-                    max={100}
                   />
                   <input
                     type="number"
@@ -298,10 +297,9 @@ export default function AdminPopupBannerFormPage() {
                     onChange={(e) => setImgPosTop(e.target.value === '' ? '' : Number(e.target.value))}
                     placeholder="0"
                     min={0}
-                    max={100}
                   />
                   <span style={{ color: '#6b7280', fontSize: '1.3rem' }}>(%)</span>
-                  <span style={{ color: '#9ca3af', fontSize: '1.2rem' }}>화면 좌측에서 / 상단에서</span>
+                  <span style={{ color: '#9ca3af', fontSize: '1.2rem' }}>화면 좌측에서 / 상단에서 (100 초과 시 화면 밖 위치)</span>
                 </div>
               </div>
 
