@@ -1,17 +1,12 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from '@/components/ScrollToTop'
-import funeralCssUrl from '@/assets/css/funeral.css?url'
+import '@/assets/css/funeral.css'
 
 export default function FuneralLayout() {
   useEffect(() => {
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = funeralCssUrl
-    document.head.appendChild(link)
     document.body.classList.add('funeral-site')
     return () => {
-      document.head.removeChild(link)
       document.body.classList.remove('funeral-site')
     }
   }, [])
