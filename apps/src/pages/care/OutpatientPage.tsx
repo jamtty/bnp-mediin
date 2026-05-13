@@ -1,5 +1,6 @@
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
+import reservInfoStep from '../../assets/images/reserv_info_step.png'
 
 export default function OutpatientPage() {
   return (
@@ -122,7 +123,7 @@ export default function OutpatientPage() {
                 </div>
               </div>
               <div className="pc_hide">
-                <img src="/resource/images/reserv_info_step.png" alt="" />
+                <img src={reservInfoStep} alt="" />
               </div>
             </div>
           </div>

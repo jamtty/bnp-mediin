@@ -250,7 +250,7 @@ export default function AdminWellFilePage() {
                           type="button"
                           className="adm_btn_edit"
                           onClick={() => openEdit(item)}
-                        >편집</button>
+                        >수정</button>
                       </td>
                     </tr>
                   ))}

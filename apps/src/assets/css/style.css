@@ -11271,34 +11271,42 @@ body.h100 {
     line-height: 30px;
     color: #555555;
   }
+  .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table {
     width: 100%;
-    display: flex;
+    min-width: 520px;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table caption {
     display: none;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table thead {
-    width: 50%;
-    position: relative;
-    border: 1px solid #cccccc;
-    background: #f4f5f9;
+    width: auto;
+    position: static;
+    border: none;
+    background: none;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table thead tr {
-    display: block;
+    display: table-row;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table thead tr th {
-    display: block;
-    border-top: 1px solid #cccccc;
+    display: table-cell;
+    border: 1px solid #cccccc;
     background: #f4f5f9;
-    font-size: 15px;
-    line-height: 24px;
-    padding: 10px 0;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 8px 4px;
     font-weight: 600;
     color: #555555;
+    text-align: center;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table thead tr th:first-child {
-    border-top: 0;
+    border-top: 1px solid #cccccc;
   }
   .pop
     .ms_detail_cont
@@ -11309,41 +11317,41 @@ body.h100 {
     thead
     tr:first-child
     th:last-child {
-    height: 135px;
-    padding-right: 50%;
+    height: auto;
+    padding-right: 4px;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table thead tr:nth-child(2) {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 50%;
-    border-left: 1px solid #ccc;
+    position: static;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    border-left: none;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table tbody {
-    display: flex;
-    width: 50%;
-    border: 1px solid #ccc;
-    border-left: 0;
+    display: table-row-group;
+    width: auto;
+    border: none;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table tbody tr {
-    flex: 1;
+    flex: unset;
+    display: table-row;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table tbody tr:nth-child(2) {
-    border-left: 1px solid #ccc;
+    border-left: none;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table tbody td {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: 1px solid #cccccc;
+    display: table-cell;
+    align-items: unset;
+    justify-content: unset;
+    border: 1px solid #cccccc;
     text-align: center;
-    padding: 10px 0;
-    font-size: 15px;
-    line-height: 24px;
+    padding: 8px 4px;
+    font-size: 13px;
+    line-height: 20px;
     color: #555;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table tbody td:first-child {
-    border-top: 0;
+    border-top: 1px solid #cccccc;
   }
   .pop .ms_detail_cont .pop_cont .ms_cont .medical_schedule table tbody td strong {
     font-weight: 700;

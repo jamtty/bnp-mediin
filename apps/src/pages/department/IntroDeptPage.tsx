@@ -14,12 +14,15 @@ const depts = [
   { code: 'obstetrics',      icon: 'ico_dpt14', name: '산부인과' },
   { code: 'orthopedics',     icon: 'ico_dpt2',  name: '정형외과' },
   { code: 'urology',         icon: 'ico_dpt13', name: '비뇨의학과' },
-  { code: 'painclinic',      icon: 'ico_dpt3',  name: '신경통증클리닉' },
   { code: 'anesthesiology',  icon: 'ico_dpt11', name: '마취통증의학과' },
   { code: 'labmedicine',    icon: 'ico_dpt15', name: '진단검사의학과' },
   { code: 'radiology',       icon: 'ico_dpt12', name: '영상의학과' },
   { code: 'emergency',       icon: 'ico_dpt16', name: '응급의학과' },
   { code: 'criticalcare',    icon: 'ico_dpt35', name: '중환자의학과' },
+  { code: 'painclinic',      icon: 'ico_dpt3',  name: '신경통증클리닉' },
+  { code: 'spine-center',    icon: 'ico_dpt29', name: '척추센터' },
+  { code: 'arthroplasty-center', icon: 'ico_dpt34', name: '인공관절센터' },
+  { code: 'hpcenter',        icon: 'ico_dpt27', name: '건강증진센터' },
 ]
 
 export default function IntroDeptPage() {
