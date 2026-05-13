@@ -15516,3 +15516,115 @@ body.h100 {
     height: 220px;
   }
 }
+
+/* ===== 건강증진센터 프로그램 안내 (진료과소개 내 hpcenter) ===== */
+.content .main_program_info {
+  background: #f1f7f8;
+  padding: 60px 0 80px;
+}
+.content .main_program_info .in_tit {
+  text-align: center;
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: #202020;
+}
+.content .main_program_info .in_program_list {
+  margin: 40px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+.content .main_program_info .in_program_list .in_item {
+  width: calc(33.33% - 14px);
+  position: relative;
+  padding-bottom: 60px;
+}
+.content .main_program_info .in_program_list .in_item .item_box {
+  box-shadow: 5px 5px 10px rgba(15, 74, 99, 0.2);
+  background: #fff;
+  height: 100%;
+  text-align: center;
+  padding: 50px 25px 45px;
+}
+.content .main_program_info .in_program_list .in_item .item_box .ico_pro1 {
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  background: url(../images/hpcenter/ico_program1.svg) center no-repeat;
+}
+.content .main_program_info .in_program_list .in_item .item_box .ico_pro2 {
+  display: block;
+  margin: 0 auto;
+  width: 160px;
+  height: 120px;
+  background: url(../images/hpcenter/ico_program2.svg) center no-repeat;
+}
+.content .main_program_info .in_program_list .in_item .item_box .ico_pro3 {
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  background: url(../images/hpcenter/ico_program3.svg) center no-repeat;
+}
+.content .main_program_info .in_program_list .in_item .item_box dl {
+  margin-top: 20px;
+}
+.content .main_program_info .in_program_list .in_item .item_box dl dt {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #10a0b4;
+  border-bottom: 1px solid #cecece;
+  padding-bottom: 16px;
+}
+.content .main_program_info .in_program_list .in_item .item_box dl dd {
+  padding-top: 16px;
+  font-size: 1.5rem;
+  line-height: 2.4rem;
+  color: #505050;
+}
+.content .main_program_info .in_program_list .in_item .btn_more {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  left: 0;
+  box-shadow: 5px 5px 10px rgba(15, 74, 99, 0.2);
+  background: #10a0b4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.content .main_program_info .in_program_list .in_item .btn_more span {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #fff;
+}
+.content .main_program_info .in_program_list .in_item .btn_more:after {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin-left: 8px;
+  background: url(../images/hpcenter/ico_more.svg) center no-repeat;
+}
+
+@media (max-width: 767px) {
+  .content .main_program_info {
+    padding: 40px 0 60px;
+  }
+  .content .main_program_info .in_tit {
+    font-size: 2.2rem;
+  }
+  .content .main_program_info .in_program_list {
+    flex-direction: column;
+    gap: 70px;
+    padding: 0 15px;
+  }
+  .content .main_program_info .in_program_list .in_item {
+    width: 100%;
+  }
+}
