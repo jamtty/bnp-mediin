@@ -35,13 +35,13 @@ export default function CertificatePage() {
     fetchCertDocList().then(setCertDocs)
   }, [])
 
-  const findFile = (section: string, title: string, exts: string[]): CertDocItem | undefined =>
+  const findFile = (title: string, exts: string[]): CertDocItem | undefined =>
     certDocs.find(
-      (d) => d.section === section && d.title === title && exts.includes(d.file_ext.toLowerCase())
+      (d) => d.title === title && exts.includes(d.file_ext.toLowerCase())
     )
 
-  const DownloadLink = ({ section, title, exts }: { section: string; title: string; exts: string[] }) => {
-    const doc = findFile(section, title, exts)
+  const DownloadLink = ({ title, exts }: { title: string; exts: string[] }) => {
+    const doc = findFile(title, exts)
     return doc ? (
       <a href={doc.file_url} download={doc.ori_name} className="btn">다운로드</a>
     ) : null
@@ -200,32 +200,32 @@ export default function CertificatePage() {
                   <li>
                     <i className="ico_hangeul"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
                   </li>
                   <li>
                     <i className="ico_word"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
                   </li>
                   <li>
-                    <i className="ico_pptx"></i>
+                    <i className="ico_pdf"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 동의서" exts={['ppt','pptx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['pdf']} />
                   </li>
                   <li>
                     <i className="ico_hangeul"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
                   </li>
                   <li>
                     <i className="ico_word"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
                   </li>
                   <li>
-                    <i className="ico_pptx"></i>
+                    <i className="ico_pdf"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 위임장" exts={['ppt','pptx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['pdf']} />
                   </li>
                 </ul>
               </div>
@@ -589,32 +589,32 @@ export default function CertificatePage() {
                   <li>
                     <i className="ico_hangeul"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
                   </li>
                   <li>
                     <i className="ico_word"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
                   </li>
                   <li>
-                    <i className="ico_pptx"></i>
+                    <i className="ico_pdf"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 동의서" exts={['ppt','pptx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['pdf']} />
                   </li>
                   <li>
                     <i className="ico_hangeul"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
                   </li>
                   <li>
                     <i className="ico_word"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
                   </li>
                   <li>
-                    <i className="ico_pptx"></i>
+                    <i className="ico_pdf"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 위임장" exts={['ppt','pptx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['pdf']} />
                   </li>
                 </ul>
               </div>
@@ -1006,32 +1006,32 @@ export default function CertificatePage() {
                   <li>
                     <i className="ico_hangeul"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
                   </li>
                   <li>
                     <i className="ico_word"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
                   </li>
                   <li>
-                    <i className="ico_pptx"></i>
+                    <i className="ico_pdf"></i>
                     <p>진료기록 열람 및 사본발급 동의서</p>
-                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 동의서" exts={['ppt','pptx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 동의서" exts={['pdf']} />
                   </li>
                   <li>
                     <i className="ico_hangeul"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
                   </li>
                   <li>
                     <i className="ico_word"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
                   </li>
                   <li>
-                    <i className="ico_pptx"></i>
+                    <i className="ico_pdf"></i>
                     <p>진료기록 열람 및 사본발급 위임장</p>
-                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 위임장" exts={['ppt','pptx']} />
+                    <DownloadLink title="진료기록 열람 및 사본발급 위임장" exts={['pdf']} />
                   </li>
                 </ul>
               </div>
@@ -1439,4 +1439,5 @@ export default function CertificatePage() {
     </SubPageLayout>
   )
 }
+
 

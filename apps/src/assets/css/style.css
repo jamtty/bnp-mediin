@@ -5396,6 +5396,13 @@ body.h100 {
     background-size: 100%;
     margin-right: 10px;
   }
+  .document_list .ico_pdf {
+    width: 33px;
+    height: 32px;
+    background: url(../images/ico_pdf.png) center no-repeat;
+    background-size: 100%;
+    margin-right: 10px;
+  }
   .gray_dash_box {
     border: 1px dashed #ccc;
     background: #f8f8f8;
@@ -8197,6 +8204,13 @@ body.h100 {
     background-size: 100%;
     margin-right: 10px;
   }
+  .document_list .ico_pdf {
+    width: 33px;
+    height: 32px;
+    background: url(../images/ico_pdf.png) center no-repeat;
+    background-size: 100%;
+    margin-right: 10px;
+  }
   .gray_dash_box {
     border: 1px dashed #ccc;
     background: #f8f8f8;
@@ -10880,6 +10894,13 @@ body.h100 {
     width: 33px;
     height: 32px;
     background: url(../images/ico_ppt.png) center no-repeat;
+    background-size: 100%;
+    display: block;
+  }
+  .document_list .ico_pdf {
+    width: 33px;
+    height: 32px;
+    background: url(../images/ico_pdf.png) center no-repeat;
     background-size: 100%;
     display: block;
   }
@@ -15271,6 +15292,7 @@ body.h100 {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   min-height: 64px;
   margin-bottom: 12px;
   color: #111827;
@@ -15285,6 +15307,7 @@ body.h100 {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   min-height: 48px;
   margin-bottom: 14px;
   color: #5f6776;

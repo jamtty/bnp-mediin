@@ -1,7 +1,6 @@
 -- 구비서류 파일 관리 테이블
 CREATE TABLE IF NOT EXISTS `cert_doc_tbl` (
   `CD_IDX`       INT          NOT NULL AUTO_INCREMENT COMMENT '파일 IDX',
-  `CD_SECTION`   VARCHAR(50)  NOT NULL DEFAULT ''     COMMENT '섹션 (예: 제증명, 의무기록, 영상자료, 공통)',
   `CD_TITLE`     VARCHAR(200) NOT NULL                COMMENT '파일 제목',
   `CD_ORI_NAME`  VARCHAR(500) NOT NULL DEFAULT ''     COMMENT '원본 파일명',
   `CD_SAVE_NAME` VARCHAR(500) NOT NULL DEFAULT ''     COMMENT '저장 파일명',
@@ -16,5 +15,5 @@ CREATE TABLE IF NOT EXISTS `cert_doc_tbl` (
   `UP_MEM_ID`    VARCHAR(100) NOT NULL DEFAULT ''     COMMENT '수정자',
   `UPDATEDATE`   DATETIME                             COMMENT '수정일시',
   PRIMARY KEY (`CD_IDX`),
-  KEY `idx_section` (`CD_SECTION`, `CD_DEL_YN`, `CD_USE_YN`)
+  KEY `idx_status` (`CD_DEL_YN`, `CD_USE_YN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='구비서류 파일 관리';

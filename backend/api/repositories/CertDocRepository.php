@@ -9,7 +9,6 @@ class CertDocRepository extends BaseRepository
     {
         return $this->select(
             "SELECT CD_IDX        AS id,
-                    CD_SECTION    AS section,
                     CD_TITLE      AS title,
                     CD_ORI_NAME   AS ori_name,
                     CD_SAVE_NAME  AS save_name,
@@ -32,7 +31,6 @@ class CertDocRepository extends BaseRepository
     {
         return $this->select(
             "SELECT CD_IDX        AS id,
-                    CD_SECTION    AS section,
                     CD_TITLE      AS title,
                     CD_ORI_NAME   AS ori_name,
                     CD_SAVE_NAME  AS save_name,
@@ -50,7 +48,6 @@ class CertDocRepository extends BaseRepository
     {
         return $this->selectOne(
             "SELECT CD_IDX        AS id,
-                    CD_SECTION    AS section,
                     CD_TITLE      AS title,
                     CD_ORI_NAME   AS ori_name,
                     CD_SAVE_NAME  AS save_name,
@@ -73,24 +70,27 @@ class CertDocRepository extends BaseRepository
     {
         $this->execute(
             "INSERT INTO cert_doc_tbl
-             (CD_SECTION, CD_TITLE, CD_SORT_ORDER, CD_USE_YN, IN_MEM_ID, INPUTDATE)
-             VALUES (:section, :title, :sort_order, :use_yn, :created_by, NOW())",
+             (CD_TITLE, CD_ORI_NAME, CD_SAVE_NAME, CD_FILE_PATH, CD_FILE_SIZE, CD_FILE_EXT, CD_SORT_ORDER, CD_USE_YN, IN_MEM_ID, INPUTDATE)
+             VALUES (:title, :ori_name, :save_name, :file_path, :file_size, :file_ext, :sort_order, :use_yn, :created_by, NOW())",
             [
-                ':section'    => $data['section'],
                 ':title'      => $data['title'],
+                ':ori_name'   => $data['ori_name']  ?? '',
+                ':save_name'  => $data['save_name'] ?? '',
+                ':file_path'  => $data['file_path'] ?? '',
+                ':file_size'  => $data['file_size'] ?? 0,
+                ':file_ext'   => $data['file_ext']  ?? '',
                 ':sort_order' => $data['sort_order'] ?? 0,
                 ':use_yn'     => $data['use_yn'] ?? 'Y',
                 ':created_by' => $data['created_by'],
             ]
         );
-        return (int)$this->lastInsertId();
+        return (int)$this->db->lastInsertId();
     }
 
     public function update(int $id, array $data): bool
     {
         return $this->execute(
             "UPDATE cert_doc_tbl SET
-                CD_SECTION    = :section,
                 CD_TITLE      = :title,
                 CD_SORT_ORDER = :sort_order,
                 CD_USE_YN     = :use_yn,
@@ -98,7 +98,6 @@ class CertDocRepository extends BaseRepository
                 UPDATEDATE    = NOW()
              WHERE CD_IDX = :id",
             [
-                ':section'    => $data['section'],
                 ':title'      => $data['title'],
                 ':sort_order' => $data['sort_order'] ?? 0,
                 ':use_yn'     => $data['use_yn'],

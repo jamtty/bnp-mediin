@@ -633,6 +633,11 @@ select.adm_btn_secondary {
 .adm_btn_edit:hover {
   background: #eff6ff;
 }
+.adm_btn_edit:disabled {
+  color: #93c5fd;
+  border-color: #93c5fd;
+  cursor: not-allowed;
+}
 .adm_btn_delete {
   height: 3rem;
   padding: 0 1rem;
@@ -901,6 +906,7 @@ select.adm_btn_secondary {
 .adm_view_content {
   line-height: 1.8;
   word-break: break-word;
+  white-space: pre-wrap;
 }
 .adm_view_content img {
   max-width: 100%;

@@ -41,26 +41,32 @@ class CertDocController
         if (!$payload) { Response::error('인증이 필요합니다.', 401); return; }
 
         $loginId   = Token::getLoginIdFromPayload($payload);
-        $section   = trim((string)($request->body['section'] ?? ''));
         $title     = trim((string)($request->body['title'] ?? ''));
         $useYn     = in_array($request->body['use_yn'] ?? 'Y', ['Y', 'N'], true) ? $request->body['use_yn'] : 'Y';
         $sortOrder = (int)($request->body['sort_order'] ?? 0);
 
         if ($title === '') { Response::error('제목은 필수입니다.'); return; }
 
+        // 파일 먼저 처리
+        try {
+            $uploaded = FileUploader::process('file', 'cert', self::MAX_FILE_SIZE);
+        } catch (RuntimeException $e) {
+            Response::error($e->getMessage());
+            return;
+        }
+        $f = !empty($uploaded) ? $uploaded[0] : [];
+
         $id = $this->service->create([
-            'section'    => $section,
             'title'      => $title,
             'sort_order' => $sortOrder,
             'use_yn'     => $useYn,
             'created_by' => $loginId,
+            'ori_name'   => $f['ori_name']  ?? '',
+            'save_name'  => $f['save_name'] ?? '',
+            'file_path'  => $f['file_path'] ?? '',
+            'file_size'  => $f['file_size'] ?? 0,
+            'file_ext'   => $f['file_ext']  ?? '',
         ]);
-
-        $uploaded = FileUploader::process('file', 'cert', self::MAX_FILE_SIZE);
-        if (!empty($uploaded)) {
-            $f = $uploaded[0];
-            $this->service->updateFile($id, $f['ori_name'], $f['save_name'], $f['file_path'], (int)$f['file_size'], $f['file_ext'], $loginId);
-        }
 
         Response::json(true, ['id' => $id], '등록되었습니다.');
     }
@@ -88,7 +94,6 @@ class CertDocController
         if (!$item) { Response::error('데이터를 찾을 수 없습니다.', 404); return; }
 
         $loginId   = Token::getLoginIdFromPayload($payload);
-        $section   = trim((string)($request->body['section'] ?? $item['section']));
         $title     = trim((string)($request->body['title'] ?? $item['title']));
         $useYn     = in_array($request->body['use_yn'] ?? '', ['Y', 'N'], true) ? $request->body['use_yn'] : $item['use_yn'];
         $sortOrder = isset($request->body['sort_order']) ? (int)$request->body['sort_order'] : (int)$item['sort_order'];
@@ -96,14 +101,18 @@ class CertDocController
         if ($title === '') { Response::error('제목은 필수입니다.'); return; }
 
         $this->service->update($id, [
-            'section'    => $section,
             'title'      => $title,
             'sort_order' => $sortOrder,
             'use_yn'     => $useYn,
             'updated_by' => $loginId,
         ]);
 
-        $uploaded = FileUploader::process('file', 'cert', self::MAX_FILE_SIZE);
+        try {
+            $uploaded = FileUploader::process('file', 'cert', self::MAX_FILE_SIZE);
+        } catch (RuntimeException $e) {
+            Response::error($e->getMessage());
+            return;
+        }
         if (!empty($uploaded)) {
             $f = $uploaded[0];
             $this->service->updateFile($id, $f['ori_name'], $f['save_name'], $f['file_path'], (int)$f['file_size'], $f['file_ext'], $loginId);

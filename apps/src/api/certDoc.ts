@@ -2,7 +2,6 @@ import apiClient from './axios'
 
 export interface CertDocItem {
   id: number
-  section: string
   title: string
   ori_name: string
   save_name: string
@@ -47,6 +46,7 @@ export const fetchCertDocDetail = async (id: number): Promise<CertDocItem> => {
 export const createCertDoc = async (formData: FormData): Promise<number> => {
   const { data } = await apiClient.post('/api/cert-doc', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 60000,
   })
   if (!data.success) throw new Error(data.message || '등록에 실패했습니다.')
   return data.data.id
@@ -56,6 +56,7 @@ export const createCertDoc = async (formData: FormData): Promise<number> => {
 export const updateCertDoc = async (id: number, formData: FormData): Promise<void> => {
   const { data } = await apiClient.post(`/api/cert-doc/${id}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 60000,
   })
   if (!data.success) throw new Error(data.message || '수정에 실패했습니다.')
 }
