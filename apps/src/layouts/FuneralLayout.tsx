@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from '@/components/ScrollToTop'
 import funeralCss from '@/assets/css/funeral.css?inline'
 
 export default function FuneralLayout() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const style = document.createElement('style')
     style.setAttribute('data-layout', 'funeral')
     style.textContent = funeralCss

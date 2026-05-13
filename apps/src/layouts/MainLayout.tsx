@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from '@/components/ScrollToTop'
 import styleCss from '@/assets/css/style.css?inline'
 
 export default function MainLayout() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const style = document.createElement('style')
     style.setAttribute('data-layout', 'main')
     style.textContent = styleCss
