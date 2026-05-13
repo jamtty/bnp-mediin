@@ -1,13 +1,16 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from '@/components/ScrollToTop'
-import '@/assets/css/funeral.css'
+import funeralCss from '@/assets/css/funeral.css?inline'
 
 export default function FuneralLayout() {
   useEffect(() => {
-    document.body.classList.add('funeral-site')
+    const style = document.createElement('style')
+    style.setAttribute('data-layout', 'funeral')
+    style.textContent = funeralCss
+    document.head.appendChild(style)
     return () => {
-      document.body.classList.remove('funeral-site')
+      document.querySelector('style[data-layout="funeral"]')?.remove()
     }
   }, [])
 

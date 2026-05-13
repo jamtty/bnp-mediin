@@ -1,13 +1,16 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from '@/components/ScrollToTop'
-import '@/assets/css/hpcenter.css'
+import hpcenterCss from '@/assets/css/hpcenter.css?inline'
 
 export default function WellLayout() {
   useEffect(() => {
-    document.body.classList.add('well-site')
+    const style = document.createElement('style')
+    style.setAttribute('data-layout', 'well')
+    style.textContent = hpcenterCss
+    document.head.appendChild(style)
     return () => {
-      document.body.classList.remove('well-site')
+      document.querySelector('style[data-layout="well"]')?.remove()
     }
   }, [])
 
