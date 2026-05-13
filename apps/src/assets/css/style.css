@@ -8409,7 +8409,33 @@ body.h100 {
   .medical_staff_list .medical_staff button {
     display: flex;
     width: 100%;
-    padding: 30px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #0272b3;
+    margin-top: 24px;
+    padding: 0 20px;
+  }
+  .medical_staff_list .medical_staff button span {
+    font-size: 18px;
+    font-weight: 500;
+    color: #0272b3;
+  }
+  .medical_staff_list .medical_staff button .ico_calendar {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(../images/hpcenter/ico_cal_off.svg) center no-repeat;
+    margin-right: 10px;
+  }
+  .medical_staff_list .medical_staff button:hover {
+    background: #0272b3;
+  }
+  .medical_staff_list .medical_staff button:hover span {
+    color: #fff;
+  }
+  .medical_staff_list .medical_staff button:hover .ico_calendar {
+    background: url(../images/hpcenter/ico_cal_on.svg) center no-repeat;
   }
   .medical_staff_list .medical_staff .ms_thumb {
     width: 150px;
@@ -11105,11 +11131,40 @@ body.h100 {
     margin-top: 20px;
   }
   .medical_staff_list .medical_staff button {
+    display: flex;
     width: 100%;
-    padding: 15px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #0272b3;
+    margin-top: 24px;
+    padding: 0 15px;
+  }
+  .medical_staff_list .medical_staff button span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #0272b3;
+  }
+  .medical_staff_list .medical_staff button .ico_calendar {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url(../images/hpcenter/ico_cal_off.svg) center no-repeat;
+    background-size: 100%;
+    margin-right: 8px;
+  }
+  .medical_staff_list .medical_staff button:hover {
+    background: #0272b3;
+  }
+  .medical_staff_list .medical_staff button:hover span {
+    color: #fff;
+  }
+  .medical_staff_list .medical_staff button:hover .ico_calendar {
+    background: url(../images/hpcenter/ico_cal_on.svg) center no-repeat;
+    background-size: 100%;
   }
   .medical_staff_list .medical_staff .ms_thumb {
-    width: 150px;
+    width: 100%;
     overflow: hidden;
     margin: 0 auto;
   }
@@ -11121,6 +11176,7 @@ body.h100 {
   }
   .medical_staff_list .medical_staff .ms_cont {
     margin-top: 10px;
+    padding:10px;
   }
   .medical_staff_list .medical_staff .ms_cont .ms_tit {
     padding: 5px 0 15px;
