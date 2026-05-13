@@ -118,6 +118,15 @@ $router->get('/doctor/{id}',                         [DoctorController::class, '
 $router->post('/doctor/{id}',                        [DoctorController::class, 'update']);
 $router->post('/doctor/{id}/use',                    [DoctorController::class, 'updateUseYn']);
 $router->post('/doctor/{id}/sort',                   [DoctorController::class, 'updateSortOrder']);
+
+// 구비서류
+$router->get('/cert-doc',                 [CertDocController::class, 'listPublic']);
+$router->get('/cert-doc/admin',           [CertDocController::class, 'index']);
+$router->post('/cert-doc',                [CertDocController::class, 'store']);
+$router->get('/cert-doc/{id}',            [CertDocController::class, 'show']);
+$router->post('/cert-doc/{id}',           [CertDocController::class, 'update']);
+$router->post('/cert-doc/{id}/delete',    [CertDocController::class, 'destroy']);
+$router->post('/cert-doc/{id}/clear',     [CertDocController::class, 'clearFile']);
 $router->post('/doctor/{id}/delete',                 [DoctorController::class, 'destroy']);
 
 // 건강증진센터 파일 관리
