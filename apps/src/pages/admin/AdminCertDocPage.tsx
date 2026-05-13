@@ -6,13 +6,212 @@ import {
   createCertDoc,
   updateCertDoc,
   deleteCertDoc,
-  clearCertDocFile,
   type CertDocItem,
 } from '@/api/certDoc'
 
-const SECTIONS = ['공통', '제증명', '의무기록', '영상자료']
+const SECTIONS = ['제증명', '의무기록', '영상자료']
 
-type FormMode = 'create' | 'edit'
+const TEMPLATE_ITEMS = [
+  { title: '진료기록 열람 및 사본발급 동의서', format: 'HWP',  icon: 'ico_hangeul', exts: ['hwp', 'hwpx'] },
+  { title: '진료기록 열람 및 사본발급 동의서', format: 'Word', icon: 'ico_word',    exts: ['doc', 'docx'] },
+  { title: '진료기록 열람 및 사본발급 동의서', format: 'PPT',  icon: 'ico_pptx',   exts: ['ppt', 'pptx'] },
+  { title: '진료기록 열람 및 사본발급 위임장', format: 'HWP',  icon: 'ico_hangeul', exts: ['hwp', 'hwpx'] },
+  { title: '진료기록 열람 및 사본발급 위임장', format: 'Word', icon: 'ico_word',    exts: ['doc', 'docx'] },
+  { title: '진료기록 열람 및 사본발급 위임장', format: 'PPT',  icon: 'ico_pptx',   exts: ['ppt', 'pptx'] },
+]
+
+export default function AdminCertDocPage() {
+  const [items, setItems] = useState<CertDocItem[]>([])
+  const [loading, setLoading] = useState(false)
+  const [activeSection, setActiveSection] = useState(SECTIONS[0])
+  const [uploading, setUploading] = useState<string | null>(null)
+  const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({})
+
+  const load = async () => {
+    setLoading(true)
+    try { setItems(await fetchCertDocAdminList()) }
+    catch (err) { alert(err instanceof Error ? err.message : '불러오기 실패') }
+    finally { setLoading(false) }
+  }
+
+  useEffect(() => { load() }, [])
+
+  const findRecord = (section: string, item: typeof TEMPLATE_ITEMS[0]): CertDocItem | undefined =>
+    items.find(
+      (d) => d.section === section && d.title === item.title && item.exts.includes(d.file_ext.toLowerCase())
+    )
+
+  const itemKey = (section: string, item: typeof TEMPLATE_ITEMS[0]) =>
+    `${section}::${item.title}::${item.format}`
+
+  const handleUpload = async (section: string, item: typeof TEMPLATE_ITEMS[0], file: File) => {
+    const key = itemKey(section, item)
+    setUploading(key)
+    try {
+      const fd = new FormData()
+      fd.append('section', section)
+      fd.append('title', item.title)
+      fd.append('use_yn', 'Y')
+      fd.append('sort_order', '0')
+      fd.append('file', file)
+
+      const existing = findRecord(section, item)
+      if (existing) {
+        await updateCertDoc(existing.id, fd)
+      } else {
+        await createCertDoc(fd)
+      }
+      await load()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '업로드 실패')
+    } finally {
+      setUploading(null)
+    }
+  }
+
+  const handleDelete = async (section: string, item: typeof TEMPLATE_ITEMS[0]) => {
+    const record = findRecord(section, item)
+    if (!record) return
+    if (!confirm(`"${record.ori_name}" 파일을 삭제하시겠습니까?`)) return
+    try {
+      await deleteCertDoc(record.id)
+      await load()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '삭제 실패')
+    }
+  }
+
+  const formatBytes = (bytes: number) => {
+    if (!bytes) return '-'
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`
+  }
+
+  return (
+    <div className="adm_wrap">
+      <AdminSidebar />
+      <div className="adm_content">
+        <AdminHeader pageTitle="구비서류 관리" />
+        <main className="adm_main">
+          <section className="adm_section">
+            {/* 섹션 탭 */}
+            <div className="adm_tab_area" style={{ display: 'flex', gap: '0.8rem', marginBottom: '2rem' }}>
+              {SECTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  className={`adm_tab_btn${activeSection === s ? ' active' : ''}`}
+                  style={{
+                    padding: '0.7rem 2rem',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '0.4rem',
+                    background: activeSection === s ? '#1a56db' : '#fff',
+                    color: activeSection === s ? '#fff' : '#374151',
+                    fontWeight: activeSection === s ? 700 : 400,
+                    cursor: 'pointer',
+                    fontSize: '1.3rem',
+                  }}
+                  onClick={() => setActiveSection(s)}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+
+            {/* 안내 */}
+            <p style={{ color: '#6b7280', fontSize: '1.2rem', marginBottom: '1.6rem' }}>
+              각 항목의 파일을 업로드하면 구비서류/발급안내 페이지에서 다운로드 버튼이 활성화됩니다.
+              파일 형식(HWP·Word·PPT)에 맞는 파일을 업로드해 주세요.
+            </p>
+
+            {loading ? (
+              <p style={{ padding: '2rem', textAlign: 'center' }}>불러오는 중...</p>
+            ) : (
+              <table className="adm_table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '80px' }}>형식</th>
+                    <th>문서 제목</th>
+                    <th style={{ width: '220px' }}>등록된 파일</th>
+                    <th style={{ width: '90px' }}>파일크기</th>
+                    <th style={{ width: '160px' }}>관리</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {TEMPLATE_ITEMS.map((item) => {
+                    const record = findRecord(activeSection, item)
+                    const key = itemKey(activeSection, item)
+                    const isUploading = uploading === key
+
+                    return (
+                      <tr key={key}>
+                        <td style={{ textAlign: 'center' }}>
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              padding: '0.3rem 0.8rem',
+                              borderRadius: '0.3rem',
+                              fontSize: '1.1rem',
+                              fontWeight: 700,
+                              background: item.format === 'HWP' ? '#e0f2fe' : item.format === 'Word' ? '#dbeafe' : '#fce7f3',
+                              color: item.format === 'HWP' ? '#0369a1' : item.format === 'Word' ? '#1d4ed8' : '#be185d',
+                            }}
+                          >
+                            {item.format}
+                          </span>
+                        </td>
+                        <td>{item.title}</td>
+                        <td style={{ fontSize: '1.2rem', color: record ? '#111827' : '#9ca3af' }}>
+                          {record?.ori_name || '파일 없음'}
+                        </td>
+                        <td style={{ textAlign: 'center', color: '#6b7280', fontSize: '1.2rem' }}>
+                          {record ? formatBytes(record.file_size) : '-'}
+                        </td>
+                        <td style={{ textAlign: 'center' }}>
+                          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center' }}>
+                            <input
+                              type="file"
+                              accept=".hwp,.hwpx,.doc,.docx,.ppt,.pptx,.pdf"
+                              style={{ display: 'none' }}
+                              ref={(el) => { fileInputRefs.current[key] = el }}
+                              onChange={(e) => {
+                                const f = e.target.files?.[0]
+                                if (f) handleUpload(activeSection, item, f)
+                                e.target.value = ''
+                              }}
+                            />
+                            <button
+                              type="button"
+                              className="adm_btn adm_btn_sm adm_btn_blue"
+                              disabled={isUploading}
+                              onClick={() => fileInputRefs.current[key]?.click()}
+                            >
+                              {isUploading ? '업로드중...' : record ? '교체' : '업로드'}
+                            </button>
+                            {record && (
+                              <button
+                                type="button"
+                                className="adm_btn adm_btn_sm adm_btn_red"
+                                onClick={() => handleDelete(activeSection, item)}
+                              >
+                                삭제
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            )}
+          </section>
+        </main>
+      </div>
+    </div>
+  )
+}
+
 
 interface FormState {
   mode: FormMode

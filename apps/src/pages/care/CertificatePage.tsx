@@ -35,37 +35,16 @@ export default function CertificatePage() {
     fetchCertDocList().then(setCertDocs)
   }, [])
 
-  const getDocsBySection = (section: string) =>
-    certDocs.filter((d) => d.section === section || d.section === '')
-
-  const extToIcon = (ext: string) => {
-    switch (ext.toLowerCase()) {
-      case 'hwp': case 'hwpx': return 'ico_hangeul'
-      case 'doc': case 'docx': return 'ico_word'
-      case 'ppt': case 'pptx': return 'ico_pptx'
-      case 'xls': case 'xlsx': return 'ico_xlsx'
-      default: return 'ico_etc'
-    }
-  }
-
-  const renderDocList = (section: string) => {
-    const docs = getDocsBySection(section)
-    if (docs.length === 0) return null
-    return (
-      <div className="document_list">
-        <ul>
-          {docs.map((doc) => (
-            <li key={doc.id}>
-              <i className={extToIcon(doc.file_ext)}></i>
-              <p>{doc.title}</p>
-              <a href={doc.file_url} download={doc.ori_name} className="btn">
-                다운로드
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+  const findFile = (section: string, title: string, exts: string[]): CertDocItem | undefined =>
+    certDocs.find(
+      (d) => d.section === section && d.title === title && exts.includes(d.file_ext.toLowerCase())
     )
+
+  const DownloadLink = ({ section, title, exts }: { section: string; title: string; exts: string[] }) => {
+    const doc = findFile(section, title, exts)
+    return doc ? (
+      <a href={doc.file_url} download={doc.ori_name} className="btn">다운로드</a>
+    ) : null
   }
 
   useEffect(() => {
@@ -216,7 +195,40 @@ export default function CertificatePage() {
             >
               {/* <p className="info_alert"><span>의료법 제17조(진단서 등)에 의거하여, 진단서의 경우, 진료기록부등의 경우와 달리 환자의 의식이 있는
 										경우에는 대리인에게 위임이 불가합니다.</span></p>*/}
-              {renderDocList('제증명')}
+              <div className="document_list">
+                <ul>
+                  <li>
+                    <i className="ico_hangeul"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
+                  </li>
+                  <li>
+                    <i className="ico_word"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
+                  </li>
+                  <li>
+                    <i className="ico_pptx"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 동의서" exts={['ppt','pptx']} />
+                  </li>
+                  <li>
+                    <i className="ico_hangeul"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
+                  </li>
+                  <li>
+                    <i className="ico_word"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
+                  </li>
+                  <li>
+                    <i className="ico_pptx"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="제증명" title="진료기록 열람 및 사본발급 위임장" exts={['ppt','pptx']} />
+                  </li>
+                </ul>
+              </div>
               <div className="h_table">
                 <p className="table_label">
                   환자가 사망하거나, 의식이 없는 경우 진단서 발급 시 구비서류
@@ -572,7 +584,40 @@ export default function CertificatePage() {
                   사본발급이 가능합니다.
                 </span>
               </p>
-              {renderDocList('의무기록')}
+              <div className="document_list">
+                <ul>
+                  <li>
+                    <i className="ico_hangeul"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
+                  </li>
+                  <li>
+                    <i className="ico_word"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
+                  </li>
+                  <li>
+                    <i className="ico_pptx"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 동의서" exts={['ppt','pptx']} />
+                  </li>
+                  <li>
+                    <i className="ico_hangeul"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
+                  </li>
+                  <li>
+                    <i className="ico_word"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
+                  </li>
+                  <li>
+                    <i className="ico_pptx"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="의무기록" title="진료기록 열람 및 사본발급 위임장" exts={['ppt','pptx']} />
+                  </li>
+                </ul>
+              </div>
 
               <div className="h_table">
                 <p className="table_label">의료법 시행규칙 제13조의3 (기록 열람 등의 요건)</p>
@@ -956,7 +1001,40 @@ export default function CertificatePage() {
                   위해 사본발급이 불가능합니다.{' '}
                 </span>
               </p>
-              {renderDocList('영상자료')}
+              <div className="document_list">
+                <ul>
+                  <li>
+                    <i className="ico_hangeul"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 동의서" exts={['hwp','hwpx']} />
+                  </li>
+                  <li>
+                    <i className="ico_word"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 동의서" exts={['doc','docx']} />
+                  </li>
+                  <li>
+                    <i className="ico_pptx"></i>
+                    <p>진료기록 열람 및 사본발급 동의서</p>
+                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 동의서" exts={['ppt','pptx']} />
+                  </li>
+                  <li>
+                    <i className="ico_hangeul"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 위임장" exts={['hwp','hwpx']} />
+                  </li>
+                  <li>
+                    <i className="ico_word"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 위임장" exts={['doc','docx']} />
+                  </li>
+                  <li>
+                    <i className="ico_pptx"></i>
+                    <p>진료기록 열람 및 사본발급 위임장</p>
+                    <DownloadLink section="영상자료" title="진료기록 열람 및 사본발급 위임장" exts={['ppt','pptx']} />
+                  </li>
+                </ul>
+              </div>
 
               <div className="h_table">
                 <p className="table_label">영상자료 복사 시 구비서류 안내</p>
