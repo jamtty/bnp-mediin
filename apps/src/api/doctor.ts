@@ -33,13 +33,9 @@ export const DEPT_GROUPS: Record<string, Array<{ code: string; name: string }>> 
 }
 
 // 코드 → 이름 플랫 맵
-export const DEPT_CODE_MAP: Record<string, string> = {
-  ...Object.fromEntries(
-    Object.values(DEPT_GROUPS).flatMap((depts) => depts.map(({ code, name }) => [code, name]))
-  ),
-  // 레거시 코드 호환 (DB 데이터 마이그레이션 전까지 유지)
-  checkup: '건강증진센터',
-}
+export const DEPT_CODE_MAP: Record<string, string> = Object.fromEntries(
+  Object.values(DEPT_GROUPS).flatMap((depts) => depts.map(({ code, name }) => [code, name]))
+)
 
 export type ScheduleRow = {
   mon: string; tue: string; wed: string; thu: string; fri: string
