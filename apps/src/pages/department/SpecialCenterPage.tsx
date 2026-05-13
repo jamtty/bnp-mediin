@@ -8,7 +8,7 @@ const centers = [
   { code: 'spine-center',      icon: 'ico_dpt29', name: '척추센터' },
   { code: 'joint',             icon: 'ico_dpt30', name: '관절센터' },
   { code: 'arthroplasty-center', icon: 'ico_dpt34', name: '인공관절센터' },
-  { code: 'checkup',          icon: 'ico_dpt27', name: '검진센터' },
+  { code: 'hpcenter',         icon: 'ico_dpt27', name: '건강증진센터' },
 ]
 
 export default function SpecialCenterPage() {

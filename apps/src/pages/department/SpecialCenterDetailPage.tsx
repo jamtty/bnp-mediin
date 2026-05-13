@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Navigate } from 'react-router-dom'
 import SubPageLayout from '../../components/SubPageLayout'
 import { lnbItems } from './_lnb'
 import { fetchDoctorsByDept, type DoctorItem } from '../../api/doctor'
@@ -52,7 +52,7 @@ const centerNames: Record<string, string> = {
   'spine-center':      '척추센터',
   joint:               '관절센터',
   'arthroplasty-center': '인공관절센터',
-  checkup:             '검진센터',
+  hpcenter:            '건강증진센터',
 }
 
 const centerThirdItems = Object.entries(centerNames).map(([code, name]) => ({
@@ -66,7 +66,6 @@ export default function SpecialCenterDetailPage() {
   const [doctors, setDoctors] = useState<DoctorItem[]>([])
   const [loadingDocs, setLoadingDocs] = useState(false)
   const [scheduleDoctor, setScheduleDoctor] = useState<DoctorItem | null>(null)
-  const centerName = code ? centerNames[code] : undefined
 
   useEffect(() => {
     setActiveTab('tab01')
@@ -74,13 +73,20 @@ export default function SpecialCenterDetailPage() {
   }, [code])
 
   useEffect(() => {
-    if (!code) return
+    if (!code || code === 'checkup') return
     setLoadingDocs(true)
     fetchDoctorsByDept(code)
       .then(setDoctors)
       .catch(() => {})
       .finally(() => setLoadingDocs(false))
   }, [code])
+
+  // 구 URL 호환: /department/special/checkup → /department/special/hpcenter
+  if (code === 'checkup') {
+    return <Navigate to="/department/special/hpcenter" replace />
+  }
+
+  const centerName = code ? centerNames[code] : undefined
 
   if (!centerName) {
     return (
@@ -655,8 +661,8 @@ export default function SpecialCenterDetailPage() {
         </div>
       )}
 
-      {/* ===== 검진센터 ===== */}
-      {code === 'checkup' && (
+      {/* ===== 건강증진센터 ===== */}
+      {code === 'hpcenter' && (
         <div className="con_area">
           <div className="tab_area">
             <button
@@ -678,13 +684,13 @@ export default function SpecialCenterDetailPage() {
           {/* 탭01: 진료과 소개 */}
           <div className={`cont_area${activeTab === 'tab01' ? ' active_cont' : ''}`} id="tab01">
             <div className="emergency_sec">
-              <p className="info_tit">검진센터</p>
+              <p className="info_tit">건강증진센터</p>
               <p className="info_disc">
                 메디인병원 건강증진센터는 편안하고 쾌적한 환경 속에 최신의 장비를 도입하여 환자분들의 다양한 요구를 만족시킬 수 있는 검진 프로그램을 고객님들께 실시하고 있습니다.
               </p>
             </div>
             <div className="emergency_sec">
-              <p className="info_tit">검진센터 진료분야</p>
+              <p className="info_tit">건강증진센터 진료분야</p>
               <ul className="info_disc dot_list3">
                 <li>국민건강보험공단 건강검진</li>
                 <li>종합검진</li>

@@ -21,7 +21,6 @@ export const DEPT_GROUPS: Record<string, Array<{ code: string; name: string }>> 
     { code: 'radiology',        name: '영상의학과' },
     { code: 'emergency',        name: '응급의학과' },
     { code: 'criticalcare',     name: '중환자의학과' },
-    { code: 'hpcenter',         name: '건강증진센터' },
   ],
   '클리닉소개': [
     { code: 'painclinic',    name: '신경통증클리닉' },
@@ -29,14 +28,18 @@ export const DEPT_GROUPS: Record<string, Array<{ code: string; name: string }>> 
   '특수센터소개': [
     { code: 'spine-center',        name: '척추센터' },
     { code: 'arthroplasty-center', name: '인공관절센터' },
-    { code: 'checkup',             name: '검진센터' },
+    { code: 'hpcenter',             name: '건강증진센터' },
   ],
 }
 
 // 코드 → 이름 플랫 맵
-export const DEPT_CODE_MAP: Record<string, string> = Object.fromEntries(
-  Object.values(DEPT_GROUPS).flatMap((depts) => depts.map(({ code, name }) => [code, name]))
-)
+export const DEPT_CODE_MAP: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.values(DEPT_GROUPS).flatMap((depts) => depts.map(({ code, name }) => [code, name]))
+  ),
+  // 레거시 코드 호환 (DB 데이터 마이그레이션 전까지 유지)
+  checkup: '건강증진센터',
+}
 
 export type ScheduleRow = {
   mon: string; tue: string; wed: string; thu: string; fri: string

@@ -181,8 +181,7 @@ export default function AdminDoctorPage() {
                     <th style={{ width: '5%' }}>번호</th>
                     <th style={{ width: '10%' }}>사진</th>
                     <th>이름</th>
-                    <th style={{ width: '12%' }}>진료과</th>
-                    <th style={{ width: '12%' }}>진료과목</th>
+                    <th style={{ width: '15%' }}>진료과</th>
                     <th style={{ width: '7%' }}>표시</th>
                     <th style={{ width: '8%' }}>순서</th>
                     <th style={{ width: '10%' }}>관리</th>
@@ -190,9 +189,9 @@ export default function AdminDoctorPage() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={9} className="adm_table_empty">로딩중...</td></tr>
+                    <tr><td colSpan={8} className="adm_table_empty">로딩중...</td></tr>
                   ) : items.length === 0 ? (
-                    <tr><td colSpan={9} className="adm_table_empty">등록된 의료진이 없습니다.</td></tr>
+                    <tr><td colSpan={8} className="adm_table_empty">등록된 의료진이 없습니다.</td></tr>
                   ) : (
                     items.map((item, idx) => {
                       const isFirstInDept = items.slice(0, idx).every(i => i.dept_code !== item.dept_code)
@@ -232,7 +231,6 @@ export default function AdminDoctorPage() {
                             : DEPT_CODE_MAP[item.dept_code] ?? item.dept_code
                           )}
                         </td>
-                        <td className="adm_td_center">{item.doc_major ?? '-'}</td>
                         <td className="adm_td_center">
                           <button
                             type="button"

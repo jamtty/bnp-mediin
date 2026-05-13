@@ -31,7 +31,7 @@ function DoctorCard({ doctor, onShowSchedule }: { doctor: DoctorItem; onShowSche
         </p>
         {(() => {
           const deptCodes = doctor.dept_codes?.length ? doctor.dept_codes : [doctor.dept_code].filter(Boolean)
-          const deptNames = deptCodes.map((c) => DEPT_CODE_MAP[c] ?? c).filter(Boolean)
+          const deptNames = [...new Set(deptCodes.map((c) => DEPT_CODE_MAP[c] ?? c).filter(Boolean))]
           return deptNames.length > 0 ? (
             <p className="doctor_card_dept">{deptNames.join(' · ')}</p>
           ) : null
