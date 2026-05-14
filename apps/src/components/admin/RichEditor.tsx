@@ -336,7 +336,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
     <div
       className={`rich_editor_outer${isDraggingOver ? ' is-dragover' : ''}`}
       onDragOver={(e) => { e.preventDefault(); setIsDraggingOver(true) }}
-      onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsDraggingOver(false) }}
+      onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as globalThis.Node)) setIsDraggingOver(false) }}
       onDrop={handleDrop}
     >
       {/* ── 툴바 ── */}
