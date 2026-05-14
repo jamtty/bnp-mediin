@@ -47,8 +47,13 @@ const stripHtml = (value: string | null | undefined): string =>
   (value ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
 
 const extractFirstImageUrl = (value: string | null | undefined): string | null => {
-  const match = (value ?? '').match(/<img[^>]+src=["']([^"']+)["']/i)
-  return match ? toAbsUrl(match[1]) : null
+  const html = value ?? ''
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i)
+  if (imgMatch) return toAbsUrl(imgMatch[1])
+  // <iframe> YouTube embed에서 썸네일 추출
+  const iframeMatch = html.match(/<iframe[^>]+src=["']([^"']*youtube\.com\/embed\/([a-zA-Z0-9_-]{11})[^"']*)["']/i)
+  if (iframeMatch) return `https://i.ytimg.com/vi/${iframeMatch[2]}/hqdefault.jpg`
+  return null
 }
 
 export default function HomePage() {
