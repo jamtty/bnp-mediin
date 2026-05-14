@@ -4,6 +4,19 @@
   border-radius: 0.6rem;
   overflow: visible;
 }
+.rich_editor_outer.is-dragover {
+  border: 2px dashed #0272b3;
+  background: #f0f8ff;
+}
+.rich_editor_outer.is-dragover::after {
+  content: '이미지를 여기에 놓으세요';
+  display: block;
+  text-align: center;
+  padding: 12px;
+  color: #0272b3;
+  font-size: 14px;
+  pointer-events: none;
+}
 
 /* 툴바 */
 .te-toolbar {

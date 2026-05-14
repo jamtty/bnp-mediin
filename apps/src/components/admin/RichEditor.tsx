@@ -135,6 +135,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
   const [tableRows, setTableRows] = useState('3')
   const [tableCols, setTableCols] = useState('3')
   const [showColorPicker, setShowColorPicker] = useState(false)
+  const [isDraggingOver, setIsDraggingOver] = useState(false)
   const isInternalChange = useRef(false)
 
   const editor = useEditor({
@@ -231,6 +232,27 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
     }
   }, [editor])
 
+  // 드래그앤드롭 이미지 업로드
+  const handleDrop = useCallback(async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDraggingOver(false)
+    if (!editor) return
+    const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/'))
+    if (files.length === 0) return
+    const errors: string[] = []
+    for (const file of files) {
+      try {
+        const url = await uploadEditorImage(file)
+        editor.chain().focus().setImage({ src: url }).run()
+      } catch (err) {
+        errors.push(`${file.name}: ${err instanceof Error ? err.message : '업로드 실패'}`)
+      }
+    }
+    if (errors.length > 0) {
+      alert('일부 이미지 업로드에 실패했습니다.\n' + errors.join('\n'))
+    }
+  }, [editor])
+
   // 유튜브 삽입
   const handleYoutube = useCallback(() => {
     if (!editor) return
@@ -311,7 +333,12 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
   )
 
   return (
-    <div className="rich_editor_outer">
+    <div
+      className={`rich_editor_outer${isDraggingOver ? ' is-dragover' : ''}`}
+      onDragOver={(e) => { e.preventDefault(); setIsDraggingOver(true) }}
+      onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsDraggingOver(false) }}
+      onDrop={handleDrop}
+    >
       {/* ── 툴바 ── */}
       <div className="te-toolbar">
         {/* 헤딩 */}
