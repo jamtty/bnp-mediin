@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { useEditor, EditorContent, Extension } from '@tiptap/react'
+import { useEditor, EditorContent, Extension, Node, mergeAttributes } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
 import { TextStyle } from '@tiptap/extension-text-style'
@@ -15,6 +15,46 @@ import TableHeader from '@tiptap/extension-table-header'
 import HardBreak from '@tiptap/extension-hard-break'
 import { uploadEditorImage } from '@/api/upload'
 import { resolveContentUrls } from '@/utils/uploadUrl'
+
+// Iframe 노드 — YouTube 등 <iframe> 태그 보존
+const Iframe = Node.create({
+  name: 'iframe',
+  group: 'block',
+  atom: true,
+  addAttributes() {
+    return {
+      src:             { default: null },
+      width:           { default: null },
+      height:          { default: null },
+      frameborder:     { default: '0' },
+      allow:           { default: null },
+      allowfullscreen: { default: true },
+      referrerpolicy:  { default: null },
+      title:           { default: null },
+      style:           { default: null },
+    }
+  },
+  parseHTML() {
+    return [{ tag: 'iframe' }]
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['iframe', mergeAttributes(HTMLAttributes)]
+  },
+  addNodeView() {
+    return ({ node }) => {
+      const wrapper = document.createElement('div')
+      wrapper.style.cssText = 'position:relative;display:block;max-width:100%;margin:8px 0;'
+      const iframe = document.createElement('iframe')
+      Object.entries(node.attrs as Record<string, string | null>).forEach(([k, v]) => {
+        if (v !== null && v !== undefined && k !== 'style') iframe.setAttribute(k, String(v))
+      })
+      if (node.attrs.style) iframe.style.cssText = node.attrs.style
+      iframe.style.maxWidth = '100%'
+      wrapper.appendChild(iframe)
+      return { dom: wrapper }
+    }
+  },
+})
 
 // FontSize — TextStyle 기반 커스텀 Extension
 const FontSize = Extension.create({
@@ -119,6 +159,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
       TableRow,
       TableHeader,
       TableCell,
+      Iframe,
     ],
     content: resolveContentUrls(value || ''),
     onUpdate: ({ editor }) => {
@@ -188,6 +229,35 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
         alert('일부 이미지 업로드에 실패했습니다.\n' + errors.join('\n'))
       }
     }
+  }, [editor])
+
+  // 유튜브 삽입
+  const handleYoutube = useCallback(() => {
+    if (!editor) return
+    const input = window.prompt('YouTube URL을 입력하세요.\n(예: https://youtu.be/xxx 또는 https://www.youtube.com/watch?v=xxx)')
+    if (!input) return
+    let embedSrc = input.trim()
+    // youtu.be/ID
+    const shortMatch = embedSrc.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)
+    // youtube.com/watch?v=ID
+    const watchMatch = embedSrc.match(/[?&]v=([a-zA-Z0-9_-]{11})/)
+    // 이미 embed URL이면 그대로
+    const embedMatch = embedSrc.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/)
+    if (shortMatch) embedSrc = `https://www.youtube.com/embed/${shortMatch[1]}`
+    else if (watchMatch) embedSrc = `https://www.youtube.com/embed/${watchMatch[1]}`
+    else if (!embedMatch) { alert('올바른 YouTube URL이 아닙니다.'); return }
+
+    editor.chain().focus().insertContent({
+      type: 'iframe',
+      attrs: {
+        src: embedSrc,
+        width: '560',
+        height: '315',
+        frameborder: '0',
+        allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+        allowfullscreen: true,
+      },
+    }).run()
   }, [editor])
 
   // 링크
@@ -406,6 +476,9 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
         {btn(editor.isActive('link'), handleLink, '링크', '🔗')}
         <button type="button" className="te-btn" title="이미지 업로드" onClick={handleImageInsert}>
           🖼
+        </button>
+        <button type="button" className="te-btn" title="유튜브 삽입" onClick={handleYoutube}>
+          ▶ YouTube
         </button>
 
         <span className="te-sep" />
