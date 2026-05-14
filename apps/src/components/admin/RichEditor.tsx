@@ -221,7 +221,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
       for (const file of Array.from(files)) {
         try {
           const url = await uploadEditorImage(file)
-          editor.chain().focus().insertContent(`<p><img src="${url}" /></p><p></p>`).run()
+          editor.chain().focus().insertContent(`<p><img src="${url}" /></p><p><br></p>`).run()
         } catch (err) {
           errors.push(`${file.name}: ${err instanceof Error ? err.message : '업로드 실패'}`)
         }
@@ -243,7 +243,7 @@ export default function RichEditor({ value, onChange, placeholder }: Props) {
     for (const file of files) {
       try {
         const url = await uploadEditorImage(file)
-        editor.chain().focus().insertContent(`<p><img src="${url}" /></p><p></p>`).run()
+        editor.chain().focus().insertContent(`<p><img src="${url}" /></p><p><br></p>`).run()
       } catch (err) {
         errors.push(`${file.name}: ${err instanceof Error ? err.message : '업로드 실패'}`)
       }
