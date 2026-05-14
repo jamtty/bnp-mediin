@@ -979,45 +979,19 @@ export default function DeptDetailPage() {
         {code === 'hpcenter' && (
           <>
             <div className={activeTab === 'tab01' ? 'cont_area active_cont' : 'cont_area'}>
-              <div className="main_program_info">
-                <p className="in_tit">건강검진 프로그램 안내</p>
-                <div className="in_program_list">
-                  {[
-                    {
-                      ico: 'ico_pro1',
-                      title: '국민건강보험공단 건강검진',
-                      desc: '국민건강보험공단에서 실시하는 일반검진,\n6대 암검진을 실시함으로써 질병의 조기발견\n및 예방, 국민건강수준의 향상을 위하여\n건강검진 서비스를 제공하고 있습니다.',
-                      href: '/well/program/nhis',
-                    },
-                    {
-                      ico: 'ico_pro2',
-                      title: '기본검진프로그램',
-                      desc: '특별한 증상이나 가족력, 과거력 등이 없는\n성인을 대상으로 질병을 조기에\n발견하는 것을 목적으로 하는\n필수적인 검진 프로그램',
-                      href: '/well/program/basic',
-                    },
-                    {
-                      ico: 'ico_pro3',
-                      title: '정밀검진프로그램',
-                      desc: '각 질환 암, 뇌, 심장, 호흡기 중\n선택 할 수 있는 맞춤형 정밀검진',
-                      href: '/well/program/precision',
-                    },
-                  ].map((prog, i) => (
-                    <div className="in_item" key={i}>
-                      <div className="item_box">
-                        <i className={prog.ico}></i>
-                        <dl>
-                          <dt>{prog.title}</dt>
-                          <dd>
-                            {prog.desc.split('\n').map((line, j, arr) => (
-                              <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                            ))}
-                          </dd>
-                        </dl>
-                      </div>
-                      <a href={prog.href} className="btn_more" target="_blank" rel="noreferrer"><span>MORE</span></a>
-                    </div>
-                  ))}
-                </div>
+              <div className="emergency_sec">
+                <p className="info_tit">건강증진센터</p>
+                <p className="info_disc">
+                  메디인병원 건강증진센터는 편안하고 쾌적한 환경 속에 최신의 장비를 도입하여 환자분들의 다양한 요구를 만족시킬 수 있는 검진 프로그램을 고객님들께 실시하고 있습니다.
+                </p>
+              </div>
+              <div className="emergency_sec">
+                <p className="info_tit">건강증진센터 진료분야</p>
+                <ul className="info_disc dot_list3">
+                  <li>국민건강보험공단 건강검진</li>
+                  <li>종합검진</li>
+                  <li>정밀검진(암, 뇌, 심장, 호흡기)</li>
+                </ul>
               </div>
             </div>
             <div className={activeTab === 'tab02' ? 'cont_area active_cont' : 'cont_area'}>
