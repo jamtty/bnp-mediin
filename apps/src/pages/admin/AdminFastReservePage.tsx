@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useCallback } from 'react'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import DatePicker from '@/components/admin/DatePicker'
 import {
   fetchFastReserveList,
   updateFastReserveSucc,
@@ -17,13 +18,16 @@ export default function AdminFastReservePage() {
   const [page, setPage] = useState(1)
   const [keyword, setKeyword] = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
+  const [searchType, setSearchType] = useState('')
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateTo, setDateTo] = useState('')
   const [loading, setLoading] = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
 
-  const load = useCallback(async (p: number, kw: string) => {
+  const load = useCallback(async (p: number, params: { keyword: string; type: string; date_from: string; date_to: string }) => {
     setLoading(true)
     try {
-      const res = await fetchFastReserveList({ page: p, size: PAGE_SIZE, keyword: kw })
+      const res = await fetchFastReserveList({ page: p, size: PAGE_SIZE, keyword: params.keyword, search_type: params.type, date_from: params.date_from, date_to: params.date_to })
       setItems(res.items)
       setTotalCount(res.total)
       setTotalPages(res.total_pages)
@@ -34,13 +38,22 @@ export default function AdminFastReservePage() {
   }, [])
 
   useEffect(() => {
-    load(page, keyword)
-  }, [load, page, keyword])
+    load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
+  }, [load, page, keyword, searchType, dateFrom, dateTo])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
     setKeyword(inputKeyword)
+  }
+
+  const handleReset = () => {
+    setInputKeyword('')
+    setKeyword('')
+    setSearchType('')
+    setDateFrom('')
+    setDateTo('')
+    setPage(1)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -57,7 +70,7 @@ export default function AdminFastReservePage() {
     const next: 'Y' | 'N' = item.succ_yn === 'Y' ? 'N' : 'Y'
     try {
       await updateFastReserveSucc(item.id, next)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '처리 변경에 실패했습니다.')
     }
@@ -67,7 +80,7 @@ export default function AdminFastReservePage() {
     if (!confirm(`"${name}" 을(를) 삭제하시겠습니까?`)) return
     try {
       await deleteFastReserve(id)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -78,7 +91,7 @@ export default function AdminFastReservePage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => deleteFastReserve(id)))
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -89,7 +102,7 @@ export default function AdminFastReservePage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 처리완료로 변경하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => updateFastReserveSucc(id, 'Y')))
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '처리 변경에 실패했습니다.')
     }
@@ -104,14 +117,31 @@ export default function AdminFastReservePage() {
           <section className="adm_section">
             <div className="adm_toolbar">
               <form className="adm_search_form" onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="이름/연락처 검색"
-                  value={inputKeyword}
-                  onChange={(e) => setInputKeyword(e.target.value)}
-                />
-                <button type="submit" className="adm_btn_secondary">검색</button>
-                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>초기화</button>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">시작일</label>
+                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <label className="adm_search_label">종료일</label>
+                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                </div>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">검색어</label>
+                  <select className="adm_search_select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                    <option value="">전체</option>
+                    <option value="RT_NAME">이름</option>
+                    <option value="RT_PHONE">연락처</option>
+                  </select>
+                  <input
+                    type="text"
+                    className="adm_search_keyword"
+                    placeholder="검색어를 입력해주세요."
+                    value={inputKeyword}
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                  />
+                  <button type="submit" className="adm_search_btn">
+                    <span className="material-icons">search</span>
+                  </button>
+                  <button type="button" className="adm_btn_secondary" onClick={handleReset}>초기화</button>
+                </div>
               </form>
             </div>
 

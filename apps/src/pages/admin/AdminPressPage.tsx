@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import DatePicker from '@/components/admin/DatePicker'
 import { fetchPressList, deletePress, togglePressPin, type PressItem } from '@/api/board'
 
 const PAGE_SIZE = 15
@@ -14,13 +15,17 @@ export default function AdminPressPage() {
   const [page, setPage]             = useState(1)
   const [keyword, setKeyword]       = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
+  const [searchType, setSearchType] = useState(2)  // 0:제목 1:내용 2:전체
+  const [dateFrom, setDateFrom]     = useState('')
+  const [dateTo, setDateTo]         = useState('')
+  const [isPinned, setIsPinned]     = useState('')  // '' | '0' | '1'
   const [loading, setLoading]       = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
 
-  const load = useCallback(async (p: number, kw: string) => {
+  const load = useCallback(async (p: number, params: { keyword: string; type: number; date_from: string; date_to: string; is_pinned: string }) => {
     setLoading(true)
     try {
-      const res = await fetchPressList({ page: p, size: PAGE_SIZE, keyword: kw, type: 2 })
+      const res = await fetchPressList({ page: p, size: PAGE_SIZE, ...params })
       setItems(res.items)
       setTotalCount(res.total)
       setTotalPages(res.total_pages)
@@ -31,13 +36,23 @@ export default function AdminPressPage() {
   }, [])
 
   useEffect(() => {
-    load(page, keyword)
-  }, [load, page, keyword])
+    load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
+  }, [load, page, keyword, searchType, dateFrom, dateTo, isPinned])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
     setKeyword(inputKeyword)
+  }
+
+  const handleReset = () => {
+    setInputKeyword('')
+    setKeyword('')
+    setSearchType(2)
+    setDateFrom('')
+    setDateTo('')
+    setIsPinned('')
+    setPage(1)
   }
 
   const allChecked =
@@ -57,7 +72,7 @@ export default function AdminPressPage() {
     if (!confirm(`"${title}"을(를) 삭제하시겠습니까?`)) return
     try {
       await deletePress(id)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -68,7 +83,7 @@ export default function AdminPressPage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => deletePress(id)))
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -77,7 +92,7 @@ export default function AdminPressPage() {
   const handleTogglePin = async (id: number) => {
     try {
       await togglePressPin(id)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '처리에 실패했습니다.')
     }
@@ -92,18 +107,37 @@ export default function AdminPressPage() {
           <section className="adm_section">
             <div className="adm_toolbar">
               <form className="adm_search_form" onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="제목/내용 검색"
-                  value={inputKeyword}
-                  onChange={(e) => setInputKeyword(e.target.value)}
-                />
-                <button type="submit" className="adm_btn_secondary">
-                  검색
-                </button>
-                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>
-                  초기화
-                </button>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">시작일</label>
+                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <label className="adm_search_label">종료일</label>
+                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                  <label className="adm_search_label">공지여부</label>
+                  <select className="adm_search_select" value={isPinned} onChange={(e) => setIsPinned(e.target.value)}>
+                    <option value="">전체</option>
+                    <option value="1">공지</option>
+                    <option value="0">일반</option>
+                  </select>
+                </div>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">검색어</label>
+                  <select className="adm_search_select" value={searchType} onChange={(e) => setSearchType(Number(e.target.value))}>
+                    <option value={2}>전체</option>
+                    <option value={0}>제목</option>
+                    <option value={1}>내용</option>
+                  </select>
+                  <input
+                    type="text"
+                    className="adm_search_keyword"
+                    placeholder="검색어를 입력해주세요."
+                    value={inputKeyword}
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                  />
+                  <button type="submit" className="adm_search_btn">
+                    <span className="material-icons">search</span>
+                  </button>
+                  <button type="button" className="adm_btn_secondary" onClick={handleReset}>초기화</button>
+                </div>
               </form>
               <button
                 className="adm_btn_primary"

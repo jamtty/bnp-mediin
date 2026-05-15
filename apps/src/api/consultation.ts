@@ -9,6 +9,8 @@ export interface ConsultationListParams {
   size?: number
   keyword?: string
   type?: string  // '' | 'A.AD_TITLE' | 'A.AD_CONT' | 'A.AD_NAME'
+  date_from?: string
+  date_to?: string
 }
 
 export interface ConsultationItem {

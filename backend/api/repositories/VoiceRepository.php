@@ -329,11 +329,22 @@ class VoiceRepository extends BaseRepository
 
     private function buildWhere(array $cond): array
     {
-        $where  = 'WHERE 1=1';
+        $where  = 'WHERE A.VC_DEL_YN = \'N\'';
         $params = [];
 
-        $keyword = trim($cond['keyword'] ?? '');
-        $type    = $cond['type'] ?? '';
+        $keyword   = trim($cond['keyword'] ?? '');
+        $type      = $cond['type'] ?? '';
+        $dateFrom  = trim($cond['date_from'] ?? '');
+        $dateTo    = trim($cond['date_to']   ?? '');
+
+        if ($dateFrom !== '') {
+            $where .= ' AND DATE(A.INPUTDATE) >= :date_from';
+            $params[':date_from'] = $dateFrom;
+        }
+        if ($dateTo !== '') {
+            $where .= ' AND DATE(A.INPUTDATE) <= :date_to';
+            $params[':date_to'] = $dateTo;
+        }
 
         if ($keyword !== '') {
             $like = '%' . $keyword . '%';

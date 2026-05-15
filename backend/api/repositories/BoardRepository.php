@@ -221,11 +221,28 @@ class BoardRepository extends BaseRepository
 
     private function buildWhere(array $condition): array
     {
-        $where  = 'WHERE n.BMT_IDX = :bmt_idx';
+        $where  = 'WHERE n.BMT_IDX = :bmt_idx AND n.BD_DEL_FLAG = \'N\'';
         $params = [':bmt_idx' => $this->bmtIdx];
 
-        $keyword = trim($condition['keyword'] ?? '');
-        $type    = isset($condition['type']) ? (int)$condition['type'] : -1;
+        $keyword   = trim($condition['keyword'] ?? '');
+        $type      = isset($condition['type']) ? (int)$condition['type'] : -1;
+        $dateFrom  = trim($condition['date_from'] ?? '');
+        $dateTo    = trim($condition['date_to']   ?? '');
+        $isPinned  = $condition['is_pinned'] ?? '';
+
+        if ($dateFrom !== '') {
+            $where .= ' AND DATE(n.INPUTDATE) >= :date_from';
+            $params[':date_from'] = $dateFrom;
+        }
+        if ($dateTo !== '') {
+            $where .= ' AND DATE(n.INPUTDATE) <= :date_to';
+            $params[':date_to'] = $dateTo;
+        }
+        if ($isPinned === '1') {
+            $where .= " AND n.BD_NOTICE_YN = 'Y'";
+        } elseif ($isPinned === '0') {
+            $where .= " AND n.BD_NOTICE_YN = 'N'";
+        }
 
         if ($keyword !== '') {
             $like = '%' . $keyword . '%';

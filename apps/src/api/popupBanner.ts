@@ -43,6 +43,8 @@ export const fetchPopupBannerList = async (params: {
   size?: number
   site?: string
   keyword?: string
+  date_from?: string
+  date_to?: string
 }): Promise<PopupBannerListResponse> => {
   const { data } = await apiClient.get('/api/popup-banner', { params })
   if (!data.success) throw new Error(data.message || '목록을 불러오지 못했습니다.')

@@ -23,14 +23,20 @@ class NoticeController
      */
     public function index(Request $request): void
     {
-        $page    = $request->queryInt('page', 1, 1);
-        $size    = $request->queryInt('size', 10, 1);
-        $keyword = trim($request->query('keyword', ''));
-        $type    = $request->query('type');
+        $page     = $request->queryInt('page', 1, 1);
+        $size     = $request->queryInt('size', 10, 1);
+        $keyword  = trim($request->query('keyword', ''));
+        $type     = $request->query('type');
+        $dateFrom = trim($request->query('date_from', ''));
+        $dateTo   = trim($request->query('date_to',   ''));
+        $isPinned = $request->query('is_pinned', '');
 
         $searchCondition = [
-            'keyword' => $keyword,
-            'type'    => $type !== null ? (int)$type : -1,
+            'keyword'   => $keyword,
+            'type'      => $type !== null ? (int)$type : -1,
+            'date_from' => $dateFrom,
+            'date_to'   => $dateTo,
+            'is_pinned' => $isPinned,
         ];
 
         $result = $this->service->getList($page, $size, $searchCondition);

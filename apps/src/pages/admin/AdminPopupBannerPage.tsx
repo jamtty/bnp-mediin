@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import DatePicker from '@/components/admin/DatePicker'
 import {
   fetchPopupBannerList,
   updatePopupBannerUseYn,
@@ -22,13 +23,15 @@ export default function AdminPopupBannerPage() {
   const [site, setSite]                 = useState('')
   const [keyword, setKeyword]           = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
+  const [dateFrom, setDateFrom]         = useState('')
+  const [dateTo, setDateTo]             = useState('')
   const [loading, setLoading]           = useState(false)
   const [checkedIds, setCheckedIds]     = useState<number[]>([])
 
-  const load = useCallback(async (p: number, s: string, kw: string) => {
+  const load = useCallback(async (p: number, params: { site: string; keyword: string; date_from: string; date_to: string }) => {
     setLoading(true)
     try {
-      const res = await fetchPopupBannerList({ page: p, size: PAGE_SIZE, site: s, keyword: kw })
+      const res = await fetchPopupBannerList({ page: p, size: PAGE_SIZE, site: params.site, keyword: params.keyword, date_from: params.date_from, date_to: params.date_to })
       setItems(res.items)
       setTotalCount(res.total)
       setTotalPages(res.total_pages)
@@ -38,12 +41,21 @@ export default function AdminPopupBannerPage() {
     }
   }, [])
 
-  useEffect(() => { load(page, site, keyword) }, [load, page, site, keyword])
+  useEffect(() => { load(page, { site, keyword, date_from: dateFrom, date_to: dateTo }) }, [load, page, site, keyword, dateFrom, dateTo])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
     setKeyword(inputKeyword)
+  }
+
+  const handleReset = () => {
+    setInputKeyword('')
+    setKeyword('')
+    setSite('')
+    setDateFrom('')
+    setDateTo('')
+    setPage(1)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -55,7 +67,7 @@ export default function AdminPopupBannerPage() {
     const next: 'Y' | 'N' = item.use_yn === 'Y' ? 'N' : 'Y'
     try {
       await updatePopupBannerUseYn(item.id, next)
-      load(page, site, keyword)
+      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '변경에 실패했습니다.')
     }
@@ -64,7 +76,7 @@ export default function AdminPopupBannerPage() {
   const handleSortDown = async (item: PopupBannerItem) => {
     try {
       await updatePopupBannerSortOrder(item.id, item.sort_order + 1)
-      load(page, site, keyword)
+      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '순서 변경에 실패했습니다.')
     }
@@ -74,7 +86,7 @@ export default function AdminPopupBannerPage() {
     if (!confirm(`"${title}"을(를) 삭제하시겠습니까?`)) return
     try {
       await deletePopupBanner(id)
-      load(page, site, keyword)
+      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -85,7 +97,7 @@ export default function AdminPopupBannerPage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => deletePopupBanner(id)))
-      load(page, site, keyword)
+      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -100,24 +112,37 @@ export default function AdminPopupBannerPage() {
           <section className="adm_section">
             <div className="adm_toolbar">
               <form className="adm_search_form" onSubmit={handleSearch}>
-                <select
-                  className="adm_btn_secondary"
-                  value={site}
-                  onChange={(e) => { setSite(e.target.value); setPage(1) }}
-                >
-                  <option value="">전체 사이트</option>
-                  {Object.entries(POPUP_SITE_MAP).map(([k, v]) => (
-                    <option key={k} value={k}>{v}</option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  placeholder="관리자 제목 검색"
-                  value={inputKeyword}
-                  onChange={(e) => setInputKeyword(e.target.value)}
-                />
-                <button type="submit" className="adm_btn_secondary">검색</button>
-                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>초기화</button>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">시작일</label>
+                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <label className="adm_search_label">종료일</label>
+                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                </div>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">사이트</label>
+                  <select
+                    className="adm_search_select"
+                    value={site}
+                    onChange={(e) => { setSite(e.target.value); setPage(1) }}
+                  >
+                    <option value="">전체</option>
+                    {Object.entries(POPUP_SITE_MAP).map(([k, v]) => (
+                      <option key={k} value={k}>{v}</option>
+                    ))}
+                  </select>
+                  <label className="adm_search_label">검색어</label>
+                  <input
+                    type="text"
+                    className="adm_search_keyword"
+                    placeholder="관리자 제목 검색"
+                    value={inputKeyword}
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                  />
+                  <button type="submit" className="adm_search_btn">
+                    <span className="material-icons">search</span>
+                  </button>
+                  <button type="button" className="adm_btn_secondary" onClick={handleReset}>초기화</button>
+                </div>
               </form>
               <button className="adm_btn_primary" onClick={() => navigate('/admin/popup-banner/write')}>
                 + 등록

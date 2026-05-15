@@ -15,18 +15,18 @@
  */
 class FastReserveRepository extends BaseRepository
 {
-    public function countList(string $keyword): int
+    public function countList(string $keyword, string $searchType, string $dateFrom, string $dateTo): int
     {
-        [$where, $params] = $this->buildWhere($keyword);
+        [$where, $params] = $this->buildWhere($keyword, $searchType, $dateFrom, $dateTo);
         return (int)$this->selectScalar(
             "SELECT COUNT(*) FROM fast_reserve $where",
             $params
         );
     }
 
-    public function findList(string $keyword, int $limit, int $offset): array
+    public function findList(string $keyword, string $searchType, string $dateFrom, string $dateTo, int $limit, int $offset): array
     {
-        [$where, $params] = $this->buildWhere($keyword);
+        [$where, $params] = $this->buildWhere($keyword, $searchType, $dateFrom, $dateTo);
         $params[':limit']  = $limit;
         $params[':offset'] = $offset;
         return $this->select(
@@ -78,15 +78,31 @@ class FastReserveRepository extends BaseRepository
         ) > 0;
     }
 
-    private function buildWhere(string $keyword): array
+    private function buildWhere(string $keyword, string $searchType, string $dateFrom, string $dateTo): array
     {
         $where  = 'WHERE 1=1';
         $params = [];
         if ($keyword !== '') {
             $like = '%' . $keyword . '%';
-            $where .= ' AND (RT_NAME LIKE :keyword OR RT_PHONE LIKE :keyword_phone)';
-            $params[':keyword'] = $like;
-            $params[':keyword_phone'] = $like;
+            if ($searchType === 'RT_NAME') {
+                $where .= ' AND RT_NAME LIKE :keyword';
+                $params[':keyword'] = $like;
+            } elseif ($searchType === 'RT_PHONE') {
+                $where .= ' AND RT_PHONE LIKE :keyword';
+                $params[':keyword'] = $like;
+            } else {
+                $where .= ' AND (RT_NAME LIKE :keyword OR RT_PHONE LIKE :keyword_phone)';
+                $params[':keyword']       = $like;
+                $params[':keyword_phone'] = $like;
+            }
+        }
+        if ($dateFrom !== '') {
+            $where .= ' AND DATE(INPUTDATE) >= :date_from';
+            $params[':date_from'] = $dateFrom;
+        }
+        if ($dateTo !== '') {
+            $where .= ' AND DATE(INPUTDATE) <= :date_to';
+            $params[':date_to'] = $dateTo;
         }
         return [$where, $params];
     }

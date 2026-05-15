@@ -13,14 +13,16 @@ class PopupBannerService
 
     public function getList(array $query): array
     {
-        $page    = max(1, (int)($query['page'] ?? 1));
-        $size    = max(1, min(100, (int)($query['size'] ?? 15)));
-        $site    = trim((string)($query['site'] ?? ''));
-        $keyword = trim((string)($query['keyword'] ?? ''));
-        $offset  = ($page - 1) * $size;
+        $page     = max(1, (int)($query['page'] ?? 1));
+        $size     = max(1, min(100, (int)($query['size'] ?? 15)));
+        $site     = trim((string)($query['site']      ?? ''));
+        $keyword  = trim((string)($query['keyword']   ?? ''));
+        $dateFrom = trim((string)($query['date_from'] ?? ''));
+        $dateTo   = trim((string)($query['date_to']   ?? ''));
+        $offset   = ($page - 1) * $size;
 
-        $total = $this->repo->countList($site, $keyword);
-        $items = $this->repo->findList($site, $keyword, $size, $offset);
+        $total = $this->repo->countList($site, $keyword, $dateFrom, $dateTo);
+        $items = $this->repo->findList($site, $keyword, $dateFrom, $dateTo, $size, $offset);
 
         // 각 항목에 이미지 정보 추가
         foreach ($items as &$item) {

@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import DatePicker from '@/components/admin/DatePicker'
 import { fetchNoticeList, deleteNotice, toggleNoticePin, type NoticeItem } from '@/api/notice'
 
 const PAGE_SIZE = 15
@@ -14,15 +15,19 @@ export default function AdminNoticePage() {
   const [page, setPage] = useState(1)
   const [keyword, setKeyword] = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
+  const [searchType, setSearchType] = useState(2)  // 0:제목 1:내용 2:전체
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateTo, setDateTo] = useState('')
+  const [isPinned, setIsPinned] = useState('')  // '' | '0' | '1'
   const [loading, setLoading] = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
   const [error, setError] = useState<string | null>(null)
 
-  const load = useCallback(async (p: number, kw: string) => {
+  const load = useCallback(async (p: number, params: { keyword: string; type: number; date_from: string; date_to: string; is_pinned: string }) => {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetchNoticeList({ page: p, size: PAGE_SIZE, keyword: kw, type: 2 })
+      const res = await fetchNoticeList({ page: p, size: PAGE_SIZE, ...params })
       setItems(res.items)
       setTotalCount(res.totalCount)
       setTotalPages(res.totalPages)
@@ -35,13 +40,23 @@ export default function AdminNoticePage() {
   }, [])
 
   useEffect(() => {
-    load(page, keyword)
-  }, [load, page, keyword])
+    load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
+  }, [load, page, keyword, searchType, dateFrom, dateTo, isPinned])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
     setKeyword(inputKeyword)
+  }
+
+  const handleReset = () => {
+    setInputKeyword('')
+    setKeyword('')
+    setSearchType(2)
+    setDateFrom('')
+    setDateTo('')
+    setIsPinned('')
+    setPage(1)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -95,18 +110,37 @@ export default function AdminNoticePage() {
           <section className="adm_section">
             <div className="adm_toolbar">
               <form className="adm_search_form" onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="제목/내용 검색"
-                  value={inputKeyword}
-                  onChange={(e) => setInputKeyword(e.target.value)}
-                />
-                <button type="submit" className="adm_btn_secondary">
-                  검색
-                </button>
-                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>
-                  초기화
-                </button>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">시작일</label>
+                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <label className="adm_search_label">종료일</label>
+                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                  <label className="adm_search_label">공지여부</label>
+                  <select className="adm_search_select" value={isPinned} onChange={(e) => setIsPinned(e.target.value)}>
+                    <option value="">전체</option>
+                    <option value="1">공지</option>
+                    <option value="0">일반</option>
+                  </select>
+                </div>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">검색어</label>
+                  <select className="adm_search_select" value={searchType} onChange={(e) => setSearchType(Number(e.target.value))}>
+                    <option value={2}>전체</option>
+                    <option value={0}>제목</option>
+                    <option value={1}>내용</option>
+                  </select>
+                  <input
+                    type="text"
+                    className="adm_search_keyword"
+                    placeholder="검색어를 입력해주세요."
+                    value={inputKeyword}
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                  />
+                  <button type="submit" className="adm_search_btn">
+                    <span className="material-icons">search</span>
+                  </button>
+                  <button type="button" className="adm_btn_secondary" onClick={handleReset}>초기화</button>
+                </div>
               </form>
               <button className="adm_btn_primary" onClick={() => navigate('/admin/notice/write')}>
                 + 글쓰기
@@ -147,8 +181,9 @@ export default function AdminNoticePage() {
                         게시글이 없습니다.
                       </td>
                     </tr>
-                  ) : (
-                    items.map((item, idx) => (
+                  ) : (() => {
+                    const pinnedCount = items.filter(i => i.is_pinned).length;
+                    return items.map((item, idx) => (
                       <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
                         <td className="adm_td_center">
                           <input
@@ -158,7 +193,9 @@ export default function AdminNoticePage() {
                           />
                         </td>
                         <td className="adm_td_center">
-                          {totalCount - (page - 1) * PAGE_SIZE - idx}
+                          {item.is_pinned
+                            ? '—'
+                            : totalCount - (page - 1) * PAGE_SIZE - (idx - pinnedCount)}
                         </td>
                         <td>
                           <Link to={`/admin/notice/edit/${item.id}`} className="adm_table_link">
@@ -192,8 +229,9 @@ export default function AdminNoticePage() {
                           </div>
                         </td>
                       </tr>
-                    ))
-                  )}
+                    ));
+                  })()
+                  }
                 </tbody>
               </table>
             </div>

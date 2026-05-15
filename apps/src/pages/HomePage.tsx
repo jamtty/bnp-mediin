@@ -230,14 +230,16 @@ export default function HomePage() {
                   )
                 })}
               </div>
+            </div>
+            <div className="main_banner_controls">
               {banners.length > 1 && (
-                <>
-                  <button className="main_banner_prev" aria-label="이전" />
-                  <button className="main_banner_next" aria-label="다음" />
-                </>
+                <button className="main_banner_prev" aria-label="이전" />
+              )}
+              <div className="main_banner_pagination" />
+              {banners.length > 1 && (
+                <button className="main_banner_next" aria-label="다음" />
               )}
             </div>
-            <div className="main_banner_pagination" />
           </div>
         ) : (
           <div className="main_banner_placeholder" />

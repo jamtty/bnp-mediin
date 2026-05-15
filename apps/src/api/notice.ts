@@ -5,6 +5,9 @@ export interface NoticeListParams {
   size?: number
   type?: number // 0: 제목, 1: 내용, 2: 제목+내용
   keyword?: string
+  date_from?: string
+  date_to?: string
+  is_pinned?: string // '' | '0' | '1'
 }
 
 export interface NoticeItem {

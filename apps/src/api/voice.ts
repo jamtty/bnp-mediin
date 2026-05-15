@@ -12,6 +12,8 @@ export interface VoiceListParams {
   size?: number
   keyword?: string
   type?: string
+  date_from?: string
+  date_to?: string
 }
 
 export interface VoiceItem {

@@ -9,6 +9,9 @@ export interface BoardListParams {
   size?: number
   keyword?: string
   type?: number // 0: 제목, 1: 내용, 그 외: 제목+내용
+  date_from?: string
+  date_to?: string
+  is_pinned?: string // '' | '0' | '1'
 }
 
 interface BoardListMeta {

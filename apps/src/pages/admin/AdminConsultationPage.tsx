@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import DatePicker from '@/components/admin/DatePicker'
 import {
   fetchConsultationList,
   deleteConsultation,
@@ -19,13 +20,16 @@ export default function AdminConsultationPage() {
   const [page, setPage] = useState(1)
   const [keyword, setKeyword] = useState('')
   const [inputKeyword, setInputKeyword] = useState('')
+  const [searchType, setSearchType] = useState('')  // '' | 'A.AD_TITLE' | 'A.AD_CONT' | 'A.AD_NAME'
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateTo, setDateTo] = useState('')
   const [loading, setLoading] = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
 
-  const load = useCallback(async (p: number, kw: string) => {
+  const load = useCallback(async (p: number, params: { keyword: string; type: string; date_from: string; date_to: string }) => {
     setLoading(true)
     try {
-      const res = await fetchConsultationList({ page: p, size: PAGE_SIZE, keyword: kw })
+      const res = await fetchConsultationList({ page: p, size: PAGE_SIZE, ...params })
       setItems(res.items)
       setTotalCount(res.total)
       setTotalPages(res.total_pages)
@@ -36,13 +40,22 @@ export default function AdminConsultationPage() {
   }, [])
 
   useEffect(() => {
-    load(page, keyword)
-  }, [load, page, keyword])
+    load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
+  }, [load, page, keyword, searchType, dateFrom, dateTo])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
     setKeyword(inputKeyword)
+  }
+
+  const handleReset = () => {
+    setInputKeyword('')
+    setKeyword('')
+    setSearchType('')
+    setDateFrom('')
+    setDateTo('')
+    setPage(1)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -59,7 +72,7 @@ export default function AdminConsultationPage() {
     if (!confirm(`"${title}" 을(를) 삭제하시겠습니까?\n첨부파일도 함께 삭제됩니다.`)) return
     try {
       await deleteConsultation(id)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -70,7 +83,7 @@ export default function AdminConsultationPage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?\n첨부파일도 함께 삭제됩니다.`)) return
     try {
       await Promise.all(checkedIds.map((id) => deleteConsultation(id)))
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -85,18 +98,32 @@ export default function AdminConsultationPage() {
           <section className="adm_section">
             <div className="adm_toolbar">
               <form className="adm_search_form" onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="제목/내용 검색"
-                  value={inputKeyword}
-                  onChange={(e) => setInputKeyword(e.target.value)}
-                />
-                <button type="submit" className="adm_btn_secondary">
-                  검색
-                </button>
-                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>
-                  초기화
-                </button>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">시작일</label>
+                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <label className="adm_search_label">종료일</label>
+                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                </div>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">검색어</label>
+                  <select className="adm_search_select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                    <option value="">전체</option>
+                    <option value="A.AD_TITLE">제목</option>
+                    <option value="A.AD_CONT">내용</option>
+                    <option value="A.AD_NAME">작성자</option>
+                  </select>
+                  <input
+                    type="text"
+                    className="adm_search_keyword"
+                    placeholder="검색어를 입력해주세요."
+                    value={inputKeyword}
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                  />
+                  <button type="submit" className="adm_search_btn">
+                    <span className="material-icons">search</span>
+                  </button>
+                  <button type="button" className="adm_btn_secondary" onClick={handleReset}>초기화</button>
+                </div>
               </form>
             </div>
 

@@ -22,8 +22,10 @@ class ConsultationService
         $offset  = ($page - 1) * $perPage;
 
         $cond = [
-            'keyword' => trim($queryParams['keyword'] ?? ''),
-            'type'    => $queryParams['type'] ?? '',
+            'keyword'   => trim($queryParams['keyword'] ?? ''),
+            'type'      => $queryParams['type'] ?? '',
+            'date_from' => trim($queryParams['date_from'] ?? ''),
+            'date_to'   => trim($queryParams['date_to']   ?? ''),
         ];
 
         $total = $this->repo->countList($cond);

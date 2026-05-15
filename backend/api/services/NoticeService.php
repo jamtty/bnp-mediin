@@ -28,9 +28,9 @@ class NoticeService
         $totalPages = $totalCount > 0 ? (int)ceil($totalCount / $size) : 1;
         $items      = $this->repo->findList($searchCondition, $size, $offset);
 
-        // 키워드 검색이 없을 때만 고정글을 최상단에 추가
+        // 키워드 검색이 없을 때만 고정글을 최상단에 추가 (날짜 필터 적용)
         if ($keyword === '') {
-            $pinned = $this->repo->findPinnedList();
+            $pinned = $this->repo->findPinnedList($searchCondition);
             $items  = array_merge($pinned, $items);
         }
 

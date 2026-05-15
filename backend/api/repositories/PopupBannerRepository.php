@@ -5,15 +5,15 @@
  */
 class PopupBannerRepository extends BaseRepository
 {
-    public function countList(string $site, string $keyword): int
+    public function countList(string $site, string $keyword, string $dateFrom, string $dateTo): int
     {
-        [$where, $params] = $this->buildWhere($site, $keyword);
+        [$where, $params] = $this->buildWhere($site, $keyword, $dateFrom, $dateTo);
         return (int)$this->selectScalar("SELECT COUNT(*) FROM popup_tbl $where", $params);
     }
 
-    public function findList(string $site, string $keyword, int $limit, int $offset): array
+    public function findList(string $site, string $keyword, string $dateFrom, string $dateTo, int $limit, int $offset): array
     {
-        [$where, $params] = $this->buildWhere($site, $keyword);
+        [$where, $params] = $this->buildWhere($site, $keyword, $dateFrom, $dateTo);
         $params[':limit']  = $limit;
         $params[':offset'] = $offset;
         return $this->select(
@@ -205,7 +205,7 @@ class PopupBannerRepository extends BaseRepository
         $this->execute('DELETE FROM popup_file WHERE voc_id = :voc_id', [':voc_id' => $bnIdx]);
     }
 
-    private function buildWhere(string $site, string $keyword): array
+    private function buildWhere(string $site, string $keyword, string $dateFrom, string $dateTo): array
     {
         $where  = "WHERE BN_DEL_YN = 'N'";
         $params = [];
@@ -216,6 +216,14 @@ class PopupBannerRepository extends BaseRepository
         if ($keyword !== '') {
             $where .= ' AND BN_TITLE LIKE :keyword';
             $params[':keyword'] = '%' . $keyword . '%';
+        }
+        if ($dateFrom !== '') {
+            $where .= ' AND DATE(INPUTDATE) >= :date_from';
+            $params[':date_from'] = $dateFrom;
+        }
+        if ($dateTo !== '') {
+            $where .= ' AND DATE(INPUTDATE) <= :date_to';
+            $params[':date_to'] = $dateTo;
         }
         return [$where, $params];
     }

@@ -31,6 +31,9 @@ export const fetchFastReserveList = async (params: {
   page?: number
   size?: number
   keyword?: string
+  search_type?: string
+  date_from?: string
+  date_to?: string
 }): Promise<FastReserveListResponse> => {
   const { data } = await apiClient.get('/api/fast-reserve', { params })
   if (!data.success) throw new Error(data.message || '목록을 불러오지 못했습니다.')

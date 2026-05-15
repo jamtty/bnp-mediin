@@ -23,9 +23,25 @@ class NoticeRepository extends BaseRepository
 
     /**
      * 고정 공지글 목록 (항상 상단 고정, 페이징 없음)
+     * 날짜 필터가 있으면 해당 기간 내 공지글만 반환
      */
-    public function findPinnedList(): array
+    public function findPinnedList(array $searchCondition = []): array
     {
+        $where  = "WHERE n.BMT_IDX = :bmt_idx AND n.BD_NOTICE_YN = 'Y'";
+        $params = [':bmt_idx' => self::BMT_IDX];
+
+        $dateFrom = trim($searchCondition['date_from'] ?? '');
+        $dateTo   = trim($searchCondition['date_to']   ?? '');
+
+        if ($dateFrom !== '') {
+            $where .= ' AND DATE(n.INPUTDATE) >= :date_from';
+            $params[':date_from'] = $dateFrom;
+        }
+        if ($dateTo !== '') {
+            $where .= ' AND DATE(n.INPUTDATE) <= :date_to';
+            $params[':date_to'] = $dateTo;
+        }
+
         $sql = "
             SELECT
                 n.BD_IDX        AS id,
@@ -37,11 +53,10 @@ class NoticeRepository extends BaseRepository
                 1               AS is_pinned,
                 0               AS file_count
             FROM board_tbl n
-            WHERE n.BMT_IDX = :bmt_idx
-              AND n.BD_NOTICE_YN = 'Y'
+            $where
             ORDER BY n.BD_IDX DESC
         ";
-        return $this->select($sql, [':bmt_idx' => self::BMT_IDX]);
+        return $this->select($sql, $params);
     }
 
     /**
@@ -294,8 +309,25 @@ class NoticeRepository extends BaseRepository
         $where  = $includePinned ? 'WHERE n.BMT_IDX = :bmt_idx' : "WHERE n.BMT_IDX = :bmt_idx AND n.$base";
         $params = [':bmt_idx' => self::BMT_IDX];
 
-        $keyword = trim($condition['keyword'] ?? '');
-        $type    = isset($condition['type']) ? (int)$condition['type'] : -1;
+        $keyword   = trim($condition['keyword'] ?? '');
+        $type      = isset($condition['type']) ? (int)$condition['type'] : -1;
+        $dateFrom  = trim($condition['date_from'] ?? '');
+        $dateTo    = trim($condition['date_to']   ?? '');
+        $isPinned  = $condition['is_pinned'] ?? '';
+
+        if ($dateFrom !== '') {
+            $where .= ' AND DATE(n.INPUTDATE) >= :date_from';
+            $params[':date_from'] = $dateFrom;
+        }
+        if ($dateTo !== '') {
+            $where .= ' AND DATE(n.INPUTDATE) <= :date_to';
+            $params[':date_to'] = $dateTo;
+        }
+        if ($isPinned === '1') {
+            $where .= " AND n.BD_NOTICE_YN = 'Y'";
+        } elseif ($isPinned === '0') {
+            $where .= " AND n.BD_NOTICE_YN = 'N'";
+        }
 
         if ($keyword !== '') {
             $like = '%' . $keyword . '%';

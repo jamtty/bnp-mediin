@@ -13,13 +13,16 @@ class FastReserveService
 
     public function getList(array $query): array
     {
-        $page    = max(1, (int)($query['page'] ?? 1));
-        $size    = max(1, min(100, (int)($query['size'] ?? 15)));
-        $keyword = trim((string)($query['keyword'] ?? ''));
-        $offset  = ($page - 1) * $size;
+        $page       = max(1, (int)($query['page'] ?? 1));
+        $size       = max(1, min(100, (int)($query['size'] ?? 15)));
+        $keyword    = trim((string)($query['keyword']     ?? ''));
+        $searchType = trim((string)($query['search_type'] ?? ''));
+        $dateFrom   = trim((string)($query['date_from']   ?? ''));
+        $dateTo     = trim((string)($query['date_to']     ?? ''));
+        $offset     = ($page - 1) * $size;
 
-        $total = $this->repo->countList($keyword);
-        $items = $this->repo->findList($keyword, $size, $offset);
+        $total = $this->repo->countList($keyword, $searchType, $dateFrom, $dateTo);
+        $items = $this->repo->findList($keyword, $searchType, $dateFrom, $dateTo, $size, $offset);
 
         return [
             'items'       => $items,

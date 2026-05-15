@@ -53,6 +53,13 @@ export default function AdminDoctorPage() {
     setSearchTrigger(t => t + 1)
   }
 
+  const handleReset = () => {
+    setInputKeyword('')
+    setKeyword('')
+    setDeptCode('')
+    setPage(1)
+  }
+
   const allChecked = items.length > 0 && items.every((i) => checkedIds.includes(i.id))
   const handleCheckAll = () => setCheckedIds(allChecked ? [] : items.map((i) => i.id))
   const handleCheckOne = (id: number) =>
@@ -135,28 +142,37 @@ export default function AdminDoctorPage() {
             {/* 검색 */}
             <div className="adm_toolbar">
               <form className="adm_search_form" onSubmit={handleSearch}>
-                <select
-                  value={deptCode}
-                  onChange={(e) => { setDeptCode(e.target.value); setPage(1) }}
-                  className="adm_btn_secondary"
-                >
-                  <option value="">전체 진료과</option>
-                  {Object.entries(DEPT_GROUPS).map(([groupName, depts]) => (
-                    <optgroup key={groupName} label={groupName}>
-                      {depts.map(({ code, name }) => (
-                        <option key={code} value={code}>{name}</option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  value={inputKeyword}
-                  onChange={(e) => setInputKeyword(e.target.value)}
-                  placeholder="이름 / 진료과목 검색"
-                />
-                <button type="submit" className="adm_btn_secondary">검색</button>
-                <button type="button" className="adm_btn_secondary" onClick={() => { setInputKeyword(''); setKeyword(''); setPage(1) }}>초기화</button>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">진료과</label>
+                  <select
+                    className="adm_search_select"
+                    value={deptCode}
+                    onChange={(e) => { setDeptCode(e.target.value); setPage(1) }}
+                  >
+                    <option value="">전체</option>
+                    {Object.entries(DEPT_GROUPS).map(([groupName, depts]) => (
+                      <optgroup key={groupName} label={groupName}>
+                        {depts.map(({ code, name }) => (
+                          <option key={code} value={code}>{name}</option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </select>
+                </div>
+                <div className="adm_search_row">
+                  <label className="adm_search_label">검색어</label>
+                  <input
+                    type="text"
+                    className="adm_search_keyword"
+                    value={inputKeyword}
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                    placeholder="이름 / 진료과목 검색"
+                  />
+                  <button type="submit" className="adm_search_btn">
+                    <span className="material-icons">search</span>
+                  </button>
+                  <button type="button" className="adm_btn_secondary" onClick={handleReset}>초기화</button>
+                </div>
               </form>
               <button
                 type="button"

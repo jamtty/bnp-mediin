@@ -25,8 +25,11 @@ class BoardService
         $offset  = ($page - 1) * $perPage;
 
         $searchCondition = [
-            'keyword' => trim($queryParams['keyword'] ?? ''),
-            'type'    => $queryParams['type'] ?? '',
+            'keyword'   => trim($queryParams['keyword']   ?? ''),
+            'type'      => $queryParams['type']           ?? '',
+            'date_from' => trim($queryParams['date_from'] ?? ''),
+            'date_to'   => trim($queryParams['date_to']   ?? ''),
+            'is_pinned' => $queryParams['is_pinned']      ?? '',
         ];
 
         $total = $this->repo->countList($searchCondition);

@@ -22,6 +22,17 @@
   margin-bottom: 3.2rem;
   letter-spacing: -0.03em;
 }
+.admin_session_expired_msg {
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+  border-radius: 0.6rem;
+  color: #c2410c;
+  font-size: 1.35rem;
+  line-height: 1.6;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
 .admin_login_field {
   margin-bottom: 1.6rem;
 }
@@ -503,7 +514,171 @@
 }
 .adm_search_form {
   display: flex;
+  flex-direction: column;
   gap: 0.8rem;
+  flex: 1;
+}
+.adm_search_row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.adm_search_label {
+  font-size: 1.3rem;
+  color: #374151;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.adm_search_date {
+  height: 3.8rem;
+  padding: 0 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  outline: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 12rem;
+  background: #fff;
+  caret-color: transparent;
+}
+.adm_search_date:focus {
+  border-color: #2563eb;
+}
+/* ── Custom DatePicker ──────────────────────────── */
+.adm_datepicker {
+  position: relative;
+  display: inline-block;
+}
+.adm_calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 200;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.13);
+  padding: 1.4rem 1.2rem;
+  width: 25rem;
+  user-select: none;
+}
+.adm_cal_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.adm_cal_title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+.adm_cal_nav {
+  background: none;
+  border: none;
+  font-size: 2.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 0 0.2rem;
+  display: flex;
+  align-items: center;
+}
+.adm_cal_nav:hover { color: #111827; }
+.adm_cal_grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.adm_cal_label {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #9ca3af;
+  padding: 0.4rem 0 0.6rem;
+}
+.adm_cal_label.is_sun { color: #ef4444; }
+.adm_cal_cell {
+  width: 3.1rem;
+  height: 3.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.15rem auto;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #374151;
+  transition: background 0.1s;
+}
+.adm_cal_cell:hover { background: #f3f4f6; }
+.adm_cal_cell.is_sun { color: #ef4444; }
+.adm_cal_cell.is_sat { color: #2563eb; }
+.adm_cal_cell.is_today {
+  background: #e5e7eb;
+  font-weight: 700;
+}
+.adm_cal_cell.is_selected {
+  background: #2563eb !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+.adm_cal_cell.is_disabled {
+  color: #d1d5db !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.adm_search_select {
+  height: 3.8rem;
+  padding: 0 2.8rem 0 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  outline: none;
+  box-sizing: border-box;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23374151' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 1rem center;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.adm_search_select:focus {
+  border-color: #2563eb;
+}
+.adm_search_keyword {
+  height: 3.8rem;
+  padding: 0 1.2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  width: 22rem;
+  outline: none;
+  box-sizing: border-box;
+}
+.adm_search_keyword:focus {
+  border-color: #2563eb;
+}
+.adm_search_btn {
+  height: 3.8rem;
+  width: 3.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.adm_search_btn:hover {
+  background: #1d4ed8;
+}
+.adm_search_btn .material-icons {
+  font-size: 2rem;
 }
 .adm_search_form input {
   height: 3.8rem;
