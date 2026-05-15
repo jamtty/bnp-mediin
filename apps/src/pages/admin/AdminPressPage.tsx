@@ -180,7 +180,9 @@ export default function AdminPressPage() {
                       </td>
                     </tr>
                   ) : (
-                    items.map((item, idx) => (
+                    (() => {
+                    const pinnedCount = items.filter(i => i.is_pinned).length;
+                    return items.map((item, idx) => (
                       <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
                         <td className="adm_td_center">
                           <input
@@ -190,7 +192,9 @@ export default function AdminPressPage() {
                           />
                         </td>
                         <td className="adm_td_center">
-                          {totalCount - (page - 1) * PAGE_SIZE - idx}
+                          {item.is_pinned
+                            ? '—'
+                            : totalCount - (page - 1) * PAGE_SIZE - (idx - pinnedCount)}
                         </td>
                         <td className="adm_td_center">{item.press_name ?? '-'}</td>
                         <td>
@@ -230,6 +234,7 @@ export default function AdminPressPage() {
                         </td>
                       </tr>
                     ))
+                  })()
                   )}
                 </tbody>
               </table>

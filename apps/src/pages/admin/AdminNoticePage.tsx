@@ -73,7 +73,7 @@ export default function AdminNoticePage() {
     if (!confirm(`"${title}" 을(를) 삭제하시겠습니까?`)) return
     try {
       await deleteNotice(id)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -84,7 +84,7 @@ export default function AdminNoticePage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => deleteNotice(id)))
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -95,7 +95,7 @@ export default function AdminNoticePage() {
     if (!confirm(`"${item.title}" 을(를) ${action}하시겠습니까?`)) return
     try {
       await toggleNoticePin(item.id)
-      load(page, keyword)
+      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '변경에 실패했습니다.')
     }

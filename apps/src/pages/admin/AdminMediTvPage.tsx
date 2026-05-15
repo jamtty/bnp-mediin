@@ -150,10 +150,16 @@ export default function AdminMediTvPage() {
                   ) : items.length === 0 ? (
                     <tr><td colSpan={7} className="adm_table_empty">게시글이 없습니다.</td></tr>
                   ) : (
-                    items.map((item, idx) => (
+                    (() => {
+                    const pinnedCount = items.filter(i => i.is_pinned).length;
+                    return items.map((item, idx) => (
                       <tr key={item.id} style={item.is_pinned ? { background: '#f8f8f8' } : undefined}>
                         <td className="adm_td_center"><input type="checkbox" checked={checkedIds.includes(item.id)} onChange={() => handleCheckOne(item.id)} /></td>
-                        <td className="adm_td_center">{totalCount - (page - 1) * PAGE_SIZE - idx}</td>
+                        <td className="adm_td_center">
+                          {item.is_pinned
+                            ? '—'
+                            : totalCount - (page - 1) * PAGE_SIZE - (idx - pinnedCount)}
+                        </td>
                         <td>
                           <button className="adm_table_link" onClick={() => navigate(`/admin/medi-tv/edit/${item.id}`)}>
                             {item.is_pinned ? <span className="adm_pin_badge">공지</span> : null}
@@ -172,6 +178,7 @@ export default function AdminMediTvPage() {
                         </td>
                       </tr>
                     ))
+                  })()
                   )}
                 </tbody>
               </table>
