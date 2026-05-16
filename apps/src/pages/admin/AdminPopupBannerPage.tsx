@@ -14,21 +14,24 @@ import {
 
 const PAGE_SIZE = 15
 
+type PopupSearchParams = { site: string; keyword: string; date_from: string; date_to: string }
+const defaultPopupParams: PopupSearchParams = { site: '', keyword: '', date_from: '', date_to: '' }
+
 export default function AdminPopupBannerPage() {
   const navigate = useNavigate()
   const [items, setItems]               = useState<PopupBannerItem[]>([])
   const [totalCount, setTotalCount]     = useState(0)
   const [totalPages, setTotalPages]     = useState(1)
   const [page, setPage]                 = useState(1)
-  const [site, setSite]                 = useState('')
-  const [keyword, setKeyword]           = useState('')
+  const [searchParams, setSearchParams] = useState<PopupSearchParams>(defaultPopupParams)
   const [inputKeyword, setInputKeyword] = useState('')
-  const [dateFrom, setDateFrom]         = useState('')
-  const [dateTo, setDateTo]             = useState('')
+  const [inputSite, setInputSite]       = useState('')
+  const [inputDateFrom, setInputDateFrom] = useState('')
+  const [inputDateTo, setInputDateTo]     = useState('')
   const [loading, setLoading]           = useState(false)
   const [checkedIds, setCheckedIds]     = useState<number[]>([])
 
-  const load = useCallback(async (p: number, params: { site: string; keyword: string; date_from: string; date_to: string }) => {
+  const load = useCallback(async (p: number, params: PopupSearchParams) => {
     setLoading(true)
     try {
       const res = await fetchPopupBannerList({ page: p, size: PAGE_SIZE, site: params.site, keyword: params.keyword, date_from: params.date_from, date_to: params.date_to })
@@ -41,21 +44,21 @@ export default function AdminPopupBannerPage() {
     }
   }, [])
 
-  useEffect(() => { load(page, { site, keyword, date_from: dateFrom, date_to: dateTo }) }, [load, page, site, keyword, dateFrom, dateTo])
+  useEffect(() => { load(page, searchParams) }, [load, page, searchParams])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
-    setKeyword(inputKeyword)
+    setSearchParams({ site: inputSite, keyword: inputKeyword, date_from: inputDateFrom, date_to: inputDateTo })
   }
 
   const handleReset = () => {
     setInputKeyword('')
-    setKeyword('')
-    setSite('')
-    setDateFrom('')
-    setDateTo('')
+    setInputSite('')
+    setInputDateFrom('')
+    setInputDateTo('')
     setPage(1)
+    setSearchParams(defaultPopupParams)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -67,7 +70,7 @@ export default function AdminPopupBannerPage() {
     const next: 'Y' | 'N' = item.use_yn === 'Y' ? 'N' : 'Y'
     try {
       await updatePopupBannerUseYn(item.id, next)
-      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '변경에 실패했습니다.')
     }
@@ -76,7 +79,7 @@ export default function AdminPopupBannerPage() {
   const handleSortDown = async (item: PopupBannerItem) => {
     try {
       await updatePopupBannerSortOrder(item.id, item.sort_order + 1)
-      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '순서 변경에 실패했습니다.')
     }
@@ -86,7 +89,7 @@ export default function AdminPopupBannerPage() {
     if (!confirm(`"${title}"을(를) 삭제하시겠습니까?`)) return
     try {
       await deletePopupBanner(id)
-      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -97,7 +100,7 @@ export default function AdminPopupBannerPage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => deletePopupBanner(id)))
-      load(page, { site, keyword, date_from: dateFrom, date_to: dateTo })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -114,16 +117,16 @@ export default function AdminPopupBannerPage() {
               <form className="adm_search_form" onSubmit={handleSearch}>
                 <div className="adm_search_row">
                   <label className="adm_search_label">시작일</label>
-                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <DatePicker value={inputDateFrom} onChange={setInputDateFrom} maxDate={inputDateTo || undefined} />
                   <label className="adm_search_label">종료일</label>
-                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                  <DatePicker value={inputDateTo} onChange={setInputDateTo} minDate={inputDateFrom || undefined} />
                 </div>
                 <div className="adm_search_row">
                   <label className="adm_search_label">사이트</label>
                   <select
                     className="adm_search_select"
-                    value={site}
-                    onChange={(e) => { setSite(e.target.value); setPage(1) }}
+                    value={inputSite}
+                    onChange={(e) => setInputSite(e.target.value)}
                   >
                     <option value="">전체</option>
                     {Object.entries(POPUP_SITE_MAP).map(([k, v]) => (

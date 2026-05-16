@@ -7,22 +7,25 @@ import { deleteMediTv, fetchMediTvList, toggleMediTvPin, type MediTvItem } from 
 
 const PAGE_SIZE = 15
 
+type MediTvSearchParams = { keyword: string; type: number; date_from: string; date_to: string; is_pinned: string }
+const defaultMediTvParams: MediTvSearchParams = { keyword: '', type: 2, date_from: '', date_to: '', is_pinned: '' }
+
 export default function AdminMediTvPage() {
   const navigate = useNavigate()
   const [items, setItems] = useState<MediTvItem[]>([])
   const [totalCount, setTotalCount] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
   const [page, setPage] = useState(1)
-  const [keyword, setKeyword] = useState('')
+  const [searchParams, setSearchParams] = useState<MediTvSearchParams>(defaultMediTvParams)
   const [inputKeyword, setInputKeyword] = useState('')
-  const [searchType, setSearchType] = useState(2)
-  const [dateFrom, setDateFrom] = useState('')
-  const [dateTo, setDateTo] = useState('')
-  const [isPinned, setIsPinned] = useState('')
+  const [inputType, setInputType] = useState(2)
+  const [inputDateFrom, setInputDateFrom] = useState('')
+  const [inputDateTo, setInputDateTo] = useState('')
+  const [inputIsPinned, setInputIsPinned] = useState('')
   const [loading, setLoading] = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
 
-  const load = useCallback(async (p: number, params: { keyword: string; type: number; date_from: string; date_to: string; is_pinned: string }) => {
+  const load = useCallback(async (p: number, params: MediTvSearchParams) => {
     setLoading(true)
     try {
       const res = await fetchMediTvList({ page: p, size: PAGE_SIZE, ...params })
@@ -36,23 +39,23 @@ export default function AdminMediTvPage() {
   }, [])
 
   useEffect(() => {
-    load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
-  }, [load, page, keyword, searchType, dateFrom, dateTo, isPinned])
+    load(page, searchParams)
+  }, [load, page, searchParams])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
-    setKeyword(inputKeyword)
+    setSearchParams({ keyword: inputKeyword, type: inputType, date_from: inputDateFrom, date_to: inputDateTo, is_pinned: inputIsPinned })
   }
 
   const handleReset = () => {
     setInputKeyword('')
-    setKeyword('')
-    setSearchType(2)
-    setDateFrom('')
-    setDateTo('')
-    setIsPinned('')
+    setInputType(2)
+    setInputDateFrom('')
+    setInputDateTo('')
+    setInputIsPinned('')
     setPage(1)
+    setSearchParams(defaultMediTvParams)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -69,7 +72,7 @@ export default function AdminMediTvPage() {
     if (!confirm(`"${title}"을(를) 삭제하시겠습니까?`)) return
     try {
       await deleteMediTv(id)
-      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -80,7 +83,7 @@ export default function AdminMediTvPage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?`)) return
     try {
       await Promise.all(checkedIds.map((id) => deleteMediTv(id)))
-      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -89,7 +92,7 @@ export default function AdminMediTvPage() {
   const handleTogglePin = async (id: number) => {
     try {
       await toggleMediTvPin(id)
-      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo, is_pinned: isPinned })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '처리에 실패했습니다.')
     }
@@ -106,11 +109,11 @@ export default function AdminMediTvPage() {
               <form className="adm_search_form" onSubmit={handleSearch}>
                 <div className="adm_search_row">
                   <label className="adm_search_label">시작일</label>
-                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <DatePicker value={inputDateFrom} onChange={setInputDateFrom} maxDate={inputDateTo || undefined} />
                   <label className="adm_search_label">종료일</label>
-                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                  <DatePicker value={inputDateTo} onChange={setInputDateTo} minDate={inputDateFrom || undefined} />
                   <label className="adm_search_label">공지여부</label>
-                  <select className="adm_search_select" value={isPinned} onChange={(e) => setIsPinned(e.target.value)}>
+                  <select className="adm_search_select" value={inputIsPinned} onChange={(e) => setInputIsPinned(e.target.value)}>
                     <option value="">전체</option>
                     <option value="1">공지</option>
                     <option value="0">일반</option>
@@ -118,7 +121,7 @@ export default function AdminMediTvPage() {
                 </div>
                 <div className="adm_search_row">
                   <label className="adm_search_label">검색어</label>
-                  <select className="adm_search_select" value={searchType} onChange={(e) => setSearchType(Number(e.target.value))}>
+                  <select className="adm_search_select" value={inputType} onChange={(e) => setInputType(Number(e.target.value))}>
                     <option value={2}>전체</option>
                     <option value={0}>제목</option>
                     <option value={1}>내용</option>

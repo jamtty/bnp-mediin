@@ -12,21 +12,24 @@ import { JB_CD_MAP } from '../community/_jbCdMap'
 
 const PAGE_SIZE = 15
 
+type ConsultSearchParams = { keyword: string; type: string; date_from: string; date_to: string }
+const defaultConsultParams: ConsultSearchParams = { keyword: '', type: '', date_from: '', date_to: '' }
+
 export default function AdminConsultationPage() {
   const navigate = useNavigate()
   const [items, setItems] = useState<ConsultationItem[]>([])
   const [totalCount, setTotalCount] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
   const [page, setPage] = useState(1)
-  const [keyword, setKeyword] = useState('')
+  const [searchParams, setSearchParams] = useState<ConsultSearchParams>(defaultConsultParams)
   const [inputKeyword, setInputKeyword] = useState('')
-  const [searchType, setSearchType] = useState('')  // '' | 'A.AD_TITLE' | 'A.AD_CONT' | 'A.AD_NAME'
-  const [dateFrom, setDateFrom] = useState('')
-  const [dateTo, setDateTo] = useState('')
+  const [inputType, setInputType] = useState('')
+  const [inputDateFrom, setInputDateFrom] = useState('')
+  const [inputDateTo, setInputDateTo] = useState('')
   const [loading, setLoading] = useState(false)
   const [checkedIds, setCheckedIds] = useState<number[]>([])
 
-  const load = useCallback(async (p: number, params: { keyword: string; type: string; date_from: string; date_to: string }) => {
+  const load = useCallback(async (p: number, params: ConsultSearchParams) => {
     setLoading(true)
     try {
       const res = await fetchConsultationList({ page: p, size: PAGE_SIZE, ...params })
@@ -40,22 +43,22 @@ export default function AdminConsultationPage() {
   }, [])
 
   useEffect(() => {
-    load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
-  }, [load, page, keyword, searchType, dateFrom, dateTo])
+    load(page, searchParams)
+  }, [load, page, searchParams])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
-    setKeyword(inputKeyword)
+    setSearchParams({ keyword: inputKeyword, type: inputType, date_from: inputDateFrom, date_to: inputDateTo })
   }
 
   const handleReset = () => {
     setInputKeyword('')
-    setKeyword('')
-    setSearchType('')
-    setDateFrom('')
-    setDateTo('')
+    setInputType('')
+    setInputDateFrom('')
+    setInputDateTo('')
     setPage(1)
+    setSearchParams(defaultConsultParams)
   }
 
   const allChecked = items.length > 0 && items.every((item) => checkedIds.includes(item.id))
@@ -72,7 +75,7 @@ export default function AdminConsultationPage() {
     if (!confirm(`"${title}" 을(를) 삭제하시겠습니까?\n첨부파일도 함께 삭제됩니다.`)) return
     try {
       await deleteConsultation(id)
-      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -83,7 +86,7 @@ export default function AdminConsultationPage() {
     if (!confirm(`선택한 ${checkedIds.length}건을 삭제하시겠습니까?\n첨부파일도 함께 삭제됩니다.`)) return
     try {
       await Promise.all(checkedIds.map((id) => deleteConsultation(id)))
-      load(page, { keyword, type: searchType, date_from: dateFrom, date_to: dateTo })
+      load(page, searchParams)
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : '삭제에 실패했습니다.')
     }
@@ -100,13 +103,13 @@ export default function AdminConsultationPage() {
               <form className="adm_search_form" onSubmit={handleSearch}>
                 <div className="adm_search_row">
                   <label className="adm_search_label">시작일</label>
-                  <DatePicker value={dateFrom} onChange={setDateFrom} maxDate={dateTo || undefined} />
+                  <DatePicker value={inputDateFrom} onChange={setInputDateFrom} maxDate={inputDateTo || undefined} />
                   <label className="adm_search_label">종료일</label>
-                  <DatePicker value={dateTo} onChange={setDateTo} minDate={dateFrom || undefined} />
+                  <DatePicker value={inputDateTo} onChange={setInputDateTo} minDate={inputDateFrom || undefined} />
                 </div>
                 <div className="adm_search_row">
                   <label className="adm_search_label">검색어</label>
-                  <select className="adm_search_select" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                  <select className="adm_search_select" value={inputType} onChange={(e) => setInputType(e.target.value)}>
                     <option value="">전체</option>
                     <option value="A.AD_TITLE">제목</option>
                     <option value="A.AD_CONT">내용</option>

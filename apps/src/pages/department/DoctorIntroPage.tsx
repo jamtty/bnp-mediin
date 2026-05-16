@@ -51,32 +51,38 @@ function DoctorCard({ doctor, onShowSchedule }: { doctor: DoctorItem; onShowSche
 
 export default function DoctorIntroPage() {
   const [allDoctors, setAllDoctors] = useState<DoctorItem[]>([])
+  const [knownDeptCodes, setKnownDeptCodes] = useState<string[]>([])
   const [activeDept, setActiveDept] = useState<string>('all')
   const [loading, setLoading] = useState(true)
   const [scheduleDoctor, setScheduleDoctor] = useState<DoctorItem | null>(null)
 
   useEffect(() => {
     setLoading(true)
-    fetchPublicDoctors()
-      .then(setAllDoctors)
+    const req = activeDept === 'all' ? fetchPublicDoctors() : fetchPublicDoctors(activeDept)
+    req
+      .then((doctors) => {
+        setAllDoctors(doctors)
+        if (activeDept === 'all') {
+          setKnownDeptCodes([...new Set(doctors.flatMap((d) => (d.dept_codes?.length ? d.dept_codes : [d.dept_code].filter(Boolean))))])
+        }
+      })
       .catch(() => {})
       .finally(() => setLoading(false))
-  }, [])
+  }, [activeDept])
 
   // 의사가 가진 모든 dept_codes 수집
   const getDeptCodes = (d: DoctorItem) =>
     d.dept_codes?.length ? d.dept_codes : [d.dept_code].filter(Boolean)
 
-  // 실제 데이터가 있는 진료과만 필터 버튼에 표시
-  const existingDeptCodes = [...new Set(allDoctors.flatMap(getDeptCodes))]
+  // 실제 데이터가 있는 진료과만 필터 버튼에 표시 (초기 전체 로드 기준)
+  const existingDeptCodes = knownDeptCodes.length > 0 ? knownDeptCodes : [...new Set(allDoctors.flatMap(getDeptCodes))]
   const visibleFilters = DEPT_FILTER_LIST.filter(
     (f) => f.code === 'all' || existingDeptCodes.includes(f.code),
   )
 
   const filtered =
-    activeDept === 'all'
-      ? allDoctors
-      : allDoctors.filter((d) => getDeptCodes(d).includes(activeDept))
+    // activeDept !== 'all' 일 때 allDoctors는 이미 서버에서 해당 dept만 받아온 상태
+    allDoctors
 
   // DEPT_GROUPS 순서대로 그룹화 (전체 선택 시), 중복 코드 제거
   const groupedByDept: { code: string; label: string; doctors: DoctorItem[] }[] =

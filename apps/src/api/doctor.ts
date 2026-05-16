@@ -142,7 +142,8 @@ export const deleteDoctor = async (id: number): Promise<void> => {
 
 // 공개 의료진 전체 목록 (일반 사용자용, 활성 상태만)
 export const fetchPublicDoctors = async (deptCode?: string): Promise<DoctorItem[]> => {
-  const params: Record<string, string | number> = { use_yn: 'Y', size: 500 }
+  // 백엔드 최대 허용 size=100. 전체 로드 및 진료과별 모두 100으로 요청해 누락 방지.
+  const params: Record<string, string | number> = { use_yn: 'Y', size: 100 }
   if (deptCode) params.dept_code = deptCode
   const { data } = await apiClient.get('/api/doctor', { params })
   if (!data.success) throw new Error(data.message || '의료진 정보를 불러오지 못했습니다.')

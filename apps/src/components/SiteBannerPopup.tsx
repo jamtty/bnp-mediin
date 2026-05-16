@@ -6,6 +6,24 @@ interface Props {
 }
 
 const STORAGE_KEY_PREFIX = 'popup_dismiss_'
+const POPUP_CACHE_TTL = 60 * 60 * 1000 // 1시간
+
+interface PopupCache {
+  items: PopupBannerItem[]
+  cachedAt: number
+}
+
+const _popupCache = new Map<string, PopupCache>()
+
+async function loadPopupBanners(site: string): Promise<PopupBannerItem[]> {
+  const cached = _popupCache.get(site)
+  if (cached && Date.now() - cached.cachedAt < POPUP_CACHE_TTL) {
+    return cached.items
+  }
+  const res = await fetchPopupBannerList({ site, page: 1, size: 10 })
+  _popupCache.set(site, { items: res.items, cachedAt: Date.now() })
+  return res.items
+}
 
 function isDismissedToday(id: number): boolean {
   const stored = localStorage.getItem(STORAGE_KEY_PREFIX + id)
@@ -22,10 +40,10 @@ export default function SiteBannerPopup({ site = 'MAIN' }: Props) {
   const [closed, setClosed] = useState<Set<number>>(new Set())
 
   useEffect(() => {
-    fetchPopupBannerList({ site, page: 1, size: 10 })
-      .then((res) => {
+    loadPopupBanners(site)
+      .then((items) => {
         const today = new Date().toISOString().slice(0, 10)
-        const active = res.items.filter((p) => {
+        const active = items.filter((p) => {
           if (p.use_yn !== 'Y') return false
           if (isDismissedToday(p.id)) return false
           if (p.period_start && p.period_start > today) return false

@@ -107,12 +107,18 @@ export const togglePressPin = async (id: number): Promise<void> => {
 /**
  * 외부 URL의 og:image를 백엔드 프록시를 통해 가져옵니다.
  * 이미지가 없으면 null을 반환합니다.
+ * 세션 내 중복 요청을 방지하기 위해 결과를 메모리 캐시합니다.
  */
+const _ogImageCache = new Map<string, string | null>()
 export const fetchOgImage = async (url: string): Promise<string | null> => {
+  if (_ogImageCache.has(url)) return _ogImageCache.get(url)!
   try {
     const { data } = await apiClient.get('/api/og-image', { params: { url } })
-    return data?.data?.image_url ?? null
+    const result = data?.data?.image_url ?? null
+    _ogImageCache.set(url, result)
+    return result
   } catch {
+    _ogImageCache.set(url, null)
     return null
   }
 }

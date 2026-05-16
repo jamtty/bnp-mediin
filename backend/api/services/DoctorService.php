@@ -14,7 +14,7 @@ class DoctorService
     public function getList(array $query): array
     {
         $page     = max(1, (int)($query['page'] ?? 1));
-        $size     = max(1, min(100, (int)($query['size'] ?? 20)));
+        $size     = max(1, min(500, (int)($query['size'] ?? 20)));
         $deptCode = trim((string)($query['dept_code'] ?? ''));
         $keyword  = trim((string)($query['keyword']   ?? ''));
         $useYn    = trim((string)($query['use_yn']    ?? ''));
