@@ -328,7 +328,7 @@ export default function HomePage() {
               </a>
             </div>
             <div className="quick_item">
-              <a href="https://www.medi-yin.co.kr/fune/" target="_blank" rel="noreferrer">
+              <a href="/funeral" target="_blank" rel="noreferrer">
                 <dl>
                   <dt>장례식장</dt>
                   <dd>
