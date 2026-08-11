@@ -673,7 +673,12 @@ export default function CertificatePage() {
                             <li>환자가 자필 서명한 동의서(만14세이상인 경우)</li>
                           </ul>
                         </td>
-                        <td></td>
+                        <td className="t_left t_15">
+                            <p className="t_red">※ 환자의 형제·자매가 신청하는 경우</p>
+                            <ul className="dot_list2">
+                                <li>배우자, 직계존비속, 배우자의 직계존속이 모두 없다는 사실을 증명하는 자료를 구비한 경우에 한해 신청 가능</li>
+                            </ul>
+                        </td>
                       </tr>
                       <tr>
                         <td className="t_15">
