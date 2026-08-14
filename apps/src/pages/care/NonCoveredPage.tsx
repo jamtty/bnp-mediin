@@ -3727,7 +3727,7 @@ export default function NonCoveredPage() {
                                 <td>BM5106EM</td>
                                 <td>3M TRANSPORE WHITE SURGICAL TAPE</td>
                                 <td>3M TRANSPORE WHITE (트랜스포머 화이트 써지컬테이프)</td>
-                                <td> 2,500 </td>
+                                <td> 3,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -3763,7 +3763,7 @@ export default function NonCoveredPage() {
                                 <td>BM510RM</td>
                                 <td>ORSAY</td>
                                 <td>ORSAY</td>
-                                <td> 35,000 </td>
+                                <td> 40,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -3775,7 +3775,7 @@ export default function NonCoveredPage() {
                                 <td>BK7000VW</td>
                                 <td>RAPBAND</td>
                                 <td>RAPBAND</td>
-                                <td> 150,000 </td>
+                                <td> 180,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -3799,19 +3799,19 @@ export default function NonCoveredPage() {
                                 <td>K9206008</td>
                                 <td>슈퍼크린 SUPER CLEAN</td>
                                 <td>슈퍼크린 SUPER CLEAN</td>
-                                <td> 1,000 </td>
+                                <td> 1,500 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td>심사기준초과</td>
                             </tr>
                             <tr>
                                 <td>척추경막외 유착방지제</td>
                                 <td>BF0100AJ</td>
                                 <td>ARTQ, COVER SEAL</td>
                                 <td>ARTQ, COVER SEAL-유착방지제</td>
-                                <td> 370,000</td>
+                                <td> 420,000</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -3823,7 +3823,7 @@ export default function NonCoveredPage() {
                                 <td>BF0101WC</td>
                                 <td>큐블럭(QBLOCK), 3.5.ML</td>
                                 <td>큐블럭(QBLOCK), 3.5.ML</td>
-                                <td> 700,000</td>
+                                <td> 900,000</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -3881,7 +3881,7 @@ export default function NonCoveredPage() {
                                 <td>EXFUSE-GEL</td>
                                 <td> 500,000 </td>
                                 <td> 500,000 </td>
-                                <td> 1,000,000 </td><td></td><td></td><td></td>
+                                <td> 1,000,000 </td><td></td><td></td><td>규격에 따라 다름</td>
                             </tr>		
                             <tr>
                                 <td>치료재료</td>
@@ -3912,7 +3912,7 @@ export default function NonCoveredPage() {
                                 <td>BK7000RL</td>
                                 <td>아코반밴드</td>
                                 <td>아코반밴드 AquoBan </td>
-                                <td> 39,000 </td>
+                                <td> 45,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -3920,7 +3920,7 @@ export default function NonCoveredPage() {
                                 <td>BK7000VB</td>
                                 <td>BBAND</td>
                                 <td>BBAND with pus pen</td>
-                                <td> 27,000 </td>
+                                <td> 35,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -3968,7 +3968,7 @@ export default function NonCoveredPage() {
                                 <td>BK7100VO</td>
                                 <td>CARE BANDAGE</td>
                                 <td>CARE-BANDAGE</td>
-                                <td> 17,000 </td>
+                                <td> 20,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -4008,9 +4008,9 @@ export default function NonCoveredPage() {
                                 <td>BM1200VO</td>
                                 <td>CARE BOARD</td>
                                 <td>CARE BOARD</td>
-                                <td>  33,000  </td>
-                                <td>  22,000  </td>
-                                <td>  33,000  </td><td></td><td></td><td></td>
+                                <td>  40,000  </td>
+                                <td>  25,000  </td>
+                                <td>  40,000  </td><td></td><td></td><td>부위에 따라 다름</td>
                             </tr>
                             <tr>
                                 <td>치료재료</td>
@@ -4145,7 +4145,7 @@ export default function NonCoveredPage() {
                                 <td>BK7001MY</td>
                                 <td>토니밴드</td>
                                 <td>토니밴드</td>
-                                <td>  150,000  </td>
+                                <td>  180,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -4234,7 +4234,7 @@ export default function NonCoveredPage() {
                                 <td>BF0100LQ</td>
                                 <td>HYVIXEL(3ml)</td>
                                 <td>HYVIXEL(3ml)</td>
-                                <td>  420,000  </td>
+                                <td>  500,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -4267,6 +4267,168 @@ export default function NonCoveredPage() {
                                 <td>AUBAN II</td>
                                 <td>AUBAN II</td>
                                 <td>  45,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>12060</td>
+                                <td>팔걸이 ARM SLING</td>
+                                <td>팔걸이 ARM SLING</td>
+                                <td>  7,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>12063</td>
+                                <td>석고신발</td>
+                                <td>0</td>
+                                <td>  10,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>12064</td>
+                                <td>벨포팔걸이 (VELPEAU)</td>
+                                <td>벨포팔걸이 (VELPEAU)</td>
+                                <td>  40,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>20224</td>
+                                <td>L/S- SLING(어깨보조기)</td>
+                                <td>L/S- SLING(어깨보조기)</td>
+                                <td>  150,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>20330</td>
+                                <td>목발 (CRUTCH)</td>
+                                <td>목발 (CRUTCH)</td>
+                                <td>  35,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>단백질 함유 골이식재</td>
+                                <td>BC0301MB</td>
+                                <td>NOVOSIS TRAUMA</td>
+                                <td>NOVOSIS TRAUMA</td>
+                                <td>  1,200,000  </td>
+                                <td>  1,200,000  </td>
+                                <td>  2,200,000  </td>
+                                <td></td><td></td><td>용량에 따라 다름</td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>BC1001LU</td>
+                                <td>AWS SPLINT II</td>
+                                <td>AWS SPLINT II</td>
+                                <td>  50,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>보조기</td>
+                                <td>BC1201KZ</td>
+                                <td>경추보조기 - 필라델피아</td>
+                                <td>경추보조기 - 필라델피아</td>
+                                <td>  100,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>피부보호제</td>
+                                <td>BM5003GJ</td>
+                                <td>RENOSIL SUN/ SACR-LIGHT/ RENOSTICK SUN</td>
+                                <td>RENOSIL SUN/ SACR-LIGHT/ RENOSTICK SUN</td>
+                                <td>  40,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱고정류</td>
+                                <td>BM5100AL</td>
+                                <td>에드고픽스부직반창고</td>
+                                <td>에드고픽스부직반창고</td>
+                                <td>  2,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5100MJ</td>
+                                <td>엠픽스3</td>
+                                <td>엠픽스3</td>
+                                <td>  10,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱고정류</td>
+                                <td>BM5101CV</td>
+                                <td>DEMS-1</td>
+                                <td>DEMS-1</td>
+                                <td>  1,800  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5101FK</td>
+                                <td>DM-PU COVER</td>
+                                <td>DM-PU COVER</td>
+                                <td>  38,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5103SJ</td>
+                                <td>SURGI FXT</td>
+                                <td>SURGI FXT</td>
+                                <td>  50,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5105CM</td>
+                                <td>TD UNIFORMFIX1</td>
+                                <td>TD UNIFORMFIX1</td>
+                                <td>  40,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5106XE</td>
+                                <td>(주)갈렙외과용품</td>
+                                <td>(주)갈렙외과용품</td>
+                                <td>  250,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5107OP</td>
+                                <td>OPI CUT FIXING</td>
+                                <td>OPI CUT FIXING</td>
+                                <td>  5,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5112BL</td>
+                                <td>BNG SILICONE PAD, BNG SILICONE ROLL</td>
+                                <td>BNG SILICONE PAD, BNG SILICONE ROLL</td>
+                                <td>  12,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>드레싱 고정류</td>
+                                <td>BM5121AX</td>
+                                <td>엠에스에프(MSF)</td>
+                                <td>엠에스에프(MSF)</td>
+                                <td>  4,000  </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>흉터관리재료</td>
+                                <td>BM5000RH</td>
+                                <td>이엔티브(ENTIVE)-1G</td>
+                                <td>이엔티브(ENTIVE)-1G</td>
+                                <td>  40,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>
@@ -4370,18 +4532,6 @@ export default function NonCoveredPage() {
                                 <td> 90,000 </td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>약제비 및 치료재료</td>
-                                <td>643604610</td>
-                                <td>페라미플루주150mg </td>
-                                <td></td>
-                                <td> 30,000 </td>
-                                <td> 30,000 </td>
-                                <td> 60,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -4509,7 +4659,7 @@ export default function NonCoveredPage() {
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>659600451</td>
+                                <td>626200061</td>
                                 <td>타이유프로게스테론주_(0.5g/10mL)</td>
                                 <td></td>
                                 <td> 10,000 </td>
@@ -4533,7 +4683,7 @@ export default function NonCoveredPage() {
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>669904600</td>
+                                <td>669904601</td>
                                 <td>리포라제주1500IU<br />(히알우로니다제)</td>
                                 <td></td>
                                 <td> 66,000 </td>
@@ -4656,7 +4806,7 @@ export default function NonCoveredPage() {
                                 <td>696500010</td>
                                 <td>레반에이치 주입연고2g/1tube</td>
                                 <td></td>
-                                <td> 3,000 </td>
+                                <td> 4,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -4668,7 +4818,7 @@ export default function NonCoveredPage() {
                                 <td>659901460</td>
                                 <td>오라팡정</td>
                                 <td></td>
-                                <td> 25,200 </td>
+                                <td> 40,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -4680,7 +4830,7 @@ export default function NonCoveredPage() {
                                 <td>A03900711</td>
                                 <td>성광칼라민로숀 100ml</td>
                                 <td></td>
-                                <td> 50,000 </td>
+                                <td> 5,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -4797,7 +4947,7 @@ export default function NonCoveredPage() {
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>684900040</td>
+                                <td>684900041</td>
                                 <td>파이브로베인1%</td>
                                 <td></td>
                                 <td> 30,000 </td>
@@ -4833,7 +4983,7 @@ export default function NonCoveredPage() {
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>3Z5201106</td>
+                                <td>056400021</td>
                                 <td>스카이셀플루3가 PFS(SK) 0.5mL</td>
                                 <td></td>
                                 <td> 30,000 </td>
@@ -4848,7 +4998,7 @@ export default function NonCoveredPage() {
                                 <td>3Z5201502</td>
                                 <td>녹십자티디백신프리필드시린지주</td>
                                 <td></td>
-                                <td> 30,000 </td>
+                                <td> 40,000 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -4928,7 +5078,7 @@ export default function NonCoveredPage() {
                                 <td>622900021</td>
                                 <td>카티스템 CARTISEM (기본)</td>
                                 <td></td>
-                                <td>  10,000,000  </td>
+                                <td>  11,000,000  </td>
                                 <td></td><td></td><td></td><td></td><td>행위료포함</td>
                             </tr>
                             <tr>
@@ -4936,15 +5086,15 @@ export default function NonCoveredPage() {
                                 <td>622900021</td>
                                 <td>카티스템 CARTISEM (추가)</td>
                                 <td></td>
-                                <td>  8,800,000  </td>
+                                <td>  10,000,000  </td>
                                 <td></td><td></td><td></td><td></td><td>행위료포함</td>
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>053300080</td>
+                                <td>053300081</td>
                                 <td>루플라 주 2.5cc</td>
                                 <td></td>
-                                <td> 250,000 </td>
+                                <td> 500,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -4960,7 +5110,7 @@ export default function NonCoveredPage() {
                                 <td>641601460</td>
                                 <td>베아제정 50mg</td>
                                 <td></td>
-                                <td>  250  </td>
+                                <td>  600  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -4976,7 +5126,7 @@ export default function NonCoveredPage() {
                                 <td>647802340</td>
                                 <td>트레스탄캅셀-(비급여)(1/캅셀)</td>
                                 <td></td>
-                                <td>  500  </td>
+                                <td>  1,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -4992,7 +5142,7 @@ export default function NonCoveredPage() {
                                 <td>643900900</td>
                                 <td>액티피드정(1/정)</td>
                                 <td></td>
-                                <td>  120  </td>
+                                <td>  200  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5016,7 +5166,7 @@ export default function NonCoveredPage() {
                                 <td>642706650</td>
                                 <td>레조트론정 1mg</td>
                                 <td></td>
-                                <td> 590   </td>
+                                <td> 1,000   </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5024,7 +5174,7 @@ export default function NonCoveredPage() {
                                 <td>642706660</td>
                                 <td>레조트론정 2mg</td>
                                 <td></td>
-                                <td>  890  </td>
+                                <td>  2,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5032,7 +5182,7 @@ export default function NonCoveredPage() {
                                 <td>642100700</td>
                                 <td>삐콤정(1/정)</td>
                                 <td></td>
-                                <td> 18   </td>
+                                <td> 50   </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5048,7 +5198,7 @@ export default function NonCoveredPage() {
                                 <td>053300141</td>
                                 <td>아데노피주 20mg/2ml</td>
                                 <td></td>
-                                <td>  28,000  </td>
+                                <td>  25,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5056,7 +5206,7 @@ export default function NonCoveredPage() {
                                 <td>053300061</td>
                                 <td>히알로제주</td>
                                 <td></td>
-                                <td> 43,000   </td>
+                                <td> 50,000   </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5064,7 +5214,7 @@ export default function NonCoveredPage() {
                                 <td>053300061</td>
                                 <td>히알로제주</td>
                                 <td></td>
-                                <td> 60,000   </td>
+                                <td> 65,000   </td>
                                 <td></td><td></td><td></td><td></td><td>행위없이 단독처방 시</td>
                             </tr>
                             <tr>
@@ -5086,7 +5236,7 @@ export default function NonCoveredPage() {
                             <tr>
                                 <td>약제비 및 치료재료</td>
                                 <td>681100020</td>
-                                <td>라이넥주사액(2ml/앰플</td>
+                                <td>라이넥주사액(2ml/앰플)</td>
                                 <td></td>
                                 <td>  12,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
@@ -5125,26 +5275,26 @@ export default function NonCoveredPage() {
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>681000561</td>
+                                <td>681000560</td>
                                 <td>헥시콜스왑스틱</td>
                                 <td></td>
-                                <td>  600  </td>
+                                <td>  1,500  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>681000581</td>
+                                <td>681000580</td>
                                 <td>포비돈 스왑(Stick Povidon)</td>
                                 <td></td>
-                                <td>  600  </td>
+                                <td>  900  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>643604610</td>
+                                <td>643604611</td>
                                 <td>페라미플루주150mg mix</td>
                                 <td></td>
-                                <td>  60,000  </td>
+                                <td>  70,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5192,7 +5342,7 @@ export default function NonCoveredPage() {
                                 <td>668901281</td>
                                 <td>히루안주2.5ml</td>
                                 <td></td>
-                                <td>  43,000  </td>
+                                <td>  50,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5200,7 +5350,7 @@ export default function NonCoveredPage() {
                                 <td>668901281</td>
                                 <td>(단독)히루안주2.5ml</td>
                                 <td></td>
-                                <td>  60,000  </td>
+                                <td>  65,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5216,7 +5366,7 @@ export default function NonCoveredPage() {
                                 <td>680300153</td>
                                 <td>비디클로라프렙 10.5ml</td>
                                 <td></td>
-                                <td>  30,000  </td>
+                                <td>  35,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5224,7 +5374,7 @@ export default function NonCoveredPage() {
                                 <td>680300162</td>
                                 <td>비디클로라프렙 26ml</td>
                                 <td></td>
-                                <td>  40,000  </td>
+                                <td>  45,000  </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5240,15 +5390,15 @@ export default function NonCoveredPage() {
                                 <td>670607751</td>
                                 <td>아모부로펜주</td>
                                 <td></td>
-                                <td>  14,000 </td>
+                                <td>  27,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>693903672</td>
+                                <td>642707702</td>
                                 <td>셀트리온알보칠콘센트레이트액(폴리크레줄렌)_(36g/100mL)</td>
                                 <td></td>
-                                <td>  500 </td>
+                                <td>  5,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5261,10 +5411,10 @@ export default function NonCoveredPage() {
                             </tr>
                             <tr>
                                 <td>약제비 및 치료재료</td>
-                                <td>693903671</td>
+                                <td>642707701</td>
                                 <td>알보칠콘센트레이트액(폴리크레줄렌)_(1.8g/5mL)</td>
                                 <td></td>
-                                <td>  3,000 </td>
+                                <td>  7,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5280,7 +5430,7 @@ export default function NonCoveredPage() {
                                 <td>657807641</td>
                                 <td>바이파보주 20밀리그램(레미마졸람베실산염)_(28.22mg/1병)</td>
                                 <td></td>
-                                <td>  50,000 </td>
+                                <td>  70,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5328,7 +5478,7 @@ export default function NonCoveredPage() {
                                 <td>059600681</td>
                                 <td>리포타손주(덱사메타손팔미테이트)_(4mg/1mL)</td>
                                 <td></td>
-                                <td> 60,000 </td>
+                                <td> 65,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             <tr>
@@ -5441,6 +5591,102 @@ export default function NonCoveredPage() {
                                 <td>아렉스비주[호흡기세포융합바이러스백신(유전자재조합)]_(0.12mg/0.5mL)</td>
                                 <td></td>
                                 <td> 330,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비</td>
+                                <td>670801331</td>
+                                <td>마운자로프리필드펜주2.5mg/0.5ml</td>
+                                <td></td>
+                                <td> 350,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비</td>
+                                <td>670801321</td>
+                                <td>마운자로프리필드펜주5mg/0.5ml</td>
+                                <td></td>
+                                <td> 450,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비</td>
+                                <td>670801311</td>
+                                <td>마운자로프리필드펜주7.5mg/0.5ml</td>
+                                <td></td>
+                                <td> 630,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>3Z5200301</td>
+                                <td>스카이조스터주</td>
+                                <td></td>
+                                <td> 150,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>기타</td>
+                                <td>삭센다펜주6밀리그램</td>
+                                <td></td>
+                                <td> 100,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>670303921</td>
+                                <td>디클로메드액0.074%/200ml</td>
+                                <td></td>
+                                <td> 28,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>657808251</td>
+                                <td>슈가원프리필드주(슈가마덱스나트륨)_(0.2176g/2mL)</td>
+                                <td></td>
+                                <td> 170,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>658604880</td>
+                                <td>트롬빈플러스</td>
+                                <td></td>
+                                <td> 250,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>658204831</td>
+                                <td>어나프라주1g/100ml</td>
+                                <td></td>
+                                <td> 220,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>643803041</td>
+                                <td>신신퍼메트린크림30g</td>
+                                <td></td>
+                                <td> 14,000 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>659902140</td>
+                                <td>팜자임정</td>
+                                <td></td>
+                                <td> 600 </td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>약제비 및 치료재료</td>
+                                <td>678901271</td>
+                                <td>플루엔페라주</td>
+                                <td></td>
+                                <td> 140,000 </td>
                                 <td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>
