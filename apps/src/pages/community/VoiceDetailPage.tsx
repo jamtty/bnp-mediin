@@ -112,6 +112,23 @@ export default function VoiceDetailPage() {
               <div dangerouslySetInnerHTML={{ __html: (detail.content ?? '').replace(/\n/g, '<br>') }} />
             </div>
 
+            {detail.reply && (
+              <div className="view_comment_area">
+                <div className="comment_area">
+                  <div className="comment_item">
+                    <div className="comment_wt">
+                      <p className="wt_name">{detail.reply_name ?? '관리자'}</p>
+                      <p className="wt_date">{detail.reply_date ?? ''}</p>
+                    </div>
+                    <div
+                      className="wt_adm_comment"
+                      dangerouslySetInnerHTML={{ __html: detail.reply }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="view_control_area">
               <button type="button" className="btn btn_gray" onClick={handleModify}><span>수정</span></button>
               <button type="button" className="btn btn_bk" onClick={handleDelete}><span>삭제</span></button>
