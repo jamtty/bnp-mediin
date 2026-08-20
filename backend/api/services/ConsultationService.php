@@ -69,7 +69,7 @@ class ConsultationService
     {
         $item = $this->repo->findById($id);
         if (!$item) return false;
-        return $item['password'] === $password;
+        return $this->repo->verifyStoredPassword((string)($item['password'] ?? ''), $password);
     }
 
     // ─────────────────────────────────────────────────────────────

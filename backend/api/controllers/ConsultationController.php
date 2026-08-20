@@ -48,12 +48,9 @@ class ConsultationController
                 Response::ok(['locked' => true]);
                 return;
             }
-            if (!password_verify($password, $basic['password'] ?? '')) {
-                // 평문 4자리 비교도 지원 (레거시)
-                if ($password !== ($basic['password'] ?? '')) {
-                    Response::ok(['locked' => true, 'wrong' => true]);
-                    return;
-                }
+            if (!$this->repo->verifyStoredPassword((string)($basic['password'] ?? ''), $password)) {
+                Response::ok(['locked' => true, 'wrong' => true]);
+                return;
             }
         }
 

@@ -33,6 +33,27 @@ class ConsultationRepository extends BaseRepository
         return '*' . strtoupper(sha1(sha1($password, true)));
     }
 
+    /**
+     * 저장된 비밀번호와 입력값 비교
+     * - MySQL PASSWORD() 포맷 (*...) → 해시 재계산 비교
+     * - bcrypt 포맷 ($2y$/$2a$) → password_verify
+     * - 그 외 → 평문 비교 (레거시)
+     */
+    public function verifyStoredPassword(string $stored, string $input): bool
+    {
+        if ($stored === '' || $input === '') return false;
+
+        if (str_starts_with($stored, '*')) {
+            return hash_equals(strtoupper($stored), $this->hashPassword($input));
+        }
+
+        if (str_starts_with($stored, '$2')) {
+            return password_verify($input, $stored);
+        }
+
+        return hash_equals($stored, $input);
+    }
+
     // ─────────────────────────────────────────────────────────────
     // 목록 · 검색
     // ─────────────────────────────────────────────────────────────
